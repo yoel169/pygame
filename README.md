@@ -1,5 +1,5 @@
 # pygame
-World Flying Fighter: Not currently set to publish!
+World Flying Fighter: just a student having some fun with python.
 
 Download files and assests and run 'Game.py' (python Game.py), 'pygame' library needed(-pip install pygame). 
 
