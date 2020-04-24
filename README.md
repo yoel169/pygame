@@ -16,4 +16,4 @@ sprites: player, clouds, enemy(pufferfish), and bullets
 movement, health, damage, collision, score, text
 
 need:
-menu, levels, different enemies, pause, different powerups 
+menu, levels, different enemies, pause, different powerups and their mechanics, random cloud size
