@@ -13,7 +13,7 @@ sprites: player, clouds, enemy(pufferfish), and bullets
 movement, health, damage, collision, score, text, menu as main driver creates loop, game music: Inital D - grand prix, bullet collision sound: carrot crunch, enemy death sound: puffer fish moan.
 
 ~need:
-levels, different enemies, pause, different powerups and their mechanics, random cloud size.
+random cloud size, levels, different enemies and players, different powerups, money, store(upgrades), HUD
 
 ~update history:
 1.0: fighting jet that has to dodge missles. sounds and music work.
