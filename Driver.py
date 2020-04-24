@@ -1,6 +1,6 @@
 import pygame_gui
 import pygame
-from Game import Game
+from Levels.Game import Game
 
 SW = 800
 SH = 600
