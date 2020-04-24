@@ -7,9 +7,7 @@ World Flying Fighter: just a student having some fun with python.
 
 ~currently:
 fighting blowfish meme (https://www.youtube.com/watch?v=wKnM_oUDg18), space to shoot, arrows to move, avoid the pufferfish.
-game music: Inital D - grand prix
-bullet collision sound: carrot crunch
-enemy death sound: puffer fish moan
+game music: Inital D - grand prix, bullet collision sound: carrot crunch, enemy death sound: puffer fish moan.
 
 ~working:
 sprites: player, clouds, enemy(pufferfish), and bullets
