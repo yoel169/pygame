@@ -6,7 +6,7 @@
 ~Download files and assests and run 'Driver.py' (python Game.py).
 Dependecies: python, pygame, pygame_gui
 
-~Game: Simple menu that has 'play' and 'quit' working. Current only level where you try to feed as many blowfish (https://www.youtube.com/watch?v=wKnM_oUDg18) as you can, space to shoot, arrows to move, avoid the pufferfish.
+~Game: Simple menu that has 'play' and 'quit' working. Current only level where you try to feed as many pufferfish (https://www.youtube.com/watch?v=wKnM_oUDg18) as you can, space to shoot, arrows to move, avoid the pufferfish.
 
 ~working:
 sprites: player, clouds, enemy(pufferfish), and bullets
@@ -15,7 +15,7 @@ movement, health, damage, collision, score, text, menu as main driver creates lo
 ~need:
 levels, different enemies, pause, different powerups and their mechanics, random cloud size.
 
-update history:
+~update history:
 1.0: fighting jet that has to dodge missles. sounds and music work.
 1.5: added shooting, fixed shooting rate, added health and damadge, added score.
 2.0: working menu using pygame_gui, created menu as driver class, game gets its own class, gets called in driver class.
