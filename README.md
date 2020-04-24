@@ -3,7 +3,7 @@
 
 ~Description: flying jet fighting different enemies.
 
-~Download files and assests and run 'Driver.py' (python Game.py).
+~Download files and assests and run 'Driver.py' (python Driver.py).
 Dependecies: python, pygame, pygame_gui
 
 ~Game: arrows to move, space to shoot. Level 1: Escape from Guantanamo Bay. Get score of 50 to win.
