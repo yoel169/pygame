@@ -19,7 +19,7 @@ class Cloud(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(0, SCREEN_HEIGHT),
+                random.randint(90, SCREEN_HEIGHT),
             )
         )
 
@@ -44,7 +44,7 @@ class Bullet1(pygame.sprite.DirtySprite):
 
     def update(self):
         # Add the velocity to the position vector to move the sprite.
-        self.rect.move_ip(5, 0)
+        self.rect.move_ip(10, 0)
         if self.rect.bottom <= 0:
             self.kill()
 

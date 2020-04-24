@@ -1,5 +1,5 @@
-# Import the pygame module
 import pygame
+import pygame_gui
 from Actors.Players import Player
 from Actors.Neutrals import Cloud, Bullet1
 from Actors.Enemies import BlueJet
@@ -43,10 +43,6 @@ class Game():
         # Initialize pygame
         pygame.init()
 
-        # Create the screen object
-        # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-        # screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
         # Create a custom event for adding a new enemy/clouds
         self.ADDENEMY = pygame.USEREVENT + 1
         pygame.time.set_timer(self.ADDENEMY, 500)
@@ -87,6 +83,7 @@ class Game():
                     # If the Esc key is pressed, then exit the main loop
                     if event.key == K_ESCAPE:
                         running = False
+                        won = False
                     if event.key == K_SPACE and time_since_enter >= 600:
                         new_bullet = Bullet1(self.player.rect.center)
                         self.bullets.add(new_bullet)
@@ -96,6 +93,7 @@ class Game():
                 # Check for QUIT event. If QUIT, then set running to false.
                 if event.type == QUIT:
                     running = False
+                    won = False
 
                 if pygame.time.get_ticks() >= 3000:
                     # Add a new enemy?
@@ -105,12 +103,12 @@ class Game():
                         self.enemies.add(new_enemy)
                         self.all_sprites.add(new_enemy)
 
-                        # Add a new cloud?
-                        if event.type == self.ADDCLOUD:
-                            # Create the new cloud and add it to sprite groups
-                            new_cloud = Cloud()
-                            self.clouds.add(new_cloud)
-                            self.all_sprites.add(new_cloud)
+                    # Add a new cloud?
+                    if event.type == self.ADDCLOUD:
+                        # Create the new cloud and add it to sprite groups
+                        new_cloud = Cloud()
+                        self.clouds.add(new_cloud)
+                        self.all_sprites.add(new_cloud)
 
             # Get the set of keys pressed and check for user input
             pressed_keys = pygame.key.get_pressed()
@@ -139,6 +137,10 @@ class Game():
                     if enemy.health <= 0:
                         score += 1
 
+            if score >= 50:
+                won = True
+                running = False
+
             # Check if any enemies have collided with the player
             hit = pygame.sprite.spritecollideany(self.player, self.enemies)
             if hit != None:
@@ -152,10 +154,14 @@ class Game():
                 running = False
                 print("you died!")
 
-            # Ensure program maintains a rate of 30 frames per second
-            clock.tick(30)
+            # Fill the screen with blue
+            #self.screen.fill((135, 206, 250))
+
+            # Ensure program maintains a rate of 60 frames per second
+            clock.tick(60)
 
             text_update(score, self.player.health, self.player.lives, self.screen)
+            pygame.draw.line(self.screen,(0,0,0),(0,65),(self.SCREEN_WIDTH, 65),3)
 
             # Update the display
             pygame.display.flip()

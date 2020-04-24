@@ -14,28 +14,28 @@ def text_objects(text, font):
 def points_display(text, screen):
     largeText = pygame.font.Font('freesansbold.ttf', 20)
     TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = (halfw - 60, 50)
+    TextRect.center = (halfw - 120, 50)
     screen.blit(TextSurf, TextRect)
 
 
 def title_display(text, screen):
-    largeText = pygame.font.Font('freesansbold.ttf', 35)
+    largeText = pygame.font.Font('freesansbold.ttf', 30)
     TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = (halfw, 20)
+    TextRect.center = (halfw , 20)
     screen.blit(TextSurf, TextRect)
 
 
 def health_display(text, screen):
     largeText = pygame.font.Font('freesansbold.ttf', 20)
     TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = (halfw + 50, 50)
+    TextRect.center = (halfw , 50)
     screen.blit(TextSurf, TextRect)
 
 
 def lives_display(text, screen):
     largeText = pygame.font.Font('freesansbold.ttf', 20)
     TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = (SCREEN_WIDTH - 100, 30)
+    TextRect.center = (halfw + 120, 50)
     screen.blit(TextSurf, TextRect)
 
 
@@ -43,4 +43,4 @@ def text_update(sc, health, lives, screen):
     points_display(('Score: ' + str(sc)), screen)
     health_display(('Health: ' + str(health)), screen)
     lives_display(('Lives: ' + str(lives)), screen)
-    title_display(('Level 1'), screen)
+    title_display(('Level 1: Escape Guantanamo Bay'), screen)
