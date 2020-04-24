@@ -2,7 +2,7 @@ import pygame
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-black = (0,0,0)
+black = (0, 0, 0)
 
 
 def text_objects(text, font):
@@ -11,7 +11,7 @@ def text_objects(text, font):
 
 
 def message_display(text, screen):
-    largeText = pygame.font.Font('freesansbold.ttf',20)
+    largeText = pygame.font.Font('freesansbold.ttf', 20)
     TextSurf, TextRect = text_objects(text, largeText)
     TextRect.center = (SCREEN_WIDTH - 60, 30)
     screen.blit(TextSurf, TextRect)
