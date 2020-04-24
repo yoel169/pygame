@@ -6,11 +6,10 @@
 ~Download files and assests and run 'Driver.py' (python Game.py).
 Dependecies: python, pygame, pygame_gui
 
-~Game: Simple menu that has 'play' and 'quit' working. Current only level where you try to feed as many pufferfish (https://www.youtube.com/watch?v=wKnM_oUDg18) as you can, space to shoot, arrows to move, avoid the pufferfish.
+~Game: arrows to move, space to shoot. Level 1: Escape from Guantanamo Bay. Get score of 50 to win.
 
 ~working:
-sprites: player, clouds, enemy(pufferfish), and bullets
-movement, health, damage, collision, score, text, menu as main driver creates loop, game music: Inital D - grand prix, bullet collision sound: carrot crunch, enemy death sound: puffer fish moan.
+sprites: player, clouds, enemies, and bullets. movement, health, damage, collision, score, text, menu as main driver creates loop, game music: Inital D - grand prix.
 
 ~need:
 random cloud size, levels, different enemies and players, different powerups, money, store(upgrades), HUD
