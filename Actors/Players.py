@@ -27,6 +27,7 @@ class Player(pygame.sprite.DirtySprite):
         self.health = 30
         self.lives = 2
         self.speed = 0
+        self.damage = 1
 
     # Move the sprite based on user keypresses
     def update(self, pressed_keys):

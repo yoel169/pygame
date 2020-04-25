@@ -19,7 +19,7 @@ class Cloud(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(90, SCREEN_HEIGHT),
+                random.randint(90, SCREEN_HEIGHT - 50),
             )
         )
 
@@ -32,7 +32,7 @@ class Cloud(pygame.sprite.DirtySprite):
 
 
 class Bullet1(pygame.sprite.DirtySprite):
-    def __init__(self, position):
+    def __init__(self, position, power):
         super(Bullet1, self).__init__()
         self.surf = pygame.image.load("Media/bullet.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
@@ -40,7 +40,7 @@ class Bullet1(pygame.sprite.DirtySprite):
         self.pos = pygame.math.Vector2(position)
         self.vel = pygame.math.Vector2(0, -450)
         self._layer = 1
-        self.damage = 10
+        self.damage = 10 + power
 
     def update(self):
         # Add the velocity to the position vector to move the sprite.
@@ -79,7 +79,7 @@ class PowerUp1(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(90, SCREEN_HEIGHT),
+                random.randint(90, SCREEN_HEIGHT - 50),
             )
         )
 
