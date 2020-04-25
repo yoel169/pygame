@@ -34,7 +34,6 @@ class BlueJet(pygame.sprite.DirtySprite):
             self.kill()
         elif self.health <= 0:
             self.kill()
-            # death_sound.play()
 
 
 # Define the enemy object by extending pygame.sprite.Sprite

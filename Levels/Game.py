@@ -16,21 +16,16 @@ from pygame.locals import (
 
 
 class Game():
-    def __init__(self, width, height, screen):
+    def __init__(self, width, height, screen, option):
         self.SCREEN_WIDTH = width
         self.SCREEN_HEIGHT = height
         self.screen = screen
-
-        # Define constants for the screen width and height
-        # SCREEN_WIDTH = 800
-        # SCREEN_HEIGHT = 600
+        self.auto = option
 
         # Setup for sounds. Defaults are good.
         pygame.mixer.init()
 
         # Load and play background music
-        # Sound source: http://ccmixter.org/files/Apoxode/59262
-        # License: https://creativecommons.org/licenses/by/3.0/
         pygame.mixer.music.load("Media/game.mp3")
         pygame.mixer.music.play(loops=-1)
 
@@ -45,9 +40,9 @@ class Game():
 
         # Create a custom event for adding a new enemy/clouds
         self.ADDENEMY = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.ADDENEMY, 500)
+        pygame.time.set_timer(self.ADDENEMY, 1000)
         self.ADDCLOUD = pygame.USEREVENT + 2
-        pygame.time.set_timer(self.ADDCLOUD, 1000)
+        pygame.time.set_timer(self.ADDCLOUD, 5000)
         self.ADDPOWERUP1 = pygame.event.Event(pygame.USEREVENT, attr1='Event1')
 
         # Create groups to hold enemy sprites and all sprites
@@ -66,15 +61,16 @@ class Game():
     def run(self):
         # Variable to keep the main loop running
         running = True
-        speedM = 0
 
         # Setup the clock for a decent framerate
         clock = pygame.time.Clock()
-        start_time = 0
+        manual_start = 0
+        auto_start = 0
 
         score = 0
         won = False
         checker = True
+        sBooster = 0
 
         # Main loop
         while running:
@@ -87,7 +83,13 @@ class Game():
                     if event.key == K_ESCAPE:
                         running = False
                         won = False
-
+                    if event.key == K_SPACE and not self.auto:
+                        manual_timer = pygame.time.get_ticks() - manual_start
+                        if manual_timer >= 600 - sBooster:
+                            new_bullet = Bullet1(self.player.rect.center, self.player.damage)
+                            self.bullets.add(new_bullet)
+                            self.all_sprites.add(new_bullet)
+                            manual_start = pygame.time.get_ticks()
 
                 # Check for QUIT event. If QUIT, then set running to false.
                 if event.type == QUIT:
@@ -109,13 +111,13 @@ class Game():
                         self.clouds.add(new_cloud)
                         self.all_sprites.add(new_cloud)
 
-            time_since_enter = pygame.time.get_ticks() - start_time
+            auto_timer = pygame.time.get_ticks() - auto_start
 
-            if time_since_enter >= 600 - speedM:
+            if auto_timer >= 600 - sBooster and self.auto:
                 new_bullet = Bullet1(self.player.rect.center, self.player.damage)
                 self.bullets.add(new_bullet)
                 self.all_sprites.add(new_bullet)
-                start_time = pygame.time.get_ticks()
+                auto_start = pygame.time.get_ticks()
 
             # hits is a dict. The enemies are the keys and bullets the values.
             hits = pygame.sprite.groupcollide(self.enemies, self.bullets, False, True)
@@ -127,7 +129,6 @@ class Game():
                         score += 1
 
             if score % 15 == 0 and checker and score != 0:
-                #pygame.event.post(self.ADDPOWERUP1)
                 new_pwu = PowerUp1()
                 self.pwu.add(new_pwu)
                 self.all_sprites.add(new_pwu)
@@ -153,9 +154,9 @@ class Game():
                 self.player.speed += hit.power
                 self.player.health += hit.power * 10
                 self.player.damage += hit.power * 10
-                if speedM < 300:
-                    speedM += 100
-                    print("power up!")
+                if sBooster <= 300:
+                    sBooster += 50
+                print("power up!")
                 hit.kill()
 
             # check player still has lives

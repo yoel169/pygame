@@ -18,7 +18,7 @@ class Cloud(pygame.sprite.DirtySprite):
         self._layer = 0
         self.rect = self.surf.get_rect(
             center=(
-                random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
+                random.randint(SCREEN_WIDTH + 200, SCREEN_WIDTH + 300),
                 random.randint(90, SCREEN_HEIGHT - 50),
             )
         )
@@ -26,7 +26,7 @@ class Cloud(pygame.sprite.DirtySprite):
     # Move the cloud based on a constant speed
     # Remove the cloud when it passes the left edge of the screen
     def update(self):
-        self.rect.move_ip(-5, 0)
+        self.rect.move_ip(-1, 0)
         if self.rect.right < 0:
             self.kill()
 
@@ -37,15 +37,13 @@ class Bullet1(pygame.sprite.DirtySprite):
         self.surf = pygame.image.load("Media/bullet.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.surf.get_rect(center=position)
-        self.pos = pygame.math.Vector2(position)
-        self.vel = pygame.math.Vector2(0, -450)
         self._layer = 1
         self.damage = 10 + power
 
     def update(self):
         # Add the velocity to the position vector to move the sprite.
         self.rect.move_ip(10, 0)
-        if self.rect.bottom <= 0:
+        if self.rect.left > SCREEN_WIDTH:
             self.kill()
 
 
@@ -63,11 +61,11 @@ class Carrot(pygame.sprite.DirtySprite):
     def update(self):
         # Add the velocity to the position vector to move the sprite.
         self.rect.move_ip(5, 0)
-        if self.rect.bottom <= 0:
+        if self.rect.left > SCREEN_WIDTH:
             self.kill()
 
 
-#fly faster
+# fly faster
 class PowerUp1(pygame.sprite.DirtySprite):
     def __init__(self):
         super(PowerUp1, self).__init__()
