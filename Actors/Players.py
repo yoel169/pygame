@@ -26,19 +26,20 @@ class Player(pygame.sprite.DirtySprite):
         self._layer = 1
         self.health = 30
         self.lives = 2
+        self.speed = 0
 
     # Move the sprite based on user keypresses
     def update(self, pressed_keys):
         if pressed_keys[K_UP]:
-            self.rect.move_ip(0, -3)
+            self.rect.move_ip(0, -3 - self.speed)
             # move_up_sound.play()
         if pressed_keys[K_DOWN]:
-            self.rect.move_ip(0, 3)
+            self.rect.move_ip(0, 3 + self.speed)
             # move_down_sound.play()
         if pressed_keys[K_LEFT]:
-            self.rect.move_ip(-3, 0)
+            self.rect.move_ip(-3 - self.speed, 0)
         if pressed_keys[K_RIGHT]:
-            self.rect.move_ip(3, 0)
+            self.rect.move_ip(3 + self.speed, 0)
 
         # Keep player on the screen
         if self.rect.left < 0:

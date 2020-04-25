@@ -53,7 +53,7 @@ def replay_game():
     button_layout_rect.bottomright = (int(-SW / 2) + 50, -100)
 
     quit_button2 = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                               text='Quit', manager=manager,
+                                               text='Quit To Menu', manager=manager,
                                                anchors=anchd)
 
     button_layout_rect.bottomright = (int(-SW / 2) + 50, -200)

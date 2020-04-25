@@ -35,7 +35,7 @@ class Bullet1(pygame.sprite.DirtySprite):
     def __init__(self, position):
         super(Bullet1, self).__init__()
         self.surf = pygame.image.load("Media/bullet.png").convert()
-        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
+        self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.surf.get_rect(center=position)
         self.pos = pygame.math.Vector2(position)
         self.vel = pygame.math.Vector2(0, -450)
@@ -67,17 +67,19 @@ class Carrot(pygame.sprite.DirtySprite):
             self.kill()
 
 
+#fly faster
 class PowerUp1(pygame.sprite.DirtySprite):
     def __init__(self):
         super(PowerUp1, self).__init__()
-        self.surf = pygame.image.load("Media/cloud.png").convert()
+        self.surf = pygame.image.load("Media/powerup1.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         # The starting position is randomly generated
-        self._layer = 0
+        self._layer = 1
+        self.power = 1
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(0, SCREEN_HEIGHT),
+                random.randint(90, SCREEN_HEIGHT),
             )
         )
 

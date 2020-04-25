@@ -1,7 +1,7 @@
 import pygame
 import pygame_gui
 from Actors.Players import Player
-from Actors.Neutrals import Cloud, Bullet1
+from Actors.Neutrals import Cloud, Bullet1, PowerUp1
 from Actors.Enemies import BlueJet
 from Other.Messages import text_update
 
@@ -48,6 +48,7 @@ class Game():
         pygame.time.set_timer(self.ADDENEMY, 500)
         self.ADDCLOUD = pygame.USEREVENT + 2
         pygame.time.set_timer(self.ADDCLOUD, 1000)
+        self.ADDPOWERUP1 = pygame.event.Event(pygame.USEREVENT, attr1='Event1')
 
         # Create groups to hold enemy sprites and all sprites
         # - enemies is used for collision detection and position updates
@@ -56,6 +57,7 @@ class Game():
         self.bullets = pygame.sprite.LayeredDirty()
         self.enemies = pygame.sprite.LayeredDirty()
         self.clouds = pygame.sprite.LayeredDirty()
+        self.pwu = pygame.sprite.LayeredDirty()
         self.all_sprites = pygame.sprite.LayeredDirty()
 
         # Instantiate player.
@@ -72,9 +74,11 @@ class Game():
 
         score = 0
         won = False
+        checker = True
 
         # Main loop
         while running:
+
             # for loop through the event queue
             for event in pygame.event.get():
                 # Check for KEYDOWN event
@@ -113,10 +117,11 @@ class Game():
             # Get the set of keys pressed and check for user input
             pressed_keys = pygame.key.get_pressed()
 
-            # Update enemy position
+            # Update positions
             self.enemies.update()
             self.clouds.update()
             self.bullets.update()
+            self.pwu.update()
 
             # Update the player sprite based on user keypresses
             self.player.update(pressed_keys)
@@ -137,6 +142,16 @@ class Game():
                     if enemy.health <= 0:
                         score += 1
 
+            if score % 25 == 0 and checker and score != 0:
+                #pygame.event.post(self.ADDPOWERUP1)
+                new_pwu = PowerUp1()
+                self.pwu.add(new_pwu)
+                self.all_sprites.add(new_pwu)
+                checker = False
+
+            elif score % 25 != 0 and score != 0:
+                checker = True
+
             if score >= 50:
                 won = True
                 running = False
@@ -147,6 +162,14 @@ class Game():
                 self.player.health -= hit.damage
                 print("you got hit!")
                 hit.kill()
+
+            #Check if any enemies have collided with the player
+            hit = pygame.sprite.spritecollideany(self.player, self.pwu)
+            if hit != None:
+                self.player.speed += hit.power
+                print("power up!")
+                hit.kill()
+
 
             # check player still has lives
             if self.player.lives <= 0:
