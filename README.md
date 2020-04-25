@@ -6,7 +6,7 @@
 ~Download files and assests and run 'Driver.py' (python Driver.py).
 Dependecies: python, pygame, pygame_gui
 
-~Game: arrows to move, space to shoot. Level 1: Escape from Guantanamo Bay. Get score of 50 to win.
+~Game: arrows to move, space to shoot. Level 1: Escape from Guantanamo Bay. Every 15 points you a power up spawns that you can collect to gain health, increase jet speed, bullet speed, and damage. Get score of 100 to win (Kicks you out to main meu).
 
 ~working:
 sprites: player, clouds, enemies, and bullets. movement, health, damage, collision, score, text, menu as main driver creates loop, game music: Inital D - grand prix.
