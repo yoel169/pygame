@@ -19,4 +19,4 @@ random cloud size, levels, different enemies and players, different powerups, mo
 1.5: added shooting, fixed shooting rate, added health and damadge, added score.
 2.0: working menu using pygame_gui, created menu as driver class, game gets its own class, gets called in driver class. 
 2.1: Added some text info in game, organized classes and created folders, updated first level enemy and name. 
-2.2: menu fixed for true loop. worked mostly on a working retry menu. now menus are callable functions in driver. Getting a score of 50 wins and kicks you out to main menu.
+2.2: menu fixed for true loop. worked mostly on a working retry menu. now menus are callable functions in driver. Getting a score of 50 wins and kicks you out to main menu. 2.3: powerup works, first bug: bullets start spawning from the left randomy, related to too fast maybe?. 
