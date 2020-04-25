@@ -1,0 +1,20 @@
+----------------------------------------------------
+                Current track
+----------------------------------------------------
+Create new enemies, add mechanics to game
+Create different power ups, add mechanics to game
+Boss?
+Add anything else to polish and finish the first level.
+Work on a shop menu for upgrades.
+Create more levels.
+
+---------------------------------------------------
+             To do im too lazy to do
+---------------------------------------------------
+Fix sprites so the white bg disappear.
+Get better sprites.
+Get sounds.
+Actually make a description page.
+Game HUD instead of what I have now: implement python_gui in game loop
+Develop pause loop for live pausing.
+

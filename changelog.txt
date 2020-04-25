@@ -8,3 +8,4 @@
 2.3: powerup works, first bug: bullets start spawning from the left randomy, related to too fast maybe?.
 2.4: Added settings menu, user can be pick between auto and manual shooting. default to auto. Also fixed shooting bug.
     Created Menus class in Other for different menus.
+2.5:
