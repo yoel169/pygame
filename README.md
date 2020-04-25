@@ -1,4 +1,4 @@
-# World Flying Fighter
+# World Flying Shooter
  Just a student having some fun with python.
 
 ~Description: flying jet fighting different enemies.
