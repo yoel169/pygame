@@ -34,5 +34,5 @@
      * rescaled the menus, actor sprites, level text position (took longer than it sounds okay...).
      * fixed escape press bug that will jump the game to next wave (since it would end the first loop but not second).
      * added different ways to move: arrows(default), wads keys, and mouse.
-     * added different ways to shoot: auto(default), space, and mouse(off cause of bug).
+     * added different ways to shoot: auto(default), space, and mouse.
      * added user selection on menu.

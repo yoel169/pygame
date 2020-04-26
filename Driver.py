@@ -31,6 +31,12 @@ gameMenu = GameMenu(SW,SH,manager)  # setup menu class
 
 gameMenu.main_menu()  # launch main menu
 
+pygame.mixer.init()
+
+# Load and play background music
+pygame.mixer.music.load("Media/bangarang.mp3")
+pygame.mixer.music.play(loops=-1)
+
 while is_running:
     time_delta = clock.tick(60) / 1000.0
     for event in pygame.event.get():
@@ -101,10 +107,14 @@ while is_running:
                 elif event.ui_element == gameMenu.quit_button2:
                     manager.clear_and_reset()
                     gameMenu.main_menu()
+                    pygame.mixer.init()
+                    pygame.mixer.music.load("Media/bangarang.mp3")
+                    pygame.mixer.music.play(loops=-1)
 
         manager.process_events(event)
 
     if play:
+        pygame.mixer.quit()
         game = Game(SW, SH, window_surface, option, option2)  # create new game
         (won, score) = game.run()  # launch and return if player won or lost and score
         manager.clear_and_reset()  # reset GUI
@@ -118,6 +128,9 @@ while is_running:
             play = False
             manager.clear_and_reset()
             gameMenu.main_menu()
+            pygame.mixer.init()
+            pygame.mixer.music.load("Media/bangarang.mp3")
+            pygame.mixer.music.play(loops=-1)
 
     # update manager and window
     manager.update(time_delta)

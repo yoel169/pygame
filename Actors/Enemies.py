@@ -18,7 +18,7 @@ class BlueJet(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(130, SCREEN_HEIGHT - 50),
+                random.randint(140, SCREEN_HEIGHT - 60),
             )
         )
         self._layer = 1

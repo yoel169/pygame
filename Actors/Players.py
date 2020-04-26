@@ -64,8 +64,8 @@ class Player(pygame.sprite.DirtySprite):
             self.rect.left = 0
         if self.rect.right > SCREEN_WIDTH:
             self.rect.right = SCREEN_WIDTH
-        if self.rect.top <= 70:
-            self.rect.top = 70
+        if self.rect.top <= 110:
+            self.rect.top = 110
         if self.rect.bottom >= SCREEN_HEIGHT:
             self.rect.bottom = SCREEN_HEIGHT
 

@@ -128,13 +128,13 @@ class Game():
                     customMouse = ((currentP[0] - 960) * 0.3, (currentP[1] - 540)*0.3)
                     self.player.rect.move_ip(customMouse)
 
-                #if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.space is not True:
-                   # manual_timer = pygame.time.get_ticks() - manual_start
-                   # if manual_timer >= 600 - sBooster:
-                       # new_bullet = Bullet1(self.player.rect.center, self.player.damage)
-                       # self.bullets.add(new_bullet)
-                       # self.all_sprites.add(new_bullet)
-                       # manual_start = pygame.time.get_ticks()
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.space is not True and self.auto is not True:
+                    manual_timer = pygame.time.get_ticks() - manual_start
+                    if manual_timer >= 600 - sBooster:
+                        new_bullet = Bullet1(self.player.rect.center, self.player.damage)
+                        self.bullets.add(new_bullet)
+                        self.all_sprites.add(new_bullet)
+                        manual_start = pygame.time.get_ticks()
 
                 # Check for QUIT event. If QUIT, then set running to false.
                 if event.type == QUIT:
@@ -254,6 +254,9 @@ class Game():
 
         while running:
 
+            if self.mouse:  # if user is moving with mouse
+                pygame.mouse.set_pos(960, 540)  # always center mouse
+
             # for loop through the event queue
             for event in pygame.event.get():
                 # Check for KEYDOWN event
@@ -263,7 +266,8 @@ class Game():
                         exit = True
                         running = False
                         won = False
-                    if event.key == K_SPACE and not self.auto:
+
+                    if event.key == K_SPACE and self.space:
                         manual_timer = pygame.time.get_ticks() - manual_start
                         if manual_timer >= 600 - sBooster:
                             new_bullet = Bullet1(self.player.rect.center, self.player.damage)
@@ -275,6 +279,19 @@ class Game():
                 if event.type == QUIT:
                     running = False
                     won = False
+
+                if event.type == MOUSEMOTION and self.mouse:
+                    currentP = pygame.mouse.get_pos()
+                    customMouse = ((currentP[0] - 960) * 0.3, (currentP[1] - 540)*0.3)
+                    self.player.rect.move_ip(customMouse)
+
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.space is not True and self.auto is not True:
+                    manual_timer = pygame.time.get_ticks() - manual_start
+                    if manual_timer >= 600 - sBooster:
+                        new_bullet = Bullet1(self.player.rect.center, self.player.damage)
+                        self.bullets.add(new_bullet)
+                        self.all_sprites.add(new_bullet)
+                        manual_start = pygame.time.get_ticks()
 
                 # Add a new enemy?
                 if event.type == self.ADDENEMY:
