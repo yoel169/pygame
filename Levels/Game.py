@@ -48,8 +48,8 @@ class Game():
         pygame.mixer.init()
 
         # Load and play background music
-        pygame.mixer.music.load("Media/game.mp3")
-        #pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.load("Media/game2.mp3")
+        pygame.mixer.music.play(loops=-1)
 
         # Load all sound files
         # move_up_sound = pygame.mixer.Sound("Rising_putter.ogg")
@@ -347,7 +347,7 @@ class Game():
             elif score % 40 != 0 and score != 0:
                 checker = True
 
-            if score >= 200:
+            if score >= 300:
                 won = True
                 running = False
 
