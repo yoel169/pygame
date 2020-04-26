@@ -1,11 +1,38 @@
-~changelog:
-1.0: fighting jet that has to dodge missles. sounds and music work.
-1.5: added shooting, fixed shooting rate, added health and damadge, added score.
+----------------------------------------------------------------------------------------------------------------------
+             Change Log
+----------------------------------------------------------------------------------------------------------------------
+1.0: *fighting jet that has to dodge missiles.
+     *sounds and music work.
+----------------------------------------------------------------------------------------------------------------------
+1.5: *added shooting and fixed shooting rate.
+     *added health, damage and added score.
+-----------------------------------------------------------------------------------------------------------------------
 2.0: working menu using pygame_gui, created menu as driver class, game gets its own class, gets called in driver class.
-2.1: Added some text info in game, organized classes and created folders, updated first level enemy and name.
-2.2: menu fixed for true loop. worked mostly on a working retry menu. now menus are callable functions in driver.
-    Getting a score of 50 wins and kicks you out to main menu.
-2.3: powerup works, first bug: bullets start spawning from the left randomy, related to too fast maybe?.
-2.4: Added settings menu, user can be pick between auto and manual shooting. default to auto. Also fixed shooting bug.
-    Created Menus class in Other for different menus.
-2.5:
+-----------------------------------------------------------------------------------------------------------------------
+2.1: *Added some text info in game.
+     *organized classes and created folders
+     *updated first level name and enemy.
+----------------------------------------------------------------------------------------------------------------------
+2.2: *menu fixed for true loop. worked mostly on a working retry menu. now menus are callable functions in driver.
+     *Getting a score of 50 wins and kicks you out to main menu.
+----------------------------------------------------------------------------------------------------------------------
+2.3: *powerup works.
+     *first bug: bullets start spawning from the left randomy, related to too fast maybe?
+----------------------------------------------------------------------------------------------------------------------
+2.4: *Added settings menu, user can be pick between auto and manual shooting. default to auto.
+     *fixed shooting bug.
+     *Created Menus class in Other folder for different menus.
+----------------------------------------------------------------------------------------------------------------------
+2.5: * fixed white background showing with sprites by using a different color on bg then use white, and save as png.
+     * Added green jet enemy. More health and damage but gives 3 points if killed.
+     * Split game code into two main loops: wave 1 and wave 2.
+     * Created three different buff actors: health buff(+10), damage buff(+50), bullet per second buff(-50ms to timer).
+     * every 20 points in wave 1, every 40 in wave 2: 50%: spawn health buff, 25%: spawn damage buff, 25%: bullet/s buff.
+     * changed window size to 1920 * 1080, and made it fullscreen by default.
+     * added display options in settings menu: fullscreen, hardware accelerated fullscreen, and window that's scalable.
+     * added settings button to try again menu.
+     * rescaled the menus, actor sprites, level text position (took longer than it sounds okay...).
+     * fixed escape press bug that will jump the game to next wave (since it would end the first loop but not second).
+     * added different ways to move: arrows(default), wads keys, and mouse.
+     * added different ways to shoot: auto(default), space, and mouse(off cause of bug).
+     * added user selection on menu.

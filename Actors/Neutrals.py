@@ -5,8 +5,8 @@ from pygame.locals import (
 )
 
 # Define constants for the screen width and height
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
 
 
 class Cloud(pygame.sprite.DirtySprite):
@@ -19,7 +19,7 @@ class Cloud(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 200, SCREEN_WIDTH + 300),
-                random.randint(90, SCREEN_HEIGHT - 50),
+                random.randint(130, SCREEN_HEIGHT - 50),
             )
         )
 
@@ -36,7 +36,7 @@ class Bullet1(pygame.sprite.DirtySprite):
         super(Bullet1, self).__init__()
         self.surf = pygame.image.load("Media/bullet.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
-        self.rect = self.surf.get_rect(center=position)
+        self.rect = self.surf.get_rect(center= (position[0],position[1] + 25))
         self._layer = 1
         self.damage = 10 + power
 
@@ -49,7 +49,7 @@ class Bullet1(pygame.sprite.DirtySprite):
 
 class Carrot(pygame.sprite.DirtySprite):
     def __init__(self, position):
-        super(Bullet, self).__init__()
+        super(Carrot, self).__init__()
         self.surf = pygame.image.load("Media/carrot.png").convert()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         self.rect = self.surf.get_rect(center=position)
@@ -65,15 +65,62 @@ class Carrot(pygame.sprite.DirtySprite):
             self.kill()
 
 
-# fly faster
-class PowerUp1(pygame.sprite.DirtySprite):
+# ===================================== BUFFS =========================================================
+
+
+class HealthBuff(pygame.sprite.DirtySprite):
     def __init__(self):
-        super(PowerUp1, self).__init__()
-        self.surf = pygame.image.load("Media/powerup1.png").convert()
+        super(HealthBuff, self).__init__()
+        self.surf = pygame.image.load("Media/healthbuff.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         # The starting position is randomly generated
         self._layer = 1
-        self.power = 1
+        self.power = 25
+        self.rect = self.surf.get_rect(
+            center=(
+                random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
+                random.randint(90, SCREEN_HEIGHT - 50),
+            )
+        )
+
+    # Move the cloud based on a constant speed
+    # Remove the cloud when it passes the left edge of the screen
+    def update(self):
+        self.rect.move_ip(-5, 0)
+        if self.rect.right < 0:
+            self.kill()
+
+
+class DamageBuff(pygame.sprite.DirtySprite):
+    def __init__(self):
+        super(DamageBuff, self).__init__()
+        self.surf = pygame.image.load("Media/damagebuff.png").convert()
+        self.surf.set_colorkey((255, 255, 255), RLEACCEL)
+        # The starting position is randomly generated
+        self._layer = 1
+        self.power = 5
+        self.rect = self.surf.get_rect(
+            center=(
+                random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
+                random.randint(90, SCREEN_HEIGHT - 50),
+            )
+        )
+
+    # Move the cloud based on a constant speed
+    # Remove the cloud when it passes the left edge of the screen
+    def update(self):
+        self.rect.move_ip(-5, 0)
+        if self.rect.right < 0:
+            self.kill()
+
+class BulletBuff(pygame.sprite.DirtySprite):
+    def __init__(self):
+        super(BulletBuff, self).__init__()
+        self.surf = pygame.image.load("Media/bulletbuff.png").convert()
+        self.surf.set_colorkey((255, 255, 255), RLEACCEL)
+        # The starting position is randomly generated
+        self._layer = 1
+        self.power = 60  # ms
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),

@@ -1,7 +1,7 @@
 import pygame
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
 black = (0, 0, 0)
 halfw = int(SCREEN_WIDTH /2)
 
@@ -11,31 +11,31 @@ def text_objects(text, font):
     return textSurface, textSurface.get_rect()
 
 
-def points_display(text, screen):
-    largeText = pygame.font.Font('freesansbold.ttf', 20)
-    TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = (halfw - 120, 50)
-    screen.blit(TextSurf, TextRect)
-
-
 def title_display(text, screen):
     largeText = pygame.font.Font('freesansbold.ttf', 30)
     TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = (halfw , 20)
+    TextRect.center = (halfw , 40)
+    screen.blit(TextSurf, TextRect)
+
+
+def points_display(text, screen):
+    largeText = pygame.font.Font('freesansbold.ttf', 20)
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = (halfw - 120, 80)
     screen.blit(TextSurf, TextRect)
 
 
 def health_display(text, screen):
     largeText = pygame.font.Font('freesansbold.ttf', 20)
     TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = (halfw , 50)
+    TextRect.center = (halfw , 80)
     screen.blit(TextSurf, TextRect)
 
 
 def lives_display(text, screen):
     largeText = pygame.font.Font('freesansbold.ttf', 20)
     TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = (halfw + 120, 50)
+    TextRect.center = (halfw + 120, 80)
     screen.blit(TextSurf, TextRect)
 
 
