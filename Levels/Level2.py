@@ -1,0 +1,456 @@
+import pygame_gui as gui
+import pygame as py
+from Other.HUD import HUD
+from pygame.locals import (
+    K_p,
+    K_SPACE,
+    K_ESCAPE,
+    QUIT,
+    MOUSEMOTION)
+import random
+from Actors.Players import Player
+from Actors.Neutrals import Cloud, Bullet1, HealthBuff, DamageBuff, BulletBuff
+from Actors.Enemies import BlueJet, GreenJet
+
+
+class Level2:
+    def __init__(self, width, height, bg, screen, option, option2):
+        self.screen = screen
+        self.SW = width
+        self.SH = height
+        self.auto = True  # default auto to on
+        self.space = False  # default space shooting to off
+        self.mouse = False  # default mouse movement to off
+        self.background = bg
+
+        # shoot auto, with space or with mouse
+        if option == 0:
+            self.auto = True
+        elif option == 1:
+            self.space = True
+            self.auto = False
+        else:
+            self.space = False
+            self.auto = False
+
+        # move with arrows, wads, or mouse
+        arrows = None  # default to None
+        if option2 == 0:
+            arrows = True
+        elif option2 == 1:
+            arrows = False
+        else:
+            self.mouse = True
+
+        # Initialize pygame
+        py.init()
+
+        self.manager = gui.UIManager((self.SW, self.SH))  # create UI manager
+
+        # Create a custom event for adding a new enemy/clouds
+        self.ADDENEMY = py.USEREVENT + 1
+        py.time.set_timer(self.ADDENEMY, 1000)
+        self.ADDCLOUD = py.USEREVENT + 2
+        py.time.set_timer(self.ADDCLOUD, 5000)
+
+        # Create groups to hold enemy sprites and all sprites
+        # - enemies is used for collision detection and position updates
+        # - all_sprites is used for rendering
+        self.player = Player(arrows)
+        self.bullets = py.sprite.LayeredDirty()
+        self.enemies = py.sprite.LayeredDirty()
+        self.clouds = py.sprite.LayeredDirty()
+        self.buffs = py.sprite.LayeredDirty()
+        self.all_sprites = py.sprite.LayeredDirty()
+
+        # Instantiate player.
+        self.all_sprites.add(self.player)
+
+    def run(self):
+
+        clock = py.time.Clock()
+        manual_start = 0
+        auto_start = 0
+
+        running = True
+
+        score = 0
+        won = False
+        checker = True
+        sBooster = 0
+        customMouse = ()
+        time_delta = 0
+
+        hud = HUD(self.screen, self.manager, self.background, 'Level 2')
+
+        # Setup for sounds. Defaults are good.
+        py.mixer.init()
+
+        # Load and play background music
+        py.mixer.music.load("Media/game2.mp3")
+        py.mixer.music.set_volume(0.5)
+        py.mixer.music.play(loops=-1)
+
+        if not self.space and not self.auto:
+            py.mouse.set_visible(False)
+
+        # ================================================================================================
+        #                                    first wave
+        # ==================================================================================================
+
+        exit = False
+
+        while running:
+
+            time_delta = clock.tick(60)
+
+            if self.mouse:  # if user is moving with mouse
+                py.mouse.set_pos(960, 540)  # always center mouse
+
+            # for loop through the event queue
+            for event in py.event.get():
+                if event.type == py.QUIT:
+                    running = False
+                    exit = True
+                    won = False
+
+                if event.type == py.KEYDOWN:
+                    if event.key == K_p:
+                        py.mixer.music.pause()
+                        hud.pause()
+                        py.mixer.music.unpause()
+
+                    if event.key == K_ESCAPE:
+                        running = False
+                        exit = True
+                        won = False
+
+                    if event.key == K_SPACE and self.space:
+                        manual_timer = py.time.get_ticks() - manual_start
+                        if manual_timer >= 600 - sBooster:
+                            new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
+                            self.bullets.add(new_bullet)
+                            self.all_sprites.add(new_bullet)
+                            manual_start = py.time.get_ticks()
+
+                if event.type == MOUSEMOTION and self.mouse:
+                    currentP = py.mouse.get_pos()
+                    customMouse = ((currentP[0] - 960) * 0.3, (currentP[1] - 540) * 0.3)
+                    self.player.rect.move_ip(customMouse)
+
+                if event.type == py.MOUSEBUTTONDOWN and event.button == 1 and self.space is not True and self.auto is not True:
+                    manual_timer = py.time.get_ticks() - manual_start
+                    if manual_timer >= 600 - sBooster:
+                        new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
+                        self.bullets.add(new_bullet)
+                        self.all_sprites.add(new_bullet)
+                        manual_start = py.time.get_ticks()
+
+                # Check for QUIT event. If QUIT, then set running to false.
+                if event.type == QUIT:
+                    running = False
+                    won = False
+                    exit = True
+
+                if event.type == self.ADDENEMY:
+                    new_enemy = BlueJet()
+                    self.enemies.add(new_enemy)
+                    self.all_sprites.add(new_enemy)
+
+                # Add a new cloud?
+                if event.type == self.ADDCLOUD:
+                    # Create the new cloud and add it to sprite groups
+                    new_cloud = Cloud()
+                    self.clouds.add(new_cloud)
+                    self.all_sprites.add(new_cloud)
+
+                if event.type == py.USEREVENT:
+                    if event.user_type == gui.UI_BUTTON_PRESSED:
+                        if event.ui_element == hud.pause_button:
+                            py.mixer.music.pause()
+                            hud.pause()
+                            py.mixer.music.unpause()
+
+                self.manager.process_events(event)
+
+            auto_timer = py.time.get_ticks() - auto_start
+
+            if auto_timer >= 600 - sBooster and self.auto:
+                new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
+                self.bullets.add(new_bullet)
+                self.all_sprites.add(new_bullet)
+                auto_start = py.time.get_ticks()
+
+            # hits is a dict. The enemies are the keys and bullets the values.
+            hits = py.sprite.groupcollide(self.enemies, self.bullets, False, True)
+            for enemy, bullet_list in hits.items():
+                for bullet in bullet_list:
+                    enemy.health -= bullet.damage
+                    # self.collision_sound.play()
+                    if enemy.health <= 0:
+                        if enemy.__class__ == BlueJet:
+                            score += 1
+                        else:
+                            score += 3
+
+            if score % 15 == 0 and checker and score != 0:  # spawn a new buff
+                num = random.randint(1, 100)
+                if num in range(0, 51):
+                    new_buff = HealthBuff()
+                elif num in range(50, 76):
+                    new_buff = DamageBuff()
+                else:
+                    new_buff = BulletBuff()
+                self.buffs.add(new_buff)
+                self.all_sprites.add(new_buff)
+                checker = False
+
+            elif score % 15 != 0 and score != 0:  # clear spawn queue
+                checker = True
+
+            if score >= 50:  # go to second wave
+                running = False
+
+            # Check if any enemies have collided with the player
+            hit = py.sprite.spritecollideany(self.player, self.enemies)
+            if hit != None:
+                self.player.health -= hit.damage
+                print("you got hit!")
+                hit.kill()
+
+            # collide with power up
+            hit = py.sprite.spritecollideany(self.player, self.buffs)
+            if hit != None:
+                if hit.__class__ == HealthBuff:
+                    self.player.health += hit.power
+                elif hit.__class__ == DamageBuff:
+                    self.player.damage += hit.power
+                else:
+                    if sBooster <= 300:
+                        sBooster += hit.power
+                print("power up!")
+                hit.kill()
+
+            # check player still has lives
+            if self.player.lives <= 0:
+                won = False
+                running = False
+                exit = True
+                print("you died!")
+
+            # Get the set of keys pressed and check for user input
+            pressed_keys = py.key.get_pressed()
+
+            # Update the player sprite based on user keypresses
+            self.player.update(pressed_keys)
+
+            # Update positions
+            self.enemies.update()
+            self.clouds.update()
+            self.bullets.update()
+            self.buffs.update()
+
+            self.screen.blit(self.background, (0, 0))
+
+            # Draw all sprites
+            for entity in self.all_sprites:
+                self.screen.blit(entity.surf, entity.rect)
+
+            hud.update(1, 2, score, 100, self.player.health, self.player.maxHealth, self.player.lives,
+                       self.player.damage,int(self.player.damage / (0.6 - (sBooster/1000))), self.player.bspeed)
+
+            self.manager.update(time_delta)
+            self.manager.draw_ui(self.screen)
+
+            py.display.update()
+
+        if not exit:
+            running = True
+
+        # =================================================================================================
+        #                                    second  wave
+        # ==================================================================================================
+
+        while running:
+
+            time_delta = clock.tick(60)
+
+            if self.mouse:  # if user is moving with mouse
+                py.mouse.set_pos(960, 540)  # always center mouse
+
+            # for loop through the event queue
+            for event in py.event.get():
+                if event.type == py.QUIT:
+                    running = False
+                    exit = True
+                    won = False
+
+                if event.type == py.KEYDOWN:
+                    if event.key == K_p:
+                        py.mixer.music.pause()
+                        hud.pause()
+                        py.mixer.music.unpause()
+
+                    if event.key == K_ESCAPE:
+                        running = False
+                        exit = True
+                        won = False
+
+                    if event.key == K_SPACE and self.space:
+                        manual_timer = py.time.get_ticks() - manual_start
+                        if manual_timer >= 600 - sBooster:
+                            new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
+                            self.bullets.add(new_bullet)
+                            self.all_sprites.add(new_bullet)
+                            manual_start = py.time.get_ticks()
+
+                if event.type == MOUSEMOTION and self.mouse:
+                    currentP = py.mouse.get_pos()
+                    customMouse = ((currentP[0] - 960) * 0.3, (currentP[1] - 540) * 0.3)
+                    self.player.rect.move_ip(customMouse)
+
+                if event.type == py.MOUSEBUTTONDOWN and event.button == 1 and self.space is not True and self.auto is not True:
+                    manual_timer = py.time.get_ticks() - manual_start
+                    if manual_timer >= 600 - sBooster:
+                        new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
+                        self.bullets.add(new_bullet)
+                        self.all_sprites.add(new_bullet)
+                        manual_start = py.time.get_ticks()
+
+                # Check for QUIT event. If QUIT, then set running to false.
+                if event.type == QUIT:
+                    running = False
+                    won = False
+                    exit = True
+
+                if event.type == self.ADDENEMY:
+                    num = random.randint(1, 10)
+                    if num in range(1, 6):
+                        new_enemy = BlueJet()
+                        self.enemies.add(new_enemy)
+                        self.all_sprites.add(new_enemy)
+                    else:
+                        new_enemy = GreenJet()
+                        self.enemies.add(new_enemy)
+                        self.all_sprites.add(new_enemy)
+
+                # Add a new cloud?
+                if event.type == self.ADDCLOUD:
+                    # Create the new cloud and add it to sprite groups
+                    new_cloud = Cloud()
+                    self.clouds.add(new_cloud)
+                    self.all_sprites.add(new_cloud)
+
+                if event.type == py.USEREVENT:
+                    if event.user_type == gui.UI_BUTTON_PRESSED:
+                        if event.ui_element == hud.pause_button:
+                            py.mixer.music.pause()
+                            hud.pause()
+                            py.mixer.music.unpause()
+
+                self.manager.process_events(event)
+
+            auto_timer = py.time.get_ticks() - auto_start
+
+            if auto_timer >= 600 - sBooster and self.auto:
+                new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
+                self.bullets.add(new_bullet)
+                self.all_sprites.add(new_bullet)
+                auto_start = py.time.get_ticks()
+
+            # hits is a dict. The enemies are the keys and bullets the values.
+            hits = py.sprite.groupcollide(self.enemies, self.bullets, False, True)
+            for enemy, bullet_list in hits.items():
+                for bullet in bullet_list:
+                    enemy.health -= bullet.damage
+                    # self.collision_sound.play()
+                    if enemy.health <= 0:
+                        if enemy.__class__ == BlueJet:
+                            score += 1
+                        else:
+                            score += 3
+
+            if score % 25 == 0 and checker and score != 0:  # spawn a new buff
+                num = random.randint(1, 100)
+                if num in range(0, 51):
+                    new_buff = HealthBuff()
+                elif num in range(50, 76):
+                    new_buff = DamageBuff()
+                else:
+                    new_buff = BulletBuff()
+                self.buffs.add(new_buff)
+                self.all_sprites.add(new_buff)
+                checker = False
+
+            elif score % 25 != 0 and score != 0:  # clear spawn queue
+                checker = True
+
+            if score >= 100:  # you win
+                running = False
+                won = True
+
+            # Check if any enemies have collided with the player
+            hit = py.sprite.spritecollideany(self.player, self.enemies)
+            if hit != None:
+                for bullet in bullet_list:
+                    enemy.health -= bullet.damage
+                    # self.collision_sound.play()
+                    if enemy.health <= 0:
+                        if enemy.__class__ == BlueJet:
+                            score += 1
+                        else:
+                            score += 3
+
+            # collide with power up
+            hit = py.sprite.spritecollideany(self.player, self.buffs)
+            if hit != None:
+                if hit.__class__ == HealthBuff:
+                    self.player.health += hit.power
+                elif hit.__class__ == DamageBuff:
+                    self.player.damage += hit.power
+                else:
+                    if sBooster <= 300:
+                        sBooster += hit.power
+                print("power up!")
+                hit.kill()
+
+            # check player still has lives
+            if self.player.lives <= 0:
+                won = False
+                running = False
+                exit = True
+                print("you died!")
+
+            # Get the set of keys pressed and check for user input
+            pressed_keys = py.key.get_pressed()
+
+            # Update the player sprite based on user keypresses
+            self.player.update(pressed_keys)
+
+            # Update positions
+            self.enemies.update()
+            self.clouds.update()
+            self.bullets.update()
+            self.buffs.update()
+
+            self.screen.blit(self.background, (0, 0))
+
+            # Draw all sprites
+            for entity in self.all_sprites:
+                self.screen.blit(entity.surf, entity.rect)
+
+            hud.update(2, 2, score, 100, self.player.health, self.player.maxHealth, self.player.lives,
+                       self.player.damage,int(self.player.damage / (0.6 - (sBooster/1000))),self.player.bspeed)
+
+            self.manager.update(time_delta)
+            self.manager.draw_ui(self.screen)
+
+            py.display.update()
+
+        # All done! Stop and quit the mixer.
+        py.mixer.music.stop()
+        py.mixer.quit()
+
+        py.mouse.set_visible(True)
+
+        return won, score

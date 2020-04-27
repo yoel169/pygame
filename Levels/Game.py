@@ -65,7 +65,6 @@ class Game():
         pygame.time.set_timer(self.ADDENEMY, 1000)
         self.ADDCLOUD = pygame.USEREVENT + 2
         pygame.time.set_timer(self.ADDCLOUD, 5000)
-        self.ADDPOWERUP1 = pygame.event.Event(pygame.USEREVENT, attr1='Event1')
 
         # Create groups to hold enemy sprites and all sprites
         # - enemies is used for collision detection and position updates

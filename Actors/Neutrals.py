@@ -32,17 +32,18 @@ class Cloud(pygame.sprite.DirtySprite):
 
 
 class Bullet1(pygame.sprite.DirtySprite):
-    def __init__(self, position, power):
+    def __init__(self, position, power, speed):
         super(Bullet1, self).__init__()
         self.surf = pygame.image.load("Media/bullet.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.surf.get_rect(center= (position[0],position[1] + 25))
         self._layer = 1
-        self.damage = 10 + power
+        self.damage = power
+        self.speed = speed
 
     def update(self):
         # Add the velocity to the position vector to move the sprite.
-        self.rect.move_ip(10, 0)
+        self.rect.move_ip(self.speed, 0)
         if self.rect.left > SCREEN_WIDTH:
             self.kill()
 

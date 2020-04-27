@@ -18,6 +18,8 @@ class GameMenu():
         self.dropMenu = None
         self.setting_button2 = None
         self.movementMenu = None
+        self.nextL_button = None
+        self.setting_button3 = None
 
     def main_menu(self):
         buttonSize = (0, 0, 150, 60)
@@ -103,4 +105,30 @@ class GameMenu():
         button_layout_rect.bottomright = (int(-self.SW / 2) + 20, -200)
         self.confirm = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
                                                          text='Confirm', manager=self.manager,
+                                                         anchors=anchd)
+
+    def nextLevel(self):
+        labelSize = (0, 0, 500, 120)
+        label_rect = pygame.Rect(labelSize)
+
+        label_rect.bottomright = (int(- self.SW / 2 + 200), -600)
+        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text='you won!',
+                                            manager=self.manager, anchors=anchd)
+
+        buttonSize = (0, 0, 150, 60)
+        button_layout_rect = pygame.Rect(buttonSize)
+
+        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -400)
+        self.nextL_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
+                                                          text='next level', manager=self.manager,
+                                                          anchors=anchd)
+
+        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -320)
+        self.setting_button3 = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
+                                                            text='settings', manager=self.manager,
+                                                            anchors=anchd)
+
+        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -240)
+        self.quit_button2 = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
+                                                         text='quit to menu', manager=self.manager,
                                                          anchors=anchd)

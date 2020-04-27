@@ -31,8 +31,10 @@ class Player(pygame.sprite.DirtySprite):
         self.health = 50
         self.lives = 2
         self.speed = 0
-        self.damage = 1
+        self.damage = 10
         self.arrows = option
+        self.bspeed = 10
+        self.maxHealth = 100
 
     # Move the sprite based on user keypresses
     def update(self, pressed_keys):
@@ -68,11 +70,6 @@ class Player(pygame.sprite.DirtySprite):
             self.rect.top = 110
         if self.rect.bottom >= SCREEN_HEIGHT:
             self.rect.bottom = SCREEN_HEIGHT
-
-        # new life if health reaches 100
-        if self.health >= 100:
-            self.lives += 1
-            self.health = 50
 
         # lose life if health is at 0
         if self.health <= 0:
