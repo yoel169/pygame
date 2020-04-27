@@ -2,21 +2,21 @@
                 Current track
 ----------------------------------------------------
 Work on first three easy levels
-Create new enemies, add mechanics to game
+Create new enemies, develop shooting
 Create different power ups, add mechanics to game
 Boss?
 Add anything else to polish and finish the first level.
 Work on a shop menu for upgrades.
-different bullets
+Work on different bullets
 
 ---------------------------------------------------
              To do im too lazy to do
 ---------------------------------------------------
+Make game pretty for god sakes.
 Get better sprites.
 Get sounds.
 Actually make a description page.
-Game HUD instead of what I have now: implement python_gui in game loop
-Develop pause loop for live pausing.
+Game HUD: make it pretty!
 Make different difficulties: Easy, Medium, Hard, Insane.
 Save and load options for user to keep track
 
