@@ -1,7 +1,6 @@
 import pygame_gui
 import pygame
-from Levels.Level1 import Level1
-from Levels.Level2 import Level2
+from Levels import Level1, Level2, Level3
 from Other.Menus import GameMenu
 
 SW = 1920
@@ -10,13 +9,12 @@ SH = 1080
 pygame.init()
 
 pygame.display.set_caption('World Flying Shooter')
-window_surface = pygame.display.set_mode((SW, SH),flags=pygame.FULLSCREEN)
-
+window_surface = pygame.display.set_mode((SW, SH), flags=pygame.FULLSCREEN)
 
 background = pygame.image.load("BG.png").convert()
 background = pygame.transform.scale(background, (SW, SH))
 
-manager = pygame_gui.UIManager((SW, SH),'attributes.json')  # create UI manager
+manager = pygame_gui.UIManager((SW, SH), 'attributes.json')  # create UI manager
 
 is_running = True
 play = False
@@ -25,18 +23,22 @@ score = 0
 tracker = 0
 option = 0  # 0 for auto shooting, 1 for space, 2 for mouse
 option2 = 0  # 0 for arrows, 1 for wads, 2 for mouse
-levels= []
 level_tracker = 0
 gameReturn = False
 continueMenu = False
 clock = pygame.time.Clock()
 
-level1 = Level1(SW, SH, background, window_surface, option, option2)
-level2 = Level2(SW, SH, background, window_surface, option, option2)
-levels.append(level1)
-levels.append(level2)
+args = [SW, SH, background, window_surface, option, option2]
 
-gameMenu = GameMenu(SW,SH,manager)  # setup menu class
+level1 = Level1.Level1(args)
+level2 = Level2.Level2(args)
+level3 = Level3.Level3(args)
+
+levels = [level1, level2, level3]
+
+numLevels= 3
+
+gameMenu = GameMenu(SW, SH, manager)  # setup menu class
 
 gameMenu.main_menu()  # launch main menu
 
@@ -47,6 +49,7 @@ def playMusic():
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
+playMusic()
 
 while is_running:
     time_delta = clock.tick(60) / 1000.0
@@ -56,36 +59,45 @@ while is_running:
 
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+
+                # exit button
                 if event.ui_element == gameMenu.quit_button:
                     is_running = False
 
+                # play button
                 elif event.ui_element == gameMenu.play_button:
                     play = True
 
+                # replay button if exit or lost
                 elif event.ui_element == gameMenu.replay_button:
                     play = True
 
+                # settings button
                 elif event.ui_element == gameMenu.setting_button:
                     manager.clear_and_reset()
                     gameMenu.settings_menu()
 
+                # settings button called from replay menu
                 elif event.ui_element == gameMenu.setting_button2:
                     manager.clear_and_reset()
                     gameMenu.settings_menu()
                     gameReturn = True
 
+                # settings button called from win menu
                 elif event.ui_element == gameMenu.setting_button3:
                     manager.clear_and_reset()
                     gameMenu.settings_menu()
                     continueMenu = True
 
+                # next level button
                 elif event.ui_element == gameMenu.nextL_button:
                     play = True
 
+                # confirm button from inside settings menu
                 elif event.ui_element == gameMenu.confirm:
-                    temp = gameMenu.shootMenu.get_single_selection()
-                    temp2 = gameMenu.screenMenu.get_single_selection()
-                    temp3 = gameMenu.movementMenu.get_single_selection()
+                    temp = gameMenu.shootMenu.get_single_selection()  # save shooting selection
+                    temp2 = gameMenu.screenMenu.get_single_selection()  # save screen selection
+                    temp3 = gameMenu.movementMenu.get_single_selection()  # save movement selection
 
                     # update shooting
                     if temp is not None:
@@ -101,8 +113,8 @@ while is_running:
                         if temp2 == 'fullscreen':
                             window_surface = pygame.display.set_mode((SW, SH), flags=pygame.FULLSCREEN)
                         elif temp2 == 'hardware accelerated':
-                            window_surface = pygame.display.set_mode((SW, SH), flags=pygame.FULLSCREEN | pygame.HWSURFACE |
-                                                                      pygame.DOUBLEBUF)
+                            window_surface = pygame.display.set_mode((SW, SH), flags=pygame.FULLSCREEN |
+                                                                    pygame.HWSURFACE | pygame.DOUBLEBUF)
                         else:
                             window_surface = pygame.display.set_mode((SW, SH), flags=pygame.RESIZABLE)
 
@@ -125,6 +137,7 @@ while is_running:
                     else:
                         gameMenu.main_menu()
 
+                # quit button called from replay menu
                 elif event.ui_element == gameMenu.quit_button2:
                     manager.clear_and_reset()
                     gameMenu.main_menu()
@@ -133,6 +146,7 @@ while is_running:
 
     if play:
 
+        play = False
         manager.clear_and_reset()
         (won, score) = levels[level_tracker].run()  # launch and return if player won or lost and score
         manager.clear_and_reset()  # reset GUI
@@ -140,18 +154,16 @@ while is_running:
         if not won:  # if lost launch replay menu
 
             manager.clear_and_reset()
-            play = False
             gameMenu.replay_menu()
 
-        elif won:  # if won launch main menu
+        elif won:  # if won launch next level menu
 
             manager.clear_and_reset()
+            level_tracker += 1
             gameMenu.nextLevel()
 
-            play = False
-            level_tracker += 1
-
-            if level_tracker >=1:
+            if level_tracker >= numLevels:
+                manager.clear_and_reset()
                 gameMenu.main_menu()
 
     # update manager and window

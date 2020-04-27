@@ -13,7 +13,7 @@ from Actors.Neutrals import Cloud, Bullet1, HealthBuff, DamageBuff, BulletBuff
 from Actors.Enemies import BlueJet, GreenJet
 
 
-class Level2:
+class Level3:
     def __init__(self, ls):  # width, height, bg, screen, option, option2
         args = ls
         self.screen = args[3]
@@ -82,14 +82,14 @@ class Level2:
         customMouse = ()
         time_delta = 0
 
-        hud = HUD(self.screen, self.manager, self.background, 'Level 2')
+        hud = HUD(self.screen, self.manager, self.background, 'Level 3')
 
         # Setup for sounds. Defaults are good.
         py.mixer.init()
 
         # Load and play background music
         #py.mixer.music.load("Media/game2.mp3")
-        #py.mixer.music.set_volume(0.3)
+        # py.mixer.music.set_volume(0.3)
         #py.mixer.music.play(loops=-1)
 
         if not self.space and not self.auto:
@@ -154,9 +154,15 @@ class Level2:
                     exit = True
 
                 if event.type == self.ADDENEMY:
-                    new_enemy = BlueJet()
-                    self.enemies.add(new_enemy)
-                    self.all_sprites.add(new_enemy)
+                    num = random.randint(1, 10)
+                    if num in range(1, 6):
+                        new_enemy = BlueJet()
+                        self.enemies.add(new_enemy)
+                        self.all_sprites.add(new_enemy)
+                    else:
+                        new_enemy = GreenJet()
+                        self.enemies.add(new_enemy)
+                        self.all_sprites.add(new_enemy)
 
                 # Add a new cloud?
                 if event.type == self.ADDCLOUD:
@@ -215,9 +221,14 @@ class Level2:
             # Check if any enemies have collided with the player
             hit = py.sprite.spritecollideany(self.player, self.enemies)
             if hit != None:
-                self.player.health -= hit.damage
-                print("you got hit!")
-                hit.kill()
+                for bullet in bullet_list:
+                    enemy.health -= bullet.damage
+                    # self.collision_sound.play()
+                    if enemy.health <= 0:
+                        if enemy.__class__ == BlueJet:
+                            score += 1
+                        else:
+                            score += 3
 
             # collide with power up
             hit = py.sprite.spritecollideany(self.player, self.buffs)
@@ -258,7 +269,7 @@ class Level2:
                 self.screen.blit(entity.surf, entity.rect)
 
             hud.update(1, 2, score, 50, self.player.health, self.player.maxHealth, self.player.lives,
-                       self.player.damage,int(self.player.damage / (0.6 - (sBooster/1000))), self.player.bspeed)
+                       self.player.damage, int(self.player.damage / (0.6 - (sBooster / 1000))), self.player.bspeed)
 
             self.manager.update(time_delta)
             self.manager.draw_ui(self.screen)
@@ -325,15 +336,11 @@ class Level2:
                     exit = True
 
                 if event.type == self.ADDENEMY:
-                    num = random.randint(1, 10)
-                    if num in range(1, 8):
-                        new_enemy = BlueJet()
-                        self.enemies.add(new_enemy)
-                        self.all_sprites.add(new_enemy)
-                    else:
-                        new_enemy = GreenJet()
-                        self.enemies.add(new_enemy)
-                        self.all_sprites.add(new_enemy)
+                    new_enemy = GreenJet()
+                    new_enemy.health += 10
+                    new_enemy.damage += 10
+                    self.enemies.add(new_enemy)
+                    self.all_sprites.add(new_enemy)
 
                 # Add a new cloud?
                 if event.type == self.ADDCLOUD:
@@ -397,9 +404,6 @@ class Level2:
                     enemy.health -= bullet.damage
                     # self.collision_sound.play()
                     if enemy.health <= 0:
-                        if enemy.__class__ == BlueJet:
-                            score += 1
-                        else:
                             score += 3
 
             # collide with power up
@@ -441,7 +445,7 @@ class Level2:
                 self.screen.blit(entity.surf, entity.rect)
 
             hud.update(2, 2, score, 100, self.player.health, self.player.maxHealth, self.player.lives,
-                       self.player.damage,int(self.player.damage / (0.6 - (sBooster/1000))),self.player.bspeed)
+                       self.player.damage, int(self.player.damage / (0.6 - (sBooster / 1000))), self.player.bspeed)
 
             self.manager.update(time_delta)
             self.manager.draw_ui(self.screen)

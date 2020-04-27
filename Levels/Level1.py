@@ -14,19 +14,20 @@ from Actors.Enemies import BlueJet, GreenJet
 
 
 class Level1:
-    def __init__(self, width, height, bg, screen, option, option2):
-        self.screen = screen
-        self.SW = width
-        self.SH = height
+    def __init__(self, ls):  # width, height, bg, screen, option, option2
+        args = ls
+        self.screen = args[3]
+        self.SW = args[0]
+        self.SH = args[1]
         self.auto = True  # default auto to on
         self.space = False  # default space shooting to off
         self.mouse = False  # default mouse movement to off
-        self.background = bg
+        self.background = args[2]
 
         # shoot auto, with space or with mouse
-        if option == 0:
+        if args[4] == 0:
             self.auto = True
-        elif option == 1:
+        elif args[4] == 1:
             self.space = True
             self.auto = False
         else:
@@ -35,9 +36,9 @@ class Level1:
 
         # move with arrows, wads, or mouse
         arrows = None  # default to None
-        if option2 == 0:
+        if args[5] == 0:
             arrows = True
-        elif option2 == 1:
+        elif args[5] == 1:
             arrows = False
         else:
             self.mouse = True
@@ -88,9 +89,9 @@ class Level1:
         py.mixer.init()
 
         # Load and play background music
-        py.mixer.music.load("Media/game2.mp3")
-        py.mixer.music.set_volume(0.5)
-        py.mixer.music.play(loops=-1)
+        #py.mixer.music.load("Media/game2.mp3")
+        #py.mixer.music.set_volume(0.3)
+        #py.mixer.music.play(loops=-1)
 
         while running:
 
@@ -155,7 +156,7 @@ class Level1:
                     if event.user_type == gui.UI_BUTTON_PRESSED:
                         if event.ui_element == hud.pause_button:
                             py.mixer.music.pause()
-                            hud.hud.pause()
+                            hud.pause()
                             py.mixer.music.unpause()
 
                 self.manager.process_events(event)
@@ -253,8 +254,8 @@ class Level1:
             py.display.update()
 
         # All done! Stop and quit the mixer.
-        py.mixer.music.stop()
-        py.mixer.quit()
+        #py.mixer.music.stop()
+        #py.mixer.quit()
 
         py.mouse.set_visible(True)
 

@@ -108,6 +108,7 @@ class GameMenu():
                                                          anchors=anchd)
 
     def nextLevel(self):
+
         labelSize = (0, 0, 500, 120)
         label_rect = pygame.Rect(labelSize)
 

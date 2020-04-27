@@ -39,5 +39,4 @@
 -----------------------------------------------------------------------------------------------------------------------
 2.6: * slow day today... got a HUD working that can be used across levels
      * Got the first level working with the new HUD, took forever
-     * First two levels working though the music wont play for some reason?
-     * I got the music working but now something in the main menu is bugging when next level menu is called.
+     * First three levels working.
