@@ -33,7 +33,7 @@ class BlueJet(pygame.sprite.DirtySprite):
         self.rect.move_ip(-self.speed, 0)
         if self.rect.right < 0:
             self.kill()
-        elif self.health <= 0:
+        if self.health <= 0:
             self.kill()
 
 # Define the enemy object by extending pygame.sprite.Sprite
@@ -60,7 +60,7 @@ class BlueJetPlus(pygame.sprite.DirtySprite):
         self.rect.move_ip(-self.speed, 0)
         if self.rect.right < 0:
             self.kill()
-        elif self.health <= 0:
+        if self.health <= 0:
             self.kill()
 
 
@@ -103,7 +103,7 @@ class GreenJet(pygame.sprite.DirtySprite):
         self.rect.move_ip(-self.speed, 0)
         if self.rect.right < 0:
             self.kill()
-        elif self.health <= 0:
+        if self.health <= 0:
             self.kill()
 
 
