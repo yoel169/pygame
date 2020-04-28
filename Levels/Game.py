@@ -155,7 +155,7 @@ class Game():
             auto_timer = pygame.time.get_ticks() - auto_start
 
             if auto_timer >= 600 - sBooster and self.auto:
-                new_bullet = Bullet1(self.player.rect.center, self.player.damage)
+                new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed + 5)
                 self.bullets.add(new_bullet)
                 self.all_sprites.add(new_bullet)
                 auto_start = pygame.time.get_ticks()

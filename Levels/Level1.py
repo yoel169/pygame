@@ -17,12 +17,12 @@ class Level1:
     def __init__(self, ls):  # width, height, bg, screen, option, option2
         args = ls
         self.screen = args[3]
+        self.background = args[2]
         self.SW = args[0]
         self.SH = args[1]
         self.auto = True  # default auto to on
         self.space = False  # default space shooting to off
         self.mouse = False  # default mouse movement to off
-        self.background = args[2]
 
         # shoot auto, with space or with mouse
         if args[4] == 0:
@@ -43,23 +43,11 @@ class Level1:
         else:
             self.mouse = True
 
-        # Initialize pygame
-        py.init()
-
-        self.manager = gui.UIManager((self.SW, self.SH))  # create UI manager
-
-        # Create a custom event for adding a new enemy/clouds
-        self.ADDENEMY = py.USEREVENT + 1
-        py.time.set_timer(self.ADDENEMY, 500)
-        self.ADDCLOUD = py.USEREVENT + 2
-        py.time.set_timer(self.ADDCLOUD, 5000)
-
-        # Create groups to hold enemy sprites and all sprites
-        # - enemies is used for collision detection and position updates
-        # - all_sprites is used for rendering
         self.player = Player(arrows)
+
+    def run(self):
+
         self.bullets = py.sprite.LayeredDirty()
-        self.enemyB = py.sprite.LayeredDirty()
         self.enemies = py.sprite.LayeredDirty()
         self.clouds = py.sprite.LayeredDirty()
         self.buffs = py.sprite.LayeredDirty()
@@ -68,7 +56,10 @@ class Level1:
         # Instantiate player.
         self.all_sprites.add(self.player)
 
-    def run(self):
+        # Initialize pygame
+        py.init()
+
+        self.manager = gui.UIManager((self.SW, self.SH))  # create UI manager
 
         clock = py.time.Clock()
         manual_start = 0
@@ -87,16 +78,22 @@ class Level1:
         hud = HUD(self.screen,self.manager, self.background,'Level 1')
 
         # Setup for sounds. Defaults are good.
-        py.mixer.init()
+        #py.mixer.init()
 
         # Load and play background music
         #py.mixer.music.load("Media/game2.mp3")
         #py.mixer.music.set_volume(0.3)
         #py.mixer.music.play(loops=-1)
 
+        # Create a custom event for adding a new enemy/clouds
+        self.ADDENEMY = py.USEREVENT + 1
+        py.time.set_timer(self.ADDENEMY, 2000)
+        self.ADDCLOUD = py.USEREVENT + 2
+        py.time.set_timer(self.ADDCLOUD, 5000)
+
         while running:
 
-            time_delta = clock.tick(60) / 1000.0
+            self.manager.update(time_delta)  # update manager
 
             if self.mouse:  # if user is moving with mouse
                 py.mouse.set_pos(960, 540)  # always center mouse
@@ -107,6 +104,7 @@ class Level1:
                     running = False
 
                 if event.type == py.KEYDOWN:
+                    # pause event from p key
                     if event.key == K_p:
                         py.mixer.music.pause()
                         hud.pause()
@@ -115,6 +113,7 @@ class Level1:
                     if event.key == K_ESCAPE:
                         running = False
 
+                    # shooting using space if turned on
                     if event.key == K_SPACE and self.space:
                         manual_timer = py.time.get_ticks() - manual_start
                         if manual_timer >= 600 - sBooster:
@@ -123,11 +122,13 @@ class Level1:
                             self.all_sprites.add(new_bullet)
                             manual_start = py.time.get_ticks()
 
+                # moving with move if turned on
                 if event.type == MOUSEMOTION and self.mouse:
                     currentP = py.mouse.get_pos()
                     customMouse = ((currentP[0] - 960) * 0.3, (currentP[1] - 540)*0.3)
                     self.player.rect.move_ip(customMouse)
 
+                # shooting with mouse of turned on
                 if event.type == py.MOUSEBUTTONDOWN and event.button == 1 and self.space is not True and self.auto is not True:
                     manual_timer = py.time.get_ticks() - manual_start
                     if manual_timer >= 600 - sBooster:
@@ -141,6 +142,7 @@ class Level1:
                     running = False
                     won = False
 
+                # enemy
                 if event.type == self.ADDENEMY:
                     new_enemy = BlueJet()
                     self.enemies.add(new_enemy)
@@ -153,6 +155,7 @@ class Level1:
                     self.clouds.add(new_cloud)
                     self.all_sprites.add(new_cloud)
 
+                # pause event from pause button
                 if event.type == py.USEREVENT:
                     if event.user_type == gui.UI_BUTTON_PRESSED:
                         if event.ui_element == hud.pause_button:
@@ -180,6 +183,7 @@ class Level1:
                     if enemy.health <= 0:
                         score += 1
 
+            # for spawning buffs every x score
             if score % 5 == 0 and checker and score != 0:  # spawn a new buff
                 num = random.randint(1, 100)
                 if num in range(0, 51):
@@ -192,10 +196,12 @@ class Level1:
                 self.all_sprites.add(new_buff)
                 checker = False
 
-            elif score % 5 != 0 and score != 0:  # clear spawn queue
+            # clear spawn queue
+            elif score % 5 != 0 and score != 0:
                 checker = True
 
-            if score >= 50:  # won
+            # win argument
+            if score >= 50:
                 running = False
                 won = True
 
@@ -226,7 +232,7 @@ class Level1:
                 running = False
                 print("you died!")
 
-            self.screen.blit(self.background, (0, 0))
+            #self.screen.fill((255,255,255))
 
             # Get the set of keys pressed and check for user input
             pressed_keys = py.key.get_pressed()
@@ -234,9 +240,10 @@ class Level1:
             # Update the player sprite based on user keypresses
             self.player.update(pressed_keys)
 
+            self.screen.blit(self.background, (0, 0))
+
             # Update positions
             self.enemies.update()
-            self.enemyB.update()
             self.clouds.update()
             self.bullets.update()
             self.buffs.update()
@@ -245,13 +252,14 @@ class Level1:
             for entity in self.all_sprites:
                 self.screen.blit(entity.surf, entity.rect)
 
+            # update hud and manager
             hud.update(1,1,score,50,self.player.health,self.player.maxHealth,self.player.lives,self.player.damage,
                        int(self.player.damage / (0.6 - (sBooster / 1000))),self.player.bspeed)
-
-            self.manager.update(time_delta)
             self.manager.draw_ui(self.screen)
 
             py.display.update()
+
+            clock.tick(60)
 
         # All done! Stop and quit the mixer.
         #py.mixer.music.stop()

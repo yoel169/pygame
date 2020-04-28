@@ -43,10 +43,9 @@ class Level3:
         else:
             self.mouse = True
 
-        # Initialize pygame
-        py.init()
+        self.player = Player(arrows)
 
-        self.manager = gui.UIManager((self.SW, self.SH))  # create UI manager
+    def run(self):
 
         # Create a custom event for adding a new enemy/clouds
         self.ADDENEMY = py.USEREVENT + 1
@@ -57,7 +56,6 @@ class Level3:
         # Create groups to hold enemy sprites and all sprites
         # - enemies is used for collision detection and position updates
         # - all_sprites is used for rendering
-        self.player = Player(arrows)
         self.bullets = py.sprite.LayeredDirty()
         self.enemies = py.sprite.LayeredDirty()
         self.clouds = py.sprite.LayeredDirty()
@@ -67,7 +65,10 @@ class Level3:
         # Instantiate player.
         self.all_sprites.add(self.player)
 
-    def run(self):
+        # Initialize pygame
+        py.init()
+
+        self.manager = gui.UIManager((self.SW, self.SH))  # create UI manager
 
         clock = py.time.Clock()
         manual_start = 0
@@ -103,7 +104,7 @@ class Level3:
 
         while running:
 
-            time_delta = clock.tick(60)
+            self.manager.update(time_delta)
 
             if self.mouse:  # if user is moving with mouse
                 py.mouse.set_pos(960, 540)  # always center mouse
@@ -272,10 +273,10 @@ class Level3:
             hud.update(1, 2, score, 50, self.player.health, self.player.maxHealth, self.player.lives,
                        self.player.damage, int(self.player.damage / (0.6 - (sBooster / 1000))), self.player.bspeed)
 
-            self.manager.update(time_delta)
             self.manager.draw_ui(self.screen)
 
             py.display.update()
+            time_delta = clock.tick(60)
 
         if not exit:
             running = True
@@ -286,7 +287,7 @@ class Level3:
 
         while running:
 
-            time_delta = clock.tick(60)
+            self.manager.update(time_delta)
 
             if self.mouse:  # if user is moving with mouse
                 py.mouse.set_pos(960, 540)  # always center mouse
@@ -382,8 +383,7 @@ class Level3:
             if score % 20 == 0 and checker and score != 0:  # spawn a new buff
                 num = random.randint(1, 100)
                 if num in range(0, 51):
-                    if not self.player.health >= self.player.maxHealth:
-                        self.player.health += hit.power
+                    new_buff = HealthBuff()
                 elif num in range(50, 76):
                     new_buff = DamageBuff()
                 else:
@@ -450,10 +450,10 @@ class Level3:
             hud.update(2, 2, score, 100, self.player.health, self.player.maxHealth, self.player.lives,
                        self.player.damage, int(self.player.damage / (0.6 - (sBooster / 1000))), self.player.bspeed)
 
-            self.manager.update(time_delta)
             self.manager.draw_ui(self.screen)
 
             py.display.update()
+            time_delta = clock.tick(60)
 
         # All done! Stop and quit the mixer.
         #py.mixer.music.stop()

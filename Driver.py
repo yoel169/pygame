@@ -1,6 +1,6 @@
 import pygame_gui
 import pygame
-from Levels import Level1, Level2, Level3, Level4
+from Levels import Level1, Level2, Level3, Level4, Game
 from Other.Menus import GameMenu
 
 SW = 1920
@@ -37,12 +37,14 @@ level4 = Level4.Level4(args)
 
 levels = [level1, level2, level3, level4]
 
+
 level_tracker = 0
 numLevels= 4
 
 gameMenu = GameMenu(SW, SH, manager)  # setup menu class
-
 gameMenu.main_menu()  # launch main menu
+
+time_delta = 0
 
 
 def playMusic():
@@ -51,10 +53,13 @@ def playMusic():
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
-playMusic()
+#playMusic()
 
 while is_running:
-    time_delta = clock.tick(60) / 1000.0
+
+    # update manager and window
+    manager.update(time_delta)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_running = False
@@ -149,6 +154,8 @@ while is_running:
     if play:
 
         manager.clear_and_reset()
+        #game = Game.Game(SW, SH, window_surface, option, option2)
+        #game.run()
         (won, score) = levels[level_tracker].run()  # launch and return if player won or lost and score
         manager.clear_and_reset()  # reset GUI
 
@@ -170,10 +177,9 @@ while is_running:
                 manager.clear_and_reset()
                 gameMenu.main_menu()
 
-    # update manager and window
-    manager.update(time_delta)
-
     window_surface.blit(background, (0, 0))
     manager.draw_ui(window_surface)
+
+    time_delta = clock.tick(60)
 
     pygame.display.update()
