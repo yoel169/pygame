@@ -46,7 +46,7 @@ class BlueJetPlus(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(160, SCREEN_HEIGHT - 60),
+                random.randint(180, SCREEN_HEIGHT - 60),
             )
         )
         self._layer = 1
@@ -89,7 +89,7 @@ class GreenJet(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(160, SCREEN_HEIGHT - 50),
+                random.randint(180, SCREEN_HEIGHT - 50),
             )
         )
         self._layer = 1
@@ -117,7 +117,7 @@ class PufferFish(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(130, SCREEN_HEIGHT),
+                random.randint(180, SCREEN_HEIGHT),
             )
         )
         self._layer = 1

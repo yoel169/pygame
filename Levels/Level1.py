@@ -226,6 +226,8 @@ class Level1:
                 running = False
                 print("you died!")
 
+            self.screen.blit(self.background, (0, 0))
+
             # Get the set of keys pressed and check for user input
             pressed_keys = py.key.get_pressed()
 
@@ -238,8 +240,6 @@ class Level1:
             self.clouds.update()
             self.bullets.update()
             self.buffs.update()
-
-            self.screen.blit(self.background, (0, 0))
 
             # Draw all sprites
             for entity in self.all_sprites:

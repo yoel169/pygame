@@ -8,16 +8,6 @@ from pygame.locals import (
 SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1080
 
-cloud = pygame.image.load("Media/cloud.png")
-bullet1 = pygame.image.load("Media/bullet.png")
-carrot = pygame.image.load("Media/carrot.png")
-healthbuff = pygame.image.load("Media/healthbuff.png")
-damagebuff = pygame.image.load("Media/damagebuff.png")
-bulletbuff = pygame.image.load("Media/bulletbuff.png")
-ebullet = pygame.image.load("Media/ebullet.png")
-
-images = [cloud,bullet1, ebullet, carrot,healthbuff,damagebuff,bulletbuff]
-
 
 class Cloud(pygame.sprite.DirtySprite):
     def __init__(self):
@@ -29,7 +19,7 @@ class Cloud(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 200, SCREEN_WIDTH + 300),
-                random.randint(130, SCREEN_HEIGHT - 50),
+                random.randint(150, SCREEN_HEIGHT - 50),
             )
         )
 
@@ -61,7 +51,7 @@ class Bullet1(pygame.sprite.DirtySprite):
 class Carrot(pygame.sprite.DirtySprite):
     def __init__(self, position):
         super(Carrot, self).__init__()
-        self.surf = images[3].convert()
+        self.surf = carrot = pygame.image.load("Media/carrot.png").convert()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         self.rect = self.surf.get_rect(center=position)
         self.pos = pygame.math.Vector2(position)
@@ -82,7 +72,7 @@ class Carrot(pygame.sprite.DirtySprite):
 class HealthBuff(pygame.sprite.DirtySprite):
     def __init__(self):
         super(HealthBuff, self).__init__()
-        self.surf = images[4].convert()
+        self.surf = healthbuff = pygame.image.load("Media/healthbuff.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         # The starting position is randomly generated
         self._layer = 1
@@ -90,7 +80,7 @@ class HealthBuff(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(90, SCREEN_HEIGHT - 50),
+                random.randint(150, SCREEN_HEIGHT - 50),
             )
         )
 
@@ -105,7 +95,7 @@ class HealthBuff(pygame.sprite.DirtySprite):
 class DamageBuff(pygame.sprite.DirtySprite):
     def __init__(self):
         super(DamageBuff, self).__init__()
-        self.surf = images[5].convert()
+        self.surf = damagebuff = pygame.image.load("Media/damagebuff.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         # The starting position is randomly generated
         self._layer = 1
@@ -113,7 +103,7 @@ class DamageBuff(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(90, SCREEN_HEIGHT - 50),
+                random.randint(150, SCREEN_HEIGHT - 50),
             )
         )
 
@@ -127,7 +117,7 @@ class DamageBuff(pygame.sprite.DirtySprite):
 class BulletBuff(pygame.sprite.DirtySprite):
     def __init__(self):
         super(BulletBuff, self).__init__()
-        self.surf = images[6].convert()
+        self.surf = bulletbuff = pygame.image.load("Media/bulletbuff.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         # The starting position is randomly generated
         self._layer = 1
@@ -135,7 +125,7 @@ class BulletBuff(pygame.sprite.DirtySprite):
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(90, SCREEN_HEIGHT - 50),
+                random.randint(150, SCREEN_HEIGHT - 50),
             )
         )
 

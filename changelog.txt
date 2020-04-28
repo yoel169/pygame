@@ -43,5 +43,6 @@
 -----------------------------------------------------------------------------------------------------------------------
 2.62:
      * got enemy shooting mechanics
-     * got 4 levels now.
+     * got 4 levels now
+     * fixed where buffs were spawning too high
 
