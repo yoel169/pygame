@@ -40,4 +40,8 @@
 2.6: * slow day today... got a HUD working that can be used across levels
      * Got the first level working with the new HUD, took forever
      * First three levels working.
-     * got enemy shooting mechanics but they wont show up on screen
+-----------------------------------------------------------------------------------------------------------------------
+2.62:
+     * got enemy shooting mechanics
+     * got 4 levels now.
+

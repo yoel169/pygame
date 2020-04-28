@@ -223,7 +223,8 @@ class Level2:
             hit = py.sprite.spritecollideany(self.player, self.buffs)
             if hit != None:
                 if hit.__class__ == HealthBuff:
-                    self.player.health += hit.power
+                    if not self.player.health >= self.player.maxHealth:
+                        self.player.health += hit.power
                 elif hit.__class__ == DamageBuff:
                     self.player.damage += hit.power
                 else:
@@ -406,7 +407,8 @@ class Level2:
             hit = py.sprite.spritecollideany(self.player, self.buffs)
             if hit != None:
                 if hit.__class__ == HealthBuff:
-                    self.player.health += hit.power
+                    if not self.player.health >= self.player.maxHealth:
+                        self.player.health += hit.power
                 elif hit.__class__ == DamageBuff:
                     self.player.damage += hit.power
                 else:

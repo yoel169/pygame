@@ -1,6 +1,6 @@
 import pygame_gui
 import pygame
-from Levels import Level1, Level2, Level3
+from Levels import Level1, Level2, Level3, Level4
 from Other.Menus import GameMenu
 
 SW = 1920
@@ -23,20 +23,22 @@ score = 0
 tracker = 0
 option = 0  # 0 for auto shooting, 1 for space, 2 for mouse
 option2 = 0  # 0 for arrows, 1 for wads, 2 for mouse
-level_tracker = 0
 gameReturn = False
 continueMenu = False
 clock = pygame.time.Clock()
 
+# levels
 args = [SW, SH, background, window_surface, option, option2]
 
 level1 = Level1.Level1(args)
 level2 = Level2.Level2(args)
 level3 = Level3.Level3(args)
+level4 = Level4.Level4(args)
 
-levels = [level1, level2, level3]
+levels = [level1, level2, level3, level4]
 
-numLevels= 3
+level_tracker = 0
+numLevels= 4
 
 gameMenu = GameMenu(SW, SH, manager)  # setup menu class
 
@@ -146,23 +148,25 @@ while is_running:
 
     if play:
 
-        play = False
         manager.clear_and_reset()
         (won, score) = levels[level_tracker].run()  # launch and return if player won or lost and score
         manager.clear_and_reset()  # reset GUI
 
         if not won:  # if lost launch replay menu
 
+            play = False
             manager.clear_and_reset()
             gameMenu.replay_menu()
 
         elif won:  # if won launch next level menu
 
+            play = False
             manager.clear_and_reset()
             level_tracker += 1
             gameMenu.nextLevel()
 
             if level_tracker >= numLevels:
+                play = False
                 manager.clear_and_reset()
                 gameMenu.main_menu()
 

@@ -9,8 +9,8 @@ from pygame.locals import (
     MOUSEMOTION)
 import random
 from Actors.Players import Player
-from Actors.Neutrals import Cloud, Bullet1, HealthBuff, DamageBuff, BulletBuff, EBullet
-from Actors.Enemies import BlueJet
+from Actors.Neutrals import Cloud, Bullet1, HealthBuff, DamageBuff, BulletBuff
+from Actors.Enemies import BlueJet, EBullet
 
 
 class Level1:
@@ -50,7 +50,7 @@ class Level1:
 
         # Create a custom event for adding a new enemy/clouds
         self.ADDENEMY = py.USEREVENT + 1
-        py.time.set_timer(self.ADDENEMY, 1000)
+        py.time.set_timer(self.ADDENEMY, 500)
         self.ADDCLOUD = py.USEREVENT + 2
         py.time.set_timer(self.ADDCLOUD, 5000)
 
@@ -59,6 +59,7 @@ class Level1:
         # - all_sprites is used for rendering
         self.player = Player(arrows)
         self.bullets = py.sprite.LayeredDirty()
+        self.enemyB = py.sprite.LayeredDirty()
         self.enemies = py.sprite.LayeredDirty()
         self.clouds = py.sprite.LayeredDirty()
         self.buffs = py.sprite.LayeredDirty()
@@ -66,7 +67,6 @@ class Level1:
 
         # Instantiate player.
         self.all_sprites.add(self.player)
-
 
     def run(self):
 
@@ -96,7 +96,7 @@ class Level1:
 
         while running:
 
-            time_delta = clock.tick(60)
+            time_delta = clock.tick(60) / 1000.0
 
             if self.mouse:  # if user is moving with mouse
                 py.mouse.set_pos(960, 540)  # always center mouse
@@ -118,7 +118,7 @@ class Level1:
                     if event.key == K_SPACE and self.space:
                         manual_timer = py.time.get_ticks() - manual_start
                         if manual_timer >= 600 - sBooster:
-                            new_bullet = Bullet1(False,self.player.rect.center, self.player.damage, self.player.bspeed)
+                            new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
                             self.bullets.add(new_bullet)
                             self.all_sprites.add(new_bullet)
                             manual_start = py.time.get_ticks()
@@ -131,7 +131,7 @@ class Level1:
                 if event.type == py.MOUSEBUTTONDOWN and event.button == 1 and self.space is not True and self.auto is not True:
                     manual_timer = py.time.get_ticks() - manual_start
                     if manual_timer >= 600 - sBooster:
-                        new_bullet = Bullet1(False,self.player.rect.center, self.player.damage, self.player.bspeed)
+                        new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
                         self.bullets.add(new_bullet)
                         self.all_sprites.add(new_bullet)
                         manual_start = py.time.get_ticks()
@@ -164,37 +164,21 @@ class Level1:
 
             auto_timer = py.time.get_ticks() - auto_start
 
+            # auto shoot mechanics
             if auto_timer >= 600 - sBooster and self.auto:
-                new_bullet = Bullet1(False, self.player.rect.center, self.player.damage, self.player.bspeed)
+                new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed + 5)
                 self.bullets.add(new_bullet)
                 self.all_sprites.add(new_bullet)
                 auto_start = py.time.get_ticks()
-
-           # auto_timer2 = py.time.get_ticks() - enemy_shoot_start
-
-           # if auto_timer2 >= 2000:
-             #   for enemy in self.enemies:
-               #     new_bullet2 = EBullet(enemy.rect.center, enemy.damage, -10)
-               #     self.bullets.add(new_bullet2)
-               #     self.all_sprites.add(new_bullet2)
-                 #   enemy_shoot_start = py.time.get_ticks()
 
             # enemy and bullets colliding
             hits = py.sprite.groupcollide(self.enemies, self.bullets, False, True)
             for enemy, bullet_list in hits.items():
                 for bullet in bullet_list:
-                    if bullet.__class__ == Bullet1:
-                        enemy.health -= bullet.damage
-                        # self.collision_sound.play()
-                        if enemy.health <= 0:
-                             score += 1
-
-            # player and enemy bullets colliding
-            #hit = py.sprite.spritecollideany(self.player, self.bullets)
-            #if hit != None:
-            #    self.player.health -= hit.damage
-             #   print("you got hit!")
-             #   hit.kill()
+                    enemy.health -= bullet.damage
+                    # self.collision_sound.play()
+                    if enemy.health <= 0:
+                        score += 1
 
             if score % 5 == 0 and checker and score != 0:  # spawn a new buff
                 num = random.randint(1, 100)
@@ -250,6 +234,7 @@ class Level1:
 
             # Update positions
             self.enemies.update()
+            self.enemyB.update()
             self.clouds.update()
             self.bullets.update()
             self.buffs.update()

@@ -1,12 +1,11 @@
 ----------------------------------------------------
                 Current track
 ----------------------------------------------------
-Work on first three easy levels
-Create new enemies, develop shooting
-Create different power ups, add mechanics to game
-Boss?
-Add anything else to polish and finish the first level.
+implement a more object oriented way to make levels
+level picker at menu, fix hud to take max waves at beginning
+player level and xp system
 Work on a shop menu for upgrades.
+Create different power ups, add mechanics to game
 Work on different bullets
 
 ---------------------------------------------------

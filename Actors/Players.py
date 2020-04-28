@@ -49,6 +49,7 @@ class Player(pygame.sprite.DirtySprite):
                 self.rect.move_ip(-5- self.speed, 0)
             if pressed_keys[K_RIGHT]:
                 self.rect.move_ip(5 + self.speed, 0)
+
         elif self.arrows is False:
             if pressed_keys[K_w]:
                 self.rect.move_ip(0, -5 - self.speed)
