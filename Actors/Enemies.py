@@ -8,12 +8,19 @@ from pygame.locals import (
 SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1080
 
+bluejet = pygame.image.load("Media/bluejet.png")
+greenjet = pygame.image.load("Media/greenjet.png")
+pufferfish = pygame.image.load("Media/pf.png")
+
+images = [bluejet,greenjet, pufferfish]
+
+
 # Define the enemy object by extending pygame.sprite.Sprite
 # The surface you draw on the screen is now an attribute of 'enemy'
 class BlueJet(pygame.sprite.DirtySprite):
     def __init__(self):
         super(BlueJet, self).__init__()
-        self.surf = pygame.image.load("Media/bluejet.png").convert()
+        self.surf = images[0].convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.surf.get_rect(
             center=(
@@ -39,7 +46,7 @@ class BlueJet(pygame.sprite.DirtySprite):
 class GreenJet(pygame.sprite.DirtySprite):
     def __init__(self):
         super(GreenJet, self).__init__()
-        self.surf = pygame.image.load("Media/greenjet.png").convert()
+        self.surf = images[1].convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.surf.get_rect(
             center=(
@@ -67,7 +74,7 @@ class GreenJet(pygame.sprite.DirtySprite):
 class PufferFish(pygame.sprite.DirtySprite):
     def __init__(self):
         super(PufferFish, self).__init__()
-        self.surf = pygame.image.load("Media/pf.png").convert()
+        self.surf = images[2].convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.surf.get_rect(
             center=(
