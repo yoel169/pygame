@@ -10,3 +10,5 @@ Game: default arrows to move, default auto shoot, can be changed in main menu un
 
 Changes can be found in the changelog.txt and plans for next updates in roadwork.txt. You can also find more information about the enemies, levels, and future content in the documentation file.
 
+Known bug: game does not rescale to your screen size and is currently set to run in a 1920 * 1080 screen at full screen by default. This can be changed in the settings option and select windowed, then resize the window. Currently, the window resizes but not what's inside so I have to fix that too.
+
