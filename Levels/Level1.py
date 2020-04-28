@@ -103,7 +103,7 @@ class Level1:
                 if event.type == py.QUIT:
                     running = False
 
-                if event.type == py.KEYDOWN:
+                elif event.type == py.KEYDOWN:
                     # pause event from p key
                     if event.key == K_p:
                         py.mixer.music.pause()
@@ -123,13 +123,13 @@ class Level1:
                             manual_start = py.time.get_ticks()
 
                 # moving with move if turned on
-                if event.type == MOUSEMOTION and self.mouse:
+                elif event.type == MOUSEMOTION and self.mouse:
                     currentP = py.mouse.get_pos()
                     customMouse = ((currentP[0] - 960) * 0.3, (currentP[1] - 540)*0.3)
                     self.player.rect.move_ip(customMouse)
 
                 # shooting with mouse of turned on
-                if event.type == py.MOUSEBUTTONDOWN and event.button == 1 and self.space is not True and self.auto is not True:
+                elif event.type == py.MOUSEBUTTONDOWN and event.button == 1 and self.space is not True and self.auto is not True:
                     manual_timer = py.time.get_ticks() - manual_start
                     if manual_timer >= 600 - sBooster:
                         new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
@@ -138,25 +138,25 @@ class Level1:
                         manual_start = py.time.get_ticks()
 
                 # Check for QUIT event. If QUIT, then set running to false.
-                if event.type == QUIT:
+                elif event.type == QUIT:
                     running = False
                     won = False
 
                 # enemy
-                if event.type == self.ADDENEMY:
+                elif event.type == self.ADDENEMY:
                     new_enemy = BlueJet()
                     self.enemies.add(new_enemy)
                     self.all_sprites.add(new_enemy)
 
                 # Add a new cloud?
-                if event.type == self.ADDCLOUD:
+                elif event.type == self.ADDCLOUD:
                     # Create the new cloud and add it to sprite groups
                     new_cloud = Cloud()
                     self.clouds.add(new_cloud)
                     self.all_sprites.add(new_cloud)
 
                 # pause event from pause button
-                if event.type == py.USEREVENT:
+                elif event.type == py.USEREVENT:
                     if event.user_type == gui.UI_BUTTON_PRESSED:
                         if event.ui_element == hud.pause_button:
                             py.mixer.music.pause()

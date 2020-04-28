@@ -43,7 +43,7 @@ class Level4:
         else:
             self.mouse = True
 
-            self.player = Player(arrows)
+        self.player = Player(arrows)
 
     def run(self):
 
@@ -386,9 +386,8 @@ class Level4:
             elif score % 15 != 0 and score != 0:  # clear spawn queue
                 checker = True
 
-            if score >= 100:  # won
+            if score >= 100:  # next wave
                 running = False
-                won = True
 
             # player and enemy bullet collision
             hit = py.sprite.spritecollideany(self.player, self.enemyB)

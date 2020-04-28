@@ -51,7 +51,7 @@ class BlueJetPlus(pygame.sprite.DirtySprite):
         )
         self._layer = 1
         self.speed = random.randint(6, 10)
-        self.damage = 20
+        self.damage = 12
         self.health = 20
 
     # Move the sprite based on speed
@@ -77,7 +77,7 @@ class EBullet(pygame.sprite.DirtySprite):
     def update(self):
         # Add the velocity to the position vector to move the sprite.
         self.rect.move_ip( - self.speed, 0)
-        if self.rect.right < 0:
+        if self.rect.left > SCREEN_WIDTH:
             self.kill()
 
 

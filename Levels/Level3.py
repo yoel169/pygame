@@ -339,8 +339,6 @@ class Level3:
 
                 if event.type == self.ADDENEMY:
                     new_enemy = GreenJet()
-                    new_enemy.health += 10
-                    new_enemy.damage += 10
                     self.enemies.add(new_enemy)
                     self.all_sprites.add(new_enemy)
 

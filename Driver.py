@@ -1,15 +1,15 @@
 import pygame_gui
 import pygame
-from Levels import Level1, Level2, Level3, Level4, Game
+from Levels import Level1, Level2, Level3, Level4
 from Other.Menus import GameMenu
-
-SW = 1920
-SH = 1080
+from pygame.locals import VIDEORESIZE
 
 pygame.init()
 
+SW, SH = pygame.display.Info().current_w, pygame.display.Info().current_h
+
 pygame.display.set_caption('World Flying Shooter')
-window_surface = pygame.display.set_mode((SW, SH), flags=pygame.FULLSCREEN)
+window_surface = pygame.display.set_mode((SW, SH), flags=pygame.RESIZABLE)
 
 background = pygame.image.load("BG.png").convert()
 background = pygame.transform.scale(background, (SW, SH))
@@ -55,6 +55,7 @@ def playMusic():
 
 #playMusic()
 
+
 while is_running:
 
     # update manager and window
@@ -63,6 +64,11 @@ while is_running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_running = False
+
+        elif event.type == VIDEORESIZE:
+            screen = pygame.display.set_mode(event.dict['size'], flags= pygame.RESIZABLE)
+            screen.blit(pygame.transform.scale(background, event.dict['size']), (0, 0))
+            pygame.display.flip()
 
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
@@ -154,8 +160,6 @@ while is_running:
     if play:
 
         manager.clear_and_reset()
-        #game = Game.Game(SW, SH, window_surface, option, option2)
-        #game.run()
         (won, score) = levels[level_tracker].run()  # launch and return if player won or lost and score
         manager.clear_and_reset()  # reset GUI
 
