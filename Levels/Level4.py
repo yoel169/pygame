@@ -358,9 +358,10 @@ class Level4:
             # add bullet for enemy, check class for later levels
             for enemy in self.enemies:
                 if random.randint(0,100) == 0:
-                    new_bullet = EBullet(enemy.rect.center, enemy.damage, enemy.speed + 5)
-                    self.enemyB.add(new_bullet)
-                    self.all_sprites.add(new_bullet)
+                    if enemy.__class__ == BlueJetPlus:
+                        new_bullet = EBullet(enemy.rect.center, enemy.damage, enemy.speed + 5)
+                        self.enemyB.add(new_bullet)
+                        self.all_sprites.add(new_bullet)
 
             # enemy and bullets colliding
             hits = py.sprite.groupcollide(self.enemies, self.bullets, False, True)
@@ -369,7 +370,10 @@ class Level4:
                     enemy.health -= bullet.damage
                     # self.collision_sound.play()
                     if enemy.health <= 0:
-                        score += 1
+                        if enemy.__class__ == BlueJetPlus:
+                            score += 3
+                        else:
+                            score += 1
 
             if score % 15 == 0 and checker and score != 0:  # spawn a new buff
                 num = random.randint(1, 100)
@@ -550,7 +554,7 @@ class Level4:
                     enemy.health -= bullet.damage
                     # self.collision_sound.play()
                     if enemy.health <= 0:
-                        score += 1
+                        score += 3
 
             if score % 25 == 0 and checker and score != 0:  # spawn a new buff
                 num = random.randint(1, 100)
