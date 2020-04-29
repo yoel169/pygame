@@ -66,7 +66,6 @@ class Level3:
         clock = py.time.Clock()  # time handler for game
         manual_start = 0  # shooting with space time handler if turned on
         auto_start = 0  # auto shooting time handler
-        enemy_shoot_start = 0  # enemy bullet handler
         sBooster = 0  # for auto shooting time control
         time_delta = 0  # time handler for manager
 
