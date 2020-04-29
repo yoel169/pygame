@@ -3,7 +3,7 @@ import pygame
 from Levels import Level1, Level2, Level3, Level4
 from Other.Menus import GameMenu
 from pygame.locals import VIDEORESIZE
-
+# from Levels.Stage1 import WaveMaker
 pygame.init()
 
 SW, SH = pygame.display.Info().current_w, pygame.display.Info().current_h
@@ -38,13 +38,26 @@ level4 = Level4.Level4(args)
 levels = [level1, level2, level3, level4]
 
 level_tracker = 0
-numLevels= 4
+numLevels = 4
+
+# -----------------------------------------------------------------------------------------
+#levelTitle = 'Level 1'  # args0
+#maxWaves = 3  # args1
+
+#buffSpawn = [5,10,15]  # args2
+#maxScore = [25,50,100]  # args4
+#eTypes = [0,1,2]
+#enemyTimers = [500,1000,2000]
+
+#ls = [SW, SH, background, window_surface]
+
+#myStageMaker = WaveMaker(ls)
+# -------------------------------------------------------------------------------------------
 
 gameMenu = GameMenu(SW, SH, manager)  # setup menu class
 gameMenu.main_menu()  # launch main menu
 
 time_delta = 0
-
 
 def playMusic():
     pygame.mixer.init()
@@ -160,6 +173,9 @@ while is_running:
 
         manager.clear_and_reset()
         (won, score) = levels[level_tracker].run()  # launch and return if player won or lost and score
+        #args = [option, option2]
+        #args2 = [levelTitle, maxWaves, buffSpawn,maxScore, eTypes, enemyTimers]
+        #won, score = myStageMaker.makeStage(args, args2)
         manager.clear_and_reset()  # reset GUI
 
         if not won:  # if lost launch replay menu

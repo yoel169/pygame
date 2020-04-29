@@ -49,4 +49,8 @@
 2.65:* Restructured all of the levels for more organization and better control
      * Each part in the loop is well documented
      * Restructured buffs and enemies into their classes for easier calling
+----------------------------------------------------------------------------------------------------------------------
+2.68 * All this restructuring led to a level maker... YUP! I FEEL LIKE GOD! Level maker can take in arguments and
+       generate a whole level without having to write the whole code for it... Still need to add more features like
+       multiple enemies at the same time but holy shit i did it! Object oriented up the ass!
 

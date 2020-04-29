@@ -1,16 +1,15 @@
 ----------------------------------------------------
                 Current track
 ----------------------------------------------------
-try to get screen to auto resize
-implement a more object oriented way to make levels
-level picker at menu, fix hud to take max waves at beginning
+keep working on level generator
+level picker at menu
 player level and xp system
 Work on a shop menu for upgrades.
 Create different power ups, add mechanics to game
 Work on different bullets
 
 ---------------------------------------------------
-             To do im too lazy to do
+             To dos that im too lazy to do
 ---------------------------------------------------
 Make game pretty for god sakes.
 Get better sprites.
@@ -18,6 +17,7 @@ Get sounds.
 Actually make a description page.
 Game HUD: make it pretty!
 Make different difficulties: Easy, Medium, Hard, Insane.
-Save and load options for user to keep track
+Save and load options for user to keep track (use JSON).
+Get game to rescale with window resize.
 
 

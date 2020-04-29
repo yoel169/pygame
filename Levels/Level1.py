@@ -67,7 +67,6 @@ class Level1:
         clock = py.time.Clock()  # time handler for game
         manual_start = 0  # shooting with space time handler if turned on
         auto_start = 0  # auto shooting time handler
-        enemy_shoot_start = 0  # enemy bullet handler
         sBooster = 0  # for auto shooting time control
         time_delta = 0  # time handler for manager
 
@@ -103,6 +102,7 @@ class Level1:
         py.time.set_timer(self.ADDENEMY, 2000)
         self.ADDCLOUD = py.USEREVENT + 2
         py.time.set_timer(self.ADDCLOUD, 5000)
+
 
         # ============================ MAIN GAME LOOP =============================================
         while running:
