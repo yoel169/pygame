@@ -69,63 +69,27 @@ class Carrot(pygame.sprite.DirtySprite):
 # ===================================== BUFFS =========================================================
 
 
-class HealthBuff(pygame.sprite.DirtySprite):
-    def __init__(self):
-        super(HealthBuff, self).__init__()
-        self.surf = healthbuff = pygame.image.load("Media/healthbuff.png").convert()
+class Buff(pygame.sprite.DirtySprite):
+    def __init__(self, type):
+        super(Buff, self).__init__()
+        self.type = type # health, damage, and bullet
+        if type == 0:
+            self.surf = pygame.image.load("Media/healthbuff.png").convert()
+            self.power = 25
+        elif type == 1:
+            self.surf = pygame.image.load("Media/damagebuff.png").convert()
+            self.power = 5
+        else:
+            self.surf = pygame.image.load("Media/bulletbuff.png").convert()
+            self.power = 60  # ms
+
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         # The starting position is randomly generated
         self._layer = 1
-        self.power = 25
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(150, SCREEN_HEIGHT - 50),
-            )
-        )
-
-    # Move the cloud based on a constant speed
-    # Remove the cloud when it passes the left edge of the screen
-    def update(self):
-        self.rect.move_ip(-5, 0)
-        if self.rect.right < 0:
-            self.kill()
-
-
-class DamageBuff(pygame.sprite.DirtySprite):
-    def __init__(self):
-        super(DamageBuff, self).__init__()
-        self.surf = damagebuff = pygame.image.load("Media/damagebuff.png").convert()
-        self.surf.set_colorkey((255, 255, 255), RLEACCEL)
-        # The starting position is randomly generated
-        self._layer = 1
-        self.power = 5
-        self.rect = self.surf.get_rect(
-            center=(
-                random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(150, SCREEN_HEIGHT - 50),
-            )
-        )
-
-    # Move the cloud based on a constant speed
-    # Remove the cloud when it passes the left edge of the screen
-    def update(self):
-        self.rect.move_ip(-5, 0)
-        if self.rect.right < 0:
-            self.kill()
-
-class BulletBuff(pygame.sprite.DirtySprite):
-    def __init__(self):
-        super(BulletBuff, self).__init__()
-        self.surf = bulletbuff = pygame.image.load("Media/bulletbuff.png").convert()
-        self.surf.set_colorkey((255, 255, 255), RLEACCEL)
-        # The starting position is randomly generated
-        self._layer = 1
-        self.power = 60  # ms
-        self.rect = self.surf.get_rect(
-            center=(
-                random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(150, SCREEN_HEIGHT - 50),
+                random.randint(180, SCREEN_HEIGHT - 100),
             )
         )
 

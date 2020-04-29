@@ -41,9 +41,12 @@
      * Got the first level working with the new HUD, took forever
      * First three levels working.
 -----------------------------------------------------------------------------------------------------------------------
-2.62:
-     * got enemy shooting mechanics
+2.62:* got enemy shooting mechanics
      * got 4 levels now
      * fixed where buffs were spawning too high
      * fixed a enemy spawn issue
+----------------------------------------------------------------------------------------------------------------------
+2.65:* Restructured all of the levels for more organization and better control
+     * Each part in the loop is well documented
+     * Restructured buffs and enemies into their classes for easier calling
 

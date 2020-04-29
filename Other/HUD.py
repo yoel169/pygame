@@ -6,12 +6,13 @@ SW2 = int(1920/2)
 SH2 = int(1080/2)
 
 class HUD:
-    def __init__(self, screen, manager, bg, title):
+    def __init__(self, screen, manager, bg, title, waves):
 
         self.screen = screen
         self.manager = manager
         self.background = bg
         self.conf = None
+        self.maxWaves = waves
 
         hud_size = (650, 0, 620, 100)
         hud_rect = py.Rect(hud_size)
@@ -64,13 +65,13 @@ class HUD:
                                                text='pause',
                                                manager=self.manager, container=self.hud)
 
-    def update(self, wave, wave2, score, score2, health, health2, lives, damage, bps, bspeed):
-        self.wave_label.set_text(('wave: ' + str(wave) + '/' + str(wave2)))
+    def update(self, wave, score, score2, health, health2, lives, damage, bps, bspeed):
+        self.wave_label.set_text(('wave: ' + str(wave) + '/' + str(self.maxWaves)))
         self.score_label.set_text(('Score: ' + str(score) + '/' + str(score2)))
         self.health_label.set_text(('Health: ' + str(health) + '/' + str(health2)))
         self.life_label.set_text(('Lives: ' + str(lives)))
         self.damage_label.set_text(('damage: ' + str(damage)))
-        self.bps_label.set_text(('dps: ' + str(bps)))
+        self.bps_label.set_text(('bullets every: ' + str(bps) + 'ms'))
         self.bspeed_label.set_text(('bullet speed: ' + str(bspeed)))
 
     # pause game with button or by pressing p

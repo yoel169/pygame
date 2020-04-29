@@ -37,7 +37,6 @@ level4 = Level4.Level4(args)
 
 levels = [level1, level2, level3, level4]
 
-
 level_tracker = 0
 numLevels= 4
 
@@ -49,12 +48,12 @@ time_delta = 0
 
 def playMusic():
     pygame.mixer.init()
-    pygame.mixer.music.load("Media/bangarang.mp3")
+    pygame.mixer.music.load("Media/game2.mp3")
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
-#playMusic()
 
+playMusic()
 
 while is_running:
 

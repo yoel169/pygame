@@ -4,9 +4,6 @@ from Actors.Players import Player
 from Actors.Neutrals import Cloud, Bullet1, HealthBuff, DamageBuff, BulletBuff
 from Actors.Enemies import BlueJet, GreenJet
 from Other.Messages import text_update
-
-# Import pygame.locals for easier access to key coordinates
-# Updated to conform to flake8 and black standards
 from pygame.locals import (
     K_ESCAPE,
     K_SPACE,
@@ -15,6 +12,7 @@ from pygame.locals import (
     MOUSEMOTION,
 )
 
+# ============================== OUTDATED ORIGINAL GAME LEVEL CONCEPT ===============================================
 
 class Game():
     def __init__(self, width, height, screen, option, option2):

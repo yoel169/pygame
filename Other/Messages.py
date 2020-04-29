@@ -1,5 +1,7 @@
 import pygame
 
+# ============================== OUTDATED ORIGINAL GAME HUD CONCEPT ===============================================
+
 SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1080
 black = (0, 0, 0)
