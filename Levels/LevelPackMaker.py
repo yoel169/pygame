@@ -44,6 +44,7 @@ class PackMaker:
         # INIT GAME VARIABLES
         won = False  # if user won
         checker = True  # for spawning buffs
+        checker2 = True # spawning enemies
         customMouse = ()  # custom mouse position if movement with mouse is on
         exit = False  # exit game
         auto = True  # default auto to on
@@ -114,18 +115,36 @@ class PackMaker:
 
             running = True  # game loop
 
+            # 1 for enemies, 2 for buffs, 3 for both. Spawning enemies or/and buffs
+            randCheck = 0
+            scoreCheck = 0
+
             # for every enemy that uses time create an event and group and timer event
             for count, x in enumerate(enemyL, 0):
                 if x[1] == 'time':
                     ENEMIES.append(py.USEREVENT + events)
                     TIMERS.append(py.time.set_timer(ENEMIES[count], int(x[2])))
                     events += 1
+                elif x[1] == 'random':
+                    randCheck = 1
+                elif x[1] == 'score':
+                    scoreCheck = 1
 
             for count, x in enumerate(buffL, 0):
                 if x[1] == 'time':
                     BUFFS.append(py.USEREVENT + events)
                     TIMERS.append(py.time.set_timer(ENEMIES[count], int(x[2])))
                     events += 1
+                elif x[1] == 'random':
+                    if randCheck == 1:
+                        randCheck = 3
+                    else:
+                        randCheck = 2
+                elif x[1] == 'score':
+                    if randCheck == 1:
+                        scoreCheck = 3
+                    else:
+                        scoreCheck = 2
 
             # ==================================== START  GAME LOOP =========================================
             while running:
@@ -208,25 +227,45 @@ class PackMaker:
                             all_sprites.add(new_bullet)
                             manual_start = py.time.get_ticks()
 
-                    # ENEMY SPAWN EVENT
+                    # ENEMY TIMED SPAWN EVENT
                     elif event.type in ENEMIES:
                         for x in enemyL:
-                            if x[0] == 'single':
-                                new_enemy = EnenmyJet(int(x[3]))
-                                enemies.add(new_enemy)
-                                all_sprites.add(new_enemy)
-                            elif x[0] == 'group':
-                                num = random.randint(1, 100)
-                                acc = 0
-                                dc = x[3]
-                                for index, x in enumerate(dc['chance'], 0):
-                                    acc += int(x)
-                                    if num < acc:
-                                        new_enemy = EnenmyJet(int(dc['type'][index]))
-                                        enemies.add(new_enemy)
-                                        all_sprites.add(new_enemy)
-                                        break
+                            if x[1] == 'timer':
+                                if x[0] == 'single':
+                                    new_enemy = EnenmyJet(int(x[3]))
+                                    enemies.add(new_enemy)
+                                    all_sprites.add(new_enemy)
+                                elif x[0] == 'group':
+                                    num = random.randint(1, 100)
+                                    acc = 0
+                                    dc = x[3]
+                                    for index, x in enumerate(dc['chance'], 0):
+                                        acc += int(x)
+                                        if num < acc:
+                                            new_enemy = EnenmyJet(int(dc['type'][index]))
+                                            enemies.add(new_enemy)
+                                            all_sprites.add(new_enemy)
+                                            break
 
+                    # BUFF TIMED SPAWN EVENT
+                    elif event.type in BUFFS:
+                        for x in buffL:
+                            if x[1] == 'timer':
+                                if x[0] == 'single':
+                                    new_buff = Buff(int(x[3]))
+                                    enemies.add(new_buff)
+                                    all_sprites.add(new_buff)
+                                elif x[0] == 'group':
+                                    num = random.randint(1, 100)
+                                    acc = 0
+                                    dc = x[3]
+                                    for index, x in enumerate(dc['chance'], 0):
+                                        acc += int(x)
+                                        if num < acc:
+                                            new_buff = Buff(int(dc['type'][index]))
+                                            enemies.add(new_buff)
+                                            all_sprites.add(new_buff)
+                                            break
                     # CLOUD SPAWN EVENT
                     elif event.type == ADDCLOUD:
                         # Create the new cloud and add it to sprite groups
@@ -257,7 +296,7 @@ class PackMaker:
 
                 # SPAWNING ENEMY BULLETS
                 for enemy in enemies:
-                    if random.randint(0,100) == 0:
+                    if random.randint(1,100) == 1:
                         if enemy.type == 1:
                             new_bullet = EBullet(enemy.rect.center, enemy.damage, enemy.speed + 5)
                             bullets.add(new_bullet)
@@ -280,6 +319,8 @@ class PackMaker:
                 # CLEAR BUFF SPAWN CHECK
                 elif score % buffSpawn[counter] != 0 and score != 0:
                     checker = True
+
+                if
 
                 # ================================== SPRITE COLLISION DETECTION ====================================
 
@@ -354,6 +395,7 @@ class PackMaker:
 
                 # ========================================= END GAME LOOP  ===========================================
             if exit:
+                print("exited")
                 return won, score
 
             # INCREASE COUNTERS AND RESET GAME LOOP
