@@ -53,4 +53,6 @@
 2.68 * All this restructuring led to a level maker... YUP! I FEEL LIKE GOD! Level maker can take in arguments and
        generate a whole level without having to write the whole code for it... Still need to add more features like
        multiple enemies at the same time but holy shit i did it! Object oriented up the ass!
+-----------------------------------------------------------------------------------------------------------------------
+2.7 * what's a level maker without a level maker script? Yup thats done. pretty good for now just don't input wrong values!
 
