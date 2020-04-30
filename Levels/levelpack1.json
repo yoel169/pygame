@@ -1,0 +1,64 @@
+[
+   {
+      "waves": [
+         {
+            "maxScore": 20,
+            "enemies": [
+               [
+                  "group",
+                  "time",
+                  "1000",
+                  {
+                     "type": [
+                        0,
+                        1
+                     ],
+                     "chance": [
+                        25,
+                        75
+                     ]
+                  }
+               ]
+            ],
+            "buffs": []
+         },
+         {
+            "maxScore": 50,
+            "enemies": [
+               [
+                  "group",
+                  "time",
+                  "500",
+                  {
+                     "type": [
+                        1,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        50
+                     ]
+                  }
+               ]
+            ],
+            "buffs": []
+         }
+      ]
+   },
+   {
+      "waves": [
+         {
+            "maxScore": 20,
+            "enemies": [
+               [
+                  "single",
+                  "time",
+                  200,
+                  0
+               ]
+            ],
+            "buffs": []
+         }
+      ]
+   }
+]

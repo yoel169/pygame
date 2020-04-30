@@ -11,16 +11,27 @@ import random
 from Actors.Players import Player
 from Actors.Neutrals import Cloud, Bullet1, Buff
 from Actors.Enemies import EnenmyJet, EBullet
+from Levels.PackUnpacker import Unpacker
 
-class LevelMaker:
-    def __init__(self, ls):
+class PackMaker:
+    def __init__(self, ls, pack):
         args = ls  # width, height, bg, screen
         self.screen = args[3]
         self.background = args[2]
         self.SW = args[0]
         self.SH = args[1]
 
-    def makeStage(self, args, args2):
+        # --------------- REAL UNPACK HOURS -----------------
+        newUnpacker = Unpacker(pack)
+        self.levels = newUnpacker.getLevels()
+
+    def getStage(self, args, index):
+
+        # ---------------- REALEST UNPACK HOURS -------------------
+        level = self.levels[index]
+        levelTitle = ('Level ')
+        maxWaves = len(level)
+        # ---------------------------------------------------------
 
         # INIT TIME VARIABLES
         clock = py.time.Clock()  # time handler for game
@@ -28,10 +39,9 @@ class LevelMaker:
         auto_start = 0  # auto shooting time handler
         sBooster = 0  # for auto shooting time control
         time_delta = 0  # time handler for manager
+        score = 0  # player score
 
         # INIT GAME VARIABLES
-        running = True  # game loop
-        score = 0  # player score
         won = False  # if user won
         checker = True  # for spawning buffs
         customMouse = ()  # custom mouse position if movement with mouse is on
@@ -39,15 +49,12 @@ class LevelMaker:
         auto = True  # default auto to on
         space = False  # default space shooting to off
         mouse = False  # default mouse movement to off
-        currentWave = 1  # wave number to loop through
         counter = 0  # counter for looping through arguments
+        buffSpawn = [5, 10]
 
-        # ================================= INIT GAME ARGUMENTS THAT WERE PASSED =====================================
+        # ======================================== SHOOTING AND MOVEMENT SETUP ==================================
+        option = args  # SHOOTING AND MOVEMENT
 
-        option = args # SHOOTING AND MOVEMENT
-        levelTitle, maxWaves, buffSpawn, maxScore, eTypes, enemyTimers = args2  # GAME ARGUMENTS
-
-        # ======================================== SHOOTING AND MOVEMENT SETUP =======================================
         # shoot auto, with space or with mouse
         if option[0] == 0:
             auto = True
@@ -92,28 +99,49 @@ class LevelMaker:
 
         # TIMER EVENTS FOR SPAWNING CLOUDS AND ENEMIES
         ADDCLOUD = py.USEREVENT + 1
-        ADDENEMY = py.USEREVENT + 2
         py.time.set_timer(ADDCLOUD, 5000)
 
-        while not exit:
+        # ====================================== START WAVE LOOP  ==========================================
+        for currentWave, wave in enumerate(level,1):
 
-            # CHANGE ENEMY TIMER BASED ON ARGUMENT
-            py.time.set_timer(ADDENEMY, enemyTimers[counter])
+            maxScore = wave[0]
+            enemyL = wave[1]
+            buffL = wave[2]
 
+            TIMERS, ENEMIES, BUFFS = [], [], []
+
+            events = 2
+
+            running = True  # game loop
+
+            # for every enemy that uses time create an event and group and timer event
+            for count, x in enumerate(enemyL, 0):
+                if x[1] == 'time':
+                    ENEMIES.append(py.USEREVENT + events)
+                    TIMERS.append(py.time.set_timer(ENEMIES[count], int(x[2])))
+                    events += 1
+
+            for count, x in enumerate(buffL, 0):
+                if x[1] == 'time':
+                    BUFFS.append(py.USEREVENT + events)
+                    TIMERS.append(py.time.set_timer(ENEMIES[count], int(x[2])))
+                    events += 1
+
+            # ==================================== START  GAME LOOP =========================================
             while running:
 
                 # UPDATE MANAGER
                 manager.update(time_delta)
 
                 # WIN BASED ON LAST ARGUMENT
-                if score >= maxScore[maxWaves - 1]:
+                if score >= maxScore and currentWave == maxWaves:
                     won = True
                     exit = True
                     running = False
                     print("you won!")
 
                 # ELSE NEXT WAVE
-                elif score >= maxScore[counter]:
+                elif score >= maxScore and currentWave != maxWaves:
                     running = False
                     print("next wave!")
 
@@ -135,6 +163,7 @@ class LevelMaker:
                         running = False
                         won = False
                         exit = True
+                        print("quit called")
 
                     # --------------------------------- PRESSED KEY EVENTS --------------------------------
                     elif event.type == py.KEYDOWN:
@@ -150,6 +179,7 @@ class LevelMaker:
                             running = False
                             won = False
                             exit = True
+                            print("escape key called")
 
                         # SPACE IF TURNED ON
                         if event.key == K_SPACE and space:
@@ -179,10 +209,23 @@ class LevelMaker:
                             manual_start = py.time.get_ticks()
 
                     # ENEMY SPAWN EVENT
-                    elif event.type == ADDENEMY:
-                        new_enemy = EnenmyJet(eTypes[counter])
-                        enemies.add(new_enemy)
-                        all_sprites.add(new_enemy)
+                    elif event.type in ENEMIES:
+                        for x in enemyL:
+                            if x[0] == 'single':
+                                new_enemy = EnenmyJet(int(x[3]))
+                                enemies.add(new_enemy)
+                                all_sprites.add(new_enemy)
+                            elif x[0] == 'group':
+                                num = random.randint(1, 100)
+                                acc = 0
+                                dc = x[3]
+                                for index, x in enumerate(dc['chance'], 0):
+                                    acc += int(x)
+                                    if num < acc:
+                                        new_enemy = EnenmyJet(int(dc['type'][index]))
+                                        enemies.add(new_enemy)
+                                        all_sprites.add(new_enemy)
+                                        break
 
                     # CLOUD SPAWN EVENT
                     elif event.type == ADDCLOUD:
@@ -264,6 +307,8 @@ class LevelMaker:
                     if hit.type == 0:
                         if not player.health >= player.maxHealth:
                             player.health += hit.power
+                            if player.health > player.maxHealth:
+                                player.health = player.maxHealth
                     elif hit.type == 1:
                         player.damage += hit.power
                     else:
@@ -299,7 +344,7 @@ class LevelMaker:
                     self.screen.blit(entity.surf, entity.rect)
 
                 # UPDATE HUD AND DRAW IT
-                hud.update(currentWave, score, maxScore[counter], player.health, player.maxHealth, player.lives,
+                hud.update(currentWave, score, maxScore, player.health, player.maxHealth, player.lives,
                            player.damage, 600 - sBooster, player.bspeed)
                 manager.draw_ui(self.screen)
 
@@ -308,10 +353,8 @@ class LevelMaker:
                 clock.tick(60)
 
                 # ========================================= END GAME LOOP  ===========================================
+            if exit:
+                return won, score
 
-            # INCREASE COUNTERS AND RESET LOOP
+            # INCREASE COUNTERS AND RESET GAME LOOP
             counter += 1
-            currentWave += 1
-            running = True
-
-        return won, score

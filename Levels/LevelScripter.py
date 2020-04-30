@@ -125,7 +125,7 @@ while not exit:
                         type_ = list(map(int, input("Enter " + script[x] + " types: ").split()))
                         optional = validateRange("Enter % between enemy spawns: ", len(type_))
 
-                        appender[x].append(['group', spawnT, spawnV, type_, optional])
+                        appender[x].append(['group', spawnT, spawnV, {'type': type_, 'chance': optional}])
 
                     elif checker == 'single':
 
