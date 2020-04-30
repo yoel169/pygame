@@ -69,7 +69,7 @@ print('\n')
 
 exit = False  # for leaving
 script = ['enemy', 'buff']  # for prompting between enemy and buff
-levels = ['levels']  # save all the levels
+levels = []  # save all the levels
 fileCounter = 1  # for saving the packs into diff json files
 
 # LEVEL PACK LOOP
