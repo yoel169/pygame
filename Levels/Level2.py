@@ -12,6 +12,8 @@ from Actors.Players import Player
 from Actors.Neutrals import Cloud, Bullet1, Buff
 from Actors.Enemies import EnenmyJet
 
+# ================================================ OUTED LEVEL  ==================================================
+
 
 class Level2:
     def __init__(self, ls):  # width, height, bg, screen, option, option2

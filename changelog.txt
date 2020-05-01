@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------------------------------------------------
-             Change Log
+                                               Change Log
 ----------------------------------------------------------------------------------------------------------------------
 1.0: *fighting jet that has to dodge missiles.
      *sounds and music work.
@@ -56,3 +56,7 @@
 -----------------------------------------------------------------------------------------------------------------------
 2.7 * what's a level maker without a level maker script? Yup that's done. pretty good for now just don't input wrong values!
       Now I just have to implement into back in my level maker and make a level unpacker. Hope it goes well or I oop!
+-----------------------------------------------------------------------------------------------------------------------
+2.8 * 100% done with implementing my level maker idea! Everything from the script maker works. Im not sure how accurate
+      the random is but I honestly its amazing what I've done.
+    * Created tabs in documentation for proper placement.

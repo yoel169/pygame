@@ -6,17 +6,28 @@
             "enemies": [
                [
                   "single",
-                  "time",
-                  1000,
+                  "random",
+                  50,
                   0
                ]
             ],
             "buffs": [
                [
-                  "single",
-                  "score",
-                  5,
-                  0
+                  "group",
+                  "random",
+                  "5",
+                  {
+                     "type": [
+                        0,
+                        1,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        25,
+                        25
+                     ]
+                  }
                ]
             ]
          }

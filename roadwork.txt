@@ -1,12 +1,14 @@
 ----------------------------------------------------
                 Current track
 ----------------------------------------------------
-keep working on level generator
-level picker at menu
-player level and xp system
+Create 5 more levels with new enemies/ and or buffs
 Work on a shop menu for upgrades.
-Create different power ups, add mechanics to game
+New player jet
+player level and xp system
 Work on different bullets
+create a menu for picking levels
+save / load menus
+Sandbox Mode
 
 ---------------------------------------------------
              To dos that im too lazy to do
@@ -18,6 +20,6 @@ Actually make a description page.
 Game HUD: make it pretty!
 Make different difficulties: Easy, Medium, Hard, Insane.
 Save and load options for user to keep track (use JSON).
-Get game to rescale with window resize.
+Get game to rescale with window resize. * important
 
 

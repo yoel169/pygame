@@ -13,6 +13,9 @@ from Actors.Neutrals import Cloud, Bullet1, Buff
 from Actors.Enemies import EnenmyJet, EBullet
 from Levels.PackUnpacker import Unpacker
 
+# ============================= Updated level pack reader and level maker using script =================================
+
+
 class PackMaker:
     def __init__(self, ls, pack):
         args = ls  # width, height, bg, screen
@@ -109,7 +112,7 @@ class PackMaker:
             enemyL = wave[1]
             buffL = wave[2]
 
-            TIMERS, ENEMIES, BUFFS = [], [], []
+            TIMERS, ENEMIES, BUFFS, buffScoreChecker, enemyScoreChecker = [], [], [], [], []
 
             events = 2
 
@@ -119,7 +122,7 @@ class PackMaker:
             randCheck = 0
             scoreCheck = 0
 
-            # for every enemy that uses time create an event and timer event
+            # ENEMY CREATOR  FOR DIFFERENT SPAWN TYPES
             for count, x in enumerate(enemyL, 0):
                 if x[1] == 'time':
                     ENEMIES.append(py.USEREVENT + events)
@@ -128,13 +131,18 @@ class PackMaker:
                     print("timer event for an enemy created")
                 elif x[1] == 'random':
                     randCheck = 1
+                    print("random event for an enemy created")
                 elif x[1] == 'score':
+                    if x[0] == 'group':
+                        enemyScoreChecker.append(True)
                     scoreCheck = 1
+                    print("score event for an enemy created")
 
+            # BUFF CREATOR FOR DIFFERENT SPAWN TYPES
             for count, x in enumerate(buffL, 0):
                 if x[1] == 'time':
                     BUFFS.append(py.USEREVENT + events)
-                    TIMERS.append(py.time.set_timer(ENEMIES[count], int(x[2])))
+                    TIMERS.append(py.time.set_timer(BUFFS[count], int(x[2])))
                     events += 1
                     print("timer event for a buff created")
                 elif x[1] == 'random':
@@ -142,12 +150,17 @@ class PackMaker:
                         randCheck = 3
                     else:
                         randCheck = 2
+                    print("random event for a buff created")
                 elif x[1] == 'score':
-                    if randCheck == 1:
+                    print("score event for a buff created")
+                    if x[0] == 'group':
+                        buffScoreChecker.append(True)
+                    if scoreCheck == 1:
                         scoreCheck = 3
                     else:
                         scoreCheck = 2
 
+            print(str(scoreCheck))
             # ==================================== START  GAME LOOP =========================================
             while running:
 
@@ -232,7 +245,7 @@ class PackMaker:
                     # ENEMY TIMED SPAWN EVENT
                     elif event.type in ENEMIES:
                         for x in enemyL:
-                            if x[1] == 'timer':
+                            if x[1] == 'time':
                                 if x[0] == 'single':
                                     new_enemy = EnenmyJet(int(x[3]))
                                     enemies.add(new_enemy)
@@ -248,17 +261,17 @@ class PackMaker:
                                             new_enemy = EnenmyJet(int(dc['type'][index]))
                                             enemies.add(new_enemy)
                                             all_sprites.add(new_enemy)
-                                            print("spawned an enemy from goup timer")
+                                            print("spawned an enemy from group timer")
                                             break
 
                     # BUFF TIMED SPAWN EVENT
                     elif event.type in BUFFS:
                         for x in buffL:
-                            if x[1] == 'timer':
+                            if x[1] == 'time':
                                 print("buff created from timer")
                                 if x[0] == 'single':
                                     new_buff = Buff(int(x[3]))
-                                    enemies.add(new_buff)
+                                    buffs.add(new_buff)
                                     all_sprites.add(new_buff)
                                 elif x[0] == 'group':
                                     num = random.randint(1, 100)
@@ -268,7 +281,7 @@ class PackMaker:
                                         acc += int(x)
                                         if num < acc:
                                             new_buff = Buff(int(dc['type'][index]))
-                                            enemies.add(new_buff)
+                                            buffs.add(new_buff)
                                             all_sprites.add(new_buff)
                                             break
 
@@ -308,16 +321,89 @@ class PackMaker:
                             bullets.add(new_bullet)
                             all_sprites.add(new_bullet)
 
-                if scoreCheck == 2:
-                    for x in buffL:
+                # ============================= SPAWNING BUFFS AND ENEMIES FROM SCORE =========================
+
+                # BUFF SPAWN FROM SCORE
+                if scoreCheck == 2 or scoreCheck == 3:
+                    for pos, x in enumerate(buffL, 0):
                         if x[1] == 'score':
-                            print("buff spawned from score")
-                            if score % int(x[2]) and checker2 and score != 0:
+                            if x[0] == 'single' and score % int(x[2]) == 0 and checker2 and score != 0:
+                                new_buff = Buff(int(x[3]))
+                                buffs.add(new_buff)
+                                all_sprites.add(new_buff)
+                                checker2 = False
+                                print("buff spawned at score " + str(score))
+                            elif x[0] == 'group' and score % int(x[2]) == 0 and buffScoreChecker[pos] and score != 0:
+                                    num = random.randint(1, 100)
+                                    acc = 0
+                                    dc = x[3]
+                                    for index, x in enumerate(dc['chance'], 0):
+                                        acc += int(x)
+                                        if num < acc:
+                                            new_buff = Buff(int(dc['type'][index]))
+                                            buffs.add(new_buff)
+                                            all_sprites.add(new_buff)
+                                            buffScoreChecker[pos] = False
+                                            print("buff spawned at score " + str(score))
+                                            break
+
+                # RESET BUFF SPAWN QUEUE
+                if scoreCheck == 2 or scoreCheck == 3:
+                    for pos, x in enumerate(buffL, 0):
+                        if x[1] == 'score':
+                            if x[0] == 'single' and score % int(x[2]) != 0 and score !=0 and not checker:
+                                checker2 = True
+                            elif x[0] == 'group' and score % int(x[2]) != 0 and score !=0 and not buffScoreChecker[pos]:
+                                buffScoreChecker[pos] = True
+                                print("group buff reset")
+
+                # SPAWN ENEMY FROM SCORE
+                if scoreCheck == 1 or scoreCheck == 3:
+                    for pos, x in enumerate(enemyL, 0):
+                        if x[1] == 'score':
+                            if x[0] == 'single' and score % int(x[2]) == 0 and checker2 and score != 0:
+
+                                new_enemy = EnenmyJet(int(x[3]))
+                                enemies.add(new_enemy)
+                                all_sprites.add(new_enemy)
+                                checker2 = False
+                                print("enemy spawned at score " + str(score))
+
+                            elif x[0] == 'group' and score % int(x[2]) == 0 and enemyScoreChecker[pos] and score != 0:
+                                num = random.randint(1, 100)
+                                acc = 0
+                                dc = x[3]
+                                for index, x in enumerate(dc['chance'], 0):
+                                    acc += int(x)
+                                    if num < acc:
+                                        new_enemy = Buff(int(dc['type'][index]))
+                                        enemies.add(new_enemy)
+                                        all_sprites.add(new_enemy)
+                                        enemyScoreChecker[pos] = False
+                                        print("enemy spawned at score " + str(score))
+                                        break
+
+                # RESET ENEMY SPAWN QUEUE
+                if scoreCheck == 1 or scoreCheck == 3:
+                    for pos, x in enumerate(enemyL, 0):
+                        if x[1] == 'score':
+                            if x[0] == 'single' and score % int(x[2]) != 0 and score !=0:
+                                checker2 = True
+                            elif x[1] == 'group'and score % int(x[2]) != 0 and score !=0:
+                                enemyScoreChecker[pos] = True
+
+                # ============================= SPAWNING BUFFS AND ENEMIES FROM RANDOM =========================
+                # BUFF
+                if randCheck == 2 or randCheck == 3:
+                    for pos, x in enumerate(buffL, 0):
+                        if x[1] == 'random':
+                            y = random.randint(1, 6000)
+                            if y in range(1, int(x[2]) + 1):
+                                print("buff created from random #", y, int(x[2]))
                                 if x[0] == 'single':
                                     new_buff = Buff(int(x[3]))
-                                    enemies.add(new_buff)
+                                    buffs.add(new_buff)
                                     all_sprites.add(new_buff)
-                                    checker2 = False
                                 elif x[0] == 'group':
                                     num = random.randint(1, 100)
                                     acc = 0
@@ -326,12 +412,31 @@ class PackMaker:
                                         acc += int(x)
                                         if num < acc:
                                             new_buff = Buff(int(dc['type'][index]))
-                                            enemies.add(new_buff)
+                                            buffs.add(new_buff)
                                             all_sprites.add(new_buff)
-                                            checker2 = False
                                             break
-                            elif score % int(x[2]) != 0 and score !=0:
-                                checker2 = True
+                # ENEMY
+                if randCheck == 1 or randCheck == 3:
+                    for pos, x in enumerate(enemyL, 0):
+                        if x[1] == 'random':
+                            y = random.randint(1, 6000)
+                            if y in range(1, int(x[2]) + 1):
+                                print("enemy created from random #", y, int(x[2]))
+                                if x[0] == 'single':
+                                    new_enemy = EnenmyJet(int(x[3]))
+                                    enemies.add(new_enemy)
+                                    all_sprites.add(new_enemy)
+                                elif x[0] == 'group':
+                                    num = random.randint(1, 100)
+                                    acc = 0
+                                    dc = x[3]
+                                    for index, x in enumerate(dc['chance'], 0):
+                                        acc += int(x)
+                                        if num < acc:
+                                            new_enemy = EnenmyJet(int(dc['type'][index]))
+                                            enemies.add(new_enemy)
+                                            all_sprites.add(new_enemy)
+                                            break
 
                 # ================================== SPRITE COLLISION DETECTION ====================================
 
@@ -409,5 +514,4 @@ class PackMaker:
                 print("exited")
                 return won, score
 
-            # INCREASE COUNTERS AND RESET GAME LOOP
-            counter += 1
+        return won, score

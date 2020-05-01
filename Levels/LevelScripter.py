@@ -1,7 +1,7 @@
 import json
 
-# =========================================== LEVEL PACK SCRIPT TO MAKE LEVELS =====================================
-# Follow the prompts to make level packs. If you need help check description.
+# =========================================== LEVEL PACK SCRIPT TO MAKE LEVELS =========================================
+# Follow the prompts to make level packs. If you need help check description or documentation on scripter tab.
 
 # validate input but not working
 def validate(string):
@@ -156,7 +156,7 @@ while not exit:
 
         print("level pack saved to", string)
 
-        anotherOne = input("Make another level pack? y/n")
+        anotherOne = input("Make another level pack? y/n: ")
 
         if anotherOne == 'n':
             exit = True
