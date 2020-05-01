@@ -17,13 +17,13 @@ from Levels.PackUnpacker import Unpacker
 
 
 class PackMaker:
-    def __init__(self, ls, pack):
+    def __init__(self, ls, stagenum, pack):
         args = ls  # width, height, bg, screen
         self.screen = args[3]
         self.background = args[2]
         self.SW = args[0]
         self.SH = args[1]
-
+        self.title = stagenum
         # --------------- REAL UNPACK HOURS -----------------
         newUnpacker = Unpacker(pack)
         self.levels = newUnpacker.getLevels()
@@ -32,7 +32,7 @@ class PackMaker:
 
         # ---------------- REALEST UNPACK HOURS -------------------
         level = self.levels[index]
-        levelTitle = ('Level ')
+        levelTitle = self.title
         maxWaves = len(level)
         # ---------------------------------------------------------
 

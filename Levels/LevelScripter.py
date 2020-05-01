@@ -1,4 +1,5 @@
 import json
+import os
 
 # =========================================== LEVEL PACK SCRIPT TO MAKE LEVELS =========================================
 # Follow the prompts to make level packs. If you need help check description or documentation on scripter tab.
@@ -76,13 +77,13 @@ fileCounter = 1  # for saving the packs into diff json files
 while not exit:
 
     # get number of levels
-    levelC = int(input("How many levels do you want in your level pack: "))
+    levelC = int(input("How many parts do you want in your wave: "))
 
     # LEVEL LOOP
     for y in range(1, levelC + 1):
 
         print('\n')
-        level = {'waves': []}  # level to hold all the waves
+        level = {'waves': []}  # level to hold all the info
 
         # get number of waves
         print('-------- Level ' + str(y) + ' -------')
@@ -149,14 +150,19 @@ while not exit:
 
     else:
 
-        string = 'levelpack' + str(fileCounter) + '.json'
+        string = 'wavepack' + str(fileCounter) + '.json'
 
         with open(string, 'w') as f:
             json.dump(levels, f, indent=3)
+            print("level pack saved to", string)
 
-        print("level pack saved to", string)
+        check = input("rename file? y/n: ")
 
-        anotherOne = input("Make another level pack? y/n: ")
+        if check == 'y':
+                newString = input('name: ')
+                os.rename(string, newString)
+
+        anotherOne = input("Make another wave? y/n: ")
 
         if anotherOne == 'n':
             exit = True

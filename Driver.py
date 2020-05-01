@@ -1,6 +1,6 @@
 import pygame_gui
 import pygame
-from Levels import Level1, Level2, Level3, Level4
+from Outdated import Level1, Level2, Level3, Level4
 from Other.Menus import GameMenu
 from pygame.locals import VIDEORESIZE
 from Levels.LevelPackMaker import PackMaker
@@ -54,7 +54,7 @@ ls = [SW, SH, background, window_surface]
 
 #myStageMaker = WaveMaker(ls)
 
-levelPack = PackMaker(ls, 'Levels/levelpack1.json')
+levelPack = PackMaker(ls, 'Stage 1', 'Levels/levelpack1.json')
 # -------------------------------------------------------------------------------------------
 
 gameMenu = GameMenu(SW, SH, manager)  # setup menu class
@@ -65,11 +65,11 @@ time_delta = 0
 def playMusic():
     pygame.mixer.init()
     pygame.mixer.music.load("Media/game2.mp3")
-    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.set_volume(0.2)
     pygame.mixer.music.play(-1)
 
 
-playMusic()
+#playMusic()
 
 while is_running:
 
@@ -117,7 +117,7 @@ while is_running:
                     gameMenu.settings_menu()
                     continueMenu = True
 
-                # settings button
+                # info button from main menu
                 elif event.ui_element == gameMenu.info_button:
                     manager.clear_and_reset()
                     gameMenu.info_menu()

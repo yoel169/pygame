@@ -78,7 +78,6 @@ class GameMenu():
                                                    text='quit to menu', manager=self.manager,
                                                    anchors=anchd)
 
-
     def settings_menu(self):
 
         shootDSize = (0, 0, 200, 70)
@@ -134,10 +133,11 @@ class GameMenu():
                                                          text='quit to menu', manager=self.manager,
                                                          anchors=anchd)
 
+        # description menu
     def info_menu(self):
         labelSize = (0, 0, 500, 120)
         label_rect = pygame.Rect(labelSize)
 
         label_rect.bottomright = (int(- self.SW / 2 + 200), -600)
-        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text='you won!',
+        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text='no exit',
                                             manager=self.manager, anchors=anchd)
