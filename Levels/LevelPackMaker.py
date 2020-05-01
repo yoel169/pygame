@@ -119,12 +119,13 @@ class PackMaker:
             randCheck = 0
             scoreCheck = 0
 
-            # for every enemy that uses time create an event and group and timer event
+            # for every enemy that uses time create an event and timer event
             for count, x in enumerate(enemyL, 0):
                 if x[1] == 'time':
                     ENEMIES.append(py.USEREVENT + events)
                     TIMERS.append(py.time.set_timer(ENEMIES[count], int(x[2])))
                     events += 1
+                    print("timer event for an enemy created")
                 elif x[1] == 'random':
                     randCheck = 1
                 elif x[1] == 'score':
@@ -135,6 +136,7 @@ class PackMaker:
                     BUFFS.append(py.USEREVENT + events)
                     TIMERS.append(py.time.set_timer(ENEMIES[count], int(x[2])))
                     events += 1
+                    print("timer event for a buff created")
                 elif x[1] == 'random':
                     if randCheck == 1:
                         randCheck = 3
@@ -235,6 +237,7 @@ class PackMaker:
                                     new_enemy = EnenmyJet(int(x[3]))
                                     enemies.add(new_enemy)
                                     all_sprites.add(new_enemy)
+                                    print("spawned single enemy from timer")
                                 elif x[0] == 'group':
                                     num = random.randint(1, 100)
                                     acc = 0
@@ -245,12 +248,14 @@ class PackMaker:
                                             new_enemy = EnenmyJet(int(dc['type'][index]))
                                             enemies.add(new_enemy)
                                             all_sprites.add(new_enemy)
+                                            print("spawned an enemy from goup timer")
                                             break
 
                     # BUFF TIMED SPAWN EVENT
                     elif event.type in BUFFS:
                         for x in buffL:
                             if x[1] == 'timer':
+                                print("buff created from timer")
                                 if x[0] == 'single':
                                     new_buff = Buff(int(x[3]))
                                     enemies.add(new_buff)
@@ -266,6 +271,7 @@ class PackMaker:
                                             enemies.add(new_buff)
                                             all_sprites.add(new_buff)
                                             break
+
                     # CLOUD SPAWN EVENT
                     elif event.type == ADDCLOUD:
                         # Create the new cloud and add it to sprite groups
@@ -302,25 +308,30 @@ class PackMaker:
                             bullets.add(new_bullet)
                             all_sprites.add(new_bullet)
 
-                # SPAWNING BUFFS
-                if score % buffSpawn[counter] == 0 and checker and score != 0:  # spawn a new buff
-                    num = random.randint(1, 100)
-                    if num in range(0, 51):
-                        type = 0
-                    elif num in range(50, 76):
-                        type = 1
-                    else:
-                        type = 2
-                    new_buff = Buff(type)
-                    buffs.add(new_buff)
-                    all_sprites.add(new_buff)
-                    checker = False
-
-                # CLEAR BUFF SPAWN CHECK
-                elif score % buffSpawn[counter] != 0 and score != 0:
-                    checker = True
-
-                if
+                if scoreCheck == 2:
+                    for x in buffL:
+                        if x[1] == 'score':
+                            print("buff spawned from score")
+                            if score % int(x[2]) and checker2 and score != 0:
+                                if x[0] == 'single':
+                                    new_buff = Buff(int(x[3]))
+                                    enemies.add(new_buff)
+                                    all_sprites.add(new_buff)
+                                    checker2 = False
+                                elif x[0] == 'group':
+                                    num = random.randint(1, 100)
+                                    acc = 0
+                                    dc = x[3]
+                                    for index, x in enumerate(dc['chance'], 0):
+                                        acc += int(x)
+                                        if num < acc:
+                                            new_buff = Buff(int(dc['type'][index]))
+                                            enemies.add(new_buff)
+                                            all_sprites.add(new_buff)
+                                            checker2 = False
+                                            break
+                            elif score % int(x[2]) != 0 and score !=0:
+                                checker2 = True
 
                 # ================================== SPRITE COLLISION DETECTION ====================================
 

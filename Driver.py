@@ -179,7 +179,7 @@ while is_running:
         args = [option, option2]
         #args2 = [levelTitle, maxWaves, buffSpawn,maxScore, eTypes, enemyTimers]
         #won, score = myStageMaker.makeStage(args, args2)
-        levelPack.getStage(args, 0)
+        won, score = levelPack.getStage(args, 0)
         manager.clear_and_reset()  # reset GUI
 
         if not won:  # if lost launch replay menu
