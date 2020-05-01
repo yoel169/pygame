@@ -2,6 +2,8 @@ import pygame as py
 import pygame_gui as gui
 from pygame.locals import K_p
 
+# ========================================= GAME HUD ===============================================
+
 SW2 = int(1920/2)
 SH2 = int(1080/2)
 

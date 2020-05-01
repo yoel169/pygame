@@ -76,18 +76,21 @@ fileCounter = 1  # for saving the packs into diff json files
 # LEVEL PACK LOOP
 while not exit:
 
-    # get number of levels
-    levelC = int(input("How many parts do you want in your wave: "))
+    # get number of parts(levels)
+    levelC = int(input("How many parts do you want in your pack: "))
 
     # LEVEL LOOP
     for y in range(1, levelC + 1):
 
         print('\n')
-        level = {'waves': []}  # level to hold all the info
+
+        xp = int(input("How much xp for part: "))
+
+        level = {'waves': [], 'xp': xp}  # level to hold all the info
 
         # get number of waves
         print('-------- Level ' + str(y) + ' -------')
-        waves = int(input("How many waves do you want in your level: "))
+        waves = int(input("How many waves do you want in your part: "))
 
         # WAVES LOOP
         for x in range(1, waves + 1):
@@ -96,6 +99,7 @@ while not exit:
 
             # get max score for wave and init enemy and buff lists to be added
             maxScore = int(input("Max score for wave: "))
+            xpW = int(input("xp for wave: "))
             enemies = []
             buffs = []
             appender = [enemies, buffs]  # switch between lists
@@ -135,7 +139,7 @@ while not exit:
             if exit:
                 break
             else:
-                wave = {'maxScore': maxScore, 'enemies': enemies, 'buffs':  buffs}
+                wave = {'maxScore': maxScore, 'xp': xpW, 'enemies': enemies, 'buffs':  buffs}
                 level['waves'].append(wave)
 
         if exit:

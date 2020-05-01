@@ -76,3 +76,6 @@ class Player(pygame.sprite.DirtySprite):
         if self.health <= 0:
             self.health = 30
             self.lives -= 1
+
+    def getInfo(self):
+        return self.health, self.lives, self.damage, self.bspeed, self.speed

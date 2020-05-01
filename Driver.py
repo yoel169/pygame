@@ -38,23 +38,12 @@ level4 = Level4.Level4(args)
 
 levels = [level1, level2, level3, level4]
 
-level_tracker = 0
-numLevels = 4
-
+currentPart = 0
+playerInfo = [None, None, None, None, None]
 # -----------------------------------------------------------------------------------------
-#levelTitle = 'Level 1'  # args0
-#maxWaves = 3  # args1
-
-#buffSpawn = [5,10,15]  # args2
-#maxScore = [25,50,100]  # args4
-#eTypes = [0,1,2]
-#enemyTimers = [500,1000,2000]
-
 ls = [SW, SH, background, window_surface]
 
-#myStageMaker = WaveMaker(ls)
-
-levelPack = PackMaker(ls, 'Stage 1', 'Levels/levelpack1.json')
+stage1 = PackMaker(ls, 'Stage 1', 'Levels/stage1.json')
 # -------------------------------------------------------------------------------------------
 
 gameMenu = GameMenu(SW, SH, manager)  # setup menu class
@@ -180,11 +169,8 @@ while is_running:
     if play:
 
         manager.clear_and_reset()
-        #(won, score) = levels[level_tracker].run()  # launch and return if player won or lost and score
         args = [option, option2]
-        #args2 = [levelTitle, maxWaves, buffSpawn,maxScore, eTypes, enemyTimers]
-        #won, score = myStageMaker.makeStage(args, args2)
-        won, score = levelPack.getStage(args, 0)
+        won, score, playerInfo = stage1.getStage(args, currentPart, playerInfo, score)
         manager.clear_and_reset()  # reset GUI
 
         if not won:  # if lost launch replay menu
@@ -197,13 +183,14 @@ while is_running:
 
             play = False
             manager.clear_and_reset()
-            level_tracker += 1
+            currentPart += 1
             gameMenu.nextLevel()
 
-            if level_tracker >= numLevels:
+            if currentPart >= len(stage1.levels):
                 play = False
                 manager.clear_and_reset()
                 gameMenu.main_menu()
+                score = 0
 
     window_surface.blit(background, (0, 0))
     manager.draw_ui(window_surface)

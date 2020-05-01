@@ -28,7 +28,7 @@ class PackMaker:
         newUnpacker = Unpacker(pack)
         self.levels = newUnpacker.getLevels()
 
-    def getStage(self, args, index):
+    def getStage(self, args, index, playerInfo, sc):
 
         # ---------------- REALEST UNPACK HOURS -------------------
         level = self.levels[index]
@@ -42,7 +42,7 @@ class PackMaker:
         auto_start = 0  # auto shooting time handler
         sBooster = 0  # for auto shooting time control
         time_delta = 0  # time handler for manager
-        score = 0  # player score
+        score = sc  # player score
 
         # INIT GAME VARIABLES
         won = False  # if user won
@@ -78,8 +78,16 @@ class PackMaker:
             mouse = True
         # ===================================== END SHOOTING AND MOVEMENT SETUP ===================================
 
-        # CREATE PLAYER
+        # CREATE and init PLAYER
         player = Player(arrows)
+
+        add = False
+
+        for x in playerInfo:
+            if x is not None:
+                add = True
+        if add:
+           player.health, player.lives, player.damage, player.bspeed, player.speed = playerInfo
 
         # SPRITE GROUPS
         clouds = py.sprite.LayeredDirty()
@@ -510,6 +518,6 @@ class PackMaker:
                 # ========================================= END GAME LOOP  ===========================================
             if exit:
                 print("exited")
-                return won, score
+                return won, score, player.getInfo()
 
-        return won, score
+        return won, score, player.getInfo()

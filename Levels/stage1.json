@@ -1,0 +1,104 @@
+[
+   {
+      "waves": [
+         {
+            "maxScore": 25,
+            "enemies": [
+               [
+                  "single",
+                  "time",
+                  2000,
+                  0
+               ]
+            ],
+            "buffs": [
+               [
+                  "group",
+                  "score",
+                  "5",
+                  {
+                     "type": [
+                        0,
+                        1,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        25,
+                        25
+                     ]
+                  }
+               ]
+            ]
+         }
+      ]
+   },
+   {
+      "waves": [
+         {
+            "maxScore": 50,
+            "enemies": [
+               [
+                  "single",
+                  "time",
+                  1000,
+                  0
+               ]
+            ],
+            "buffs": [
+               [
+                  "group",
+                  "score",
+                  "15",
+                  {
+                     "type": [
+                        0,
+                        1,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        25,
+                        25
+                     ]
+                  }
+               ]
+            ]
+         }
+      ]
+   },
+   {
+      "waves": [
+         {
+            "maxScore": 100,
+            "enemies": [
+               [
+                  "single",
+                  "time",
+                  500,
+                  0
+               ]
+            ],
+            "buffs": [
+               [
+                  "group",
+                  "score",
+                  "20",
+                  {
+                     "type": [
+                        0,
+                        1,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        25,
+                        25
+                     ]
+                  }
+               ]
+            ]
+         }
+      ]
+   }
+]

@@ -1,6 +1,8 @@
 import pygame
 import pygame_gui
 
+# ====================================== MENUS FOR GAME ===============================================
+
 anchd = {'left': 'right', 'right': 'right', 'top': 'bottom', 'bottom': 'bottom'}
 
 
