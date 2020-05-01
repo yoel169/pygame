@@ -117,6 +117,11 @@ while is_running:
                     gameMenu.settings_menu()
                     continueMenu = True
 
+                # settings button
+                elif event.ui_element == gameMenu.info_button:
+                    manager.clear_and_reset()
+                    gameMenu.info_menu()
+
                 # next level button
                 elif event.ui_element == gameMenu.nextL_button:
                     play = True
