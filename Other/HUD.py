@@ -5,6 +5,7 @@ from pygame.locals import K_p
 SW2 = int(1920/2)
 SH2 = int(1080/2)
 
+
 class HUD:
     def __init__(self, screen, manager, bg, title, waves):
 

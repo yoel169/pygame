@@ -46,15 +46,14 @@ class PackMaker:
 
         # INIT GAME VARIABLES
         won = False  # if user won
-        checker = True  # for spawning buffs
-        checker2 = True # spawning enemies
+        checker = True  # for spawning single buffs
+        checker2 = True # spawning single enemies
         customMouse = ()  # custom mouse position if movement with mouse is on
         exit = False  # exit game
         auto = True  # default auto to on
         space = False  # default space shooting to off
         mouse = False  # default mouse movement to off
         counter = 0  # counter for looping through arguments
-        buffSpawn = [5, 10]
 
         # ======================================== SHOOTING AND MOVEMENT SETUP ==================================
         option = args  # SHOOTING AND MOVEMENT
@@ -160,7 +159,6 @@ class PackMaker:
                     else:
                         scoreCheck = 2
 
-            print(str(scoreCheck))
             # ==================================== START  GAME LOOP =========================================
             while running:
 
@@ -389,7 +387,7 @@ class PackMaker:
                         if x[1] == 'score':
                             if x[0] == 'single' and score % int(x[2]) != 0 and score !=0:
                                 checker2 = True
-                            elif x[1] == 'group'and score % int(x[2]) != 0 and score !=0:
+                            elif x[1] == 'group' and score % int(x[2]) != 0 and score !=0:
                                 enemyScoreChecker[pos] = True
 
                 # ============================= SPAWNING BUFFS AND ENEMIES FROM RANDOM =========================

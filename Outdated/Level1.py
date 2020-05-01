@@ -107,6 +107,7 @@ class Level1:
 
 
         # ============================ MAIN GAME LOOP =============================================
+
         while running:
 
             # UPDATE MANAGER

@@ -35,7 +35,7 @@ class GameMenu():
         button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -450)
         self.play_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
                                                    text='Play', manager=self.manager,
-                                                   anchors=anchd)
+                                                   anchors=anchd, object_id='playbutton')
 
         button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -380)
         self.info_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,

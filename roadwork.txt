@@ -22,4 +22,8 @@ Make different difficulties: Easy, Medium, Hard, Insane.
 Save and load options for user to keep track (use JSON).
 Get game to rescale with window resize. * important
 
-
+---------------------------------------------------
+                    Known Bugs
+---------------------------------------------------
+Screen size not scale with smaller screens
+Level scripter
