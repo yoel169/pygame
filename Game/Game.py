@@ -16,7 +16,7 @@ from Game.GamePackUnpacker import Unpacker
 # ============================= Updated wave pack reader and game maker using script =================================
 
 
-class PackMaker:
+class Game:
     def __init__(self, ls, stagename, pack):
         args = ls  # width, height, bg, screen
         self.screen = args[3]
@@ -187,8 +187,10 @@ class PackMaker:
                     print("next wave!")
 
                 # LOSE ARGUMENT
-                if player.lives <= 0:
+                if player.health <= 0:
                     won = False
+                    player.health = player.maxHealth
+                    player.lives -= 1
                     running = False
                     exit = True
                     print("you died!")

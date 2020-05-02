@@ -28,13 +28,14 @@ class Player(pygame.sprite.DirtySprite):
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.surf.get_rect(center = (20, halfh ))
         self._layer = 1
-        self.health = 50
+        self.maxHealth = 100
+        self.health = self.maxHealth
         self.lives = 2
         self.speed = 0
         self.damage = 10
         self.arrows = option
         self.bspeed = 10
-        self.maxHealth = 100
+
 
     # Move the sprite based on user keypresses
     def update(self, pressed_keys):
@@ -71,11 +72,6 @@ class Player(pygame.sprite.DirtySprite):
             self.rect.top = 110
         if self.rect.bottom >= SCREEN_HEIGHT:
             self.rect.bottom = SCREEN_HEIGHT
-
-        # lose life if health is at 0
-        if self.health <= 0:
-            self.health = 30
-            self.lives -= 1
 
     def getInfo(self):
         return self.health, self.lives, self.damage, self.bspeed, self.speed

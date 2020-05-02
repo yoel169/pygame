@@ -2,7 +2,7 @@ import json
 import pygame as py
 import random
 
-# =================================== UNPACK A LEVEL PACK ===================================
+# =================================== UNPACK A WAVE PACK ===================================
 
 
 class Unpacker:
