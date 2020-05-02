@@ -11,9 +11,9 @@ import random
 from Actors.Players import Player
 from Actors.Neutrals import Cloud, Bullet1, Buff
 from Actors.Enemies import EnenmyJet, EBullet
-from Levels.PackUnpacker import Unpacker
+from Game.GamePackUnpacker import Unpacker
 
-# ============================= Updated level pack reader and level maker using script =================================
+# ============================= Updated wave pack reader and game maker using script =================================
 
 
 class PackMaker:
@@ -28,7 +28,7 @@ class PackMaker:
         newUnpacker = Unpacker(pack)
         self.levels = newUnpacker.getLevels()
 
-    def getPart(self, args, index, playerInfo, sc):
+    def getPart(self, args, index, playerInfo, sc, bps):
 
         # ---------------- REALEST UNPACK HOURS -------------------
         level = self.levels[index]
@@ -87,7 +87,8 @@ class PackMaker:
             if x is not None:
                 add = True
         if add:
-           player.health, player.lives, player.damage, player.bspeed, player.speed = playerInfo
+           player.health, player.lives, player.damage, player.bspeed, player.pspeed = playerInfo
+           sBooster = bps
 
         # SPRITE GROUPS
         clouds = py.sprite.LayeredDirty()
@@ -518,6 +519,6 @@ class PackMaker:
                 # ========================================= END GAME LOOP  ===========================================
             if exit:
                 print("exited")
-                return won, score, player.getInfo()
+                return won, score, player.getInfo(), sBooster
 
-        return won, score, player.getInfo()
+        return won, score, player.getInfo(), sBooster

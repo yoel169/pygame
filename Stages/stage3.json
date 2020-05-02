@@ -75,19 +75,16 @@
             "maxScore": 150,
             "enemies": [
                [
-                  "group",
+                  "single",
                   "time",
-                  "1000",
-                  {
-                     "type": [
-                        0,
-                        1
-                     ],
-                     "chance": [
-                        50,
-                        50
-                     ]
-                  }
+                  1000,
+                  1
+               ],
+               [
+                  "single",
+                  "time",
+                  1000,
+                  0
                ]
             ],
             "buffs": [
@@ -119,19 +116,16 @@
             "maxScore": 200,
             "enemies": [
                [
-                  "group",
+                  "single",
                   "time",
-                  "1000",
-                  {
-                     "type": [
-                        1,
-                        2
-                     ],
-                     "chance": [
-                        50,
-                        50
-                     ]
-                  }
+                  1000,
+                  1
+               ],
+               [
+                  "single",
+                  "time",
+                  1000,
+                  2
                ]
             ],
             "buffs": [

@@ -2,11 +2,16 @@ import pygame_gui
 import pygame
 from Other.Menus import GameMenu
 from pygame.locals import VIDEORESIZE
-from Levels.LevelPackMaker import PackMaker
+from Game.Game import PackMaker
+from Other.Constants import Constants
+
+const = Constants()
 
 pygame.init()
 
-SW, SH = pygame.display.Info().current_w, pygame.display.Info().current_h
+SW, SH = pygame.display.Info().current_w, pygame.display.Info().current_h - 60
+
+Constants.screenSize = (SH, SH)  # change class variable of constant to share screen size among other classes
 
 pygame.display.set_caption('World Flying Shooter')
 window_surface = pygame.display.set_mode((SW, SH), flags=pygame.RESIZABLE)
@@ -31,16 +36,23 @@ clock = pygame.time.Clock()
 currentPart = 0
 currentStage = 0
 
+# default set user variables to none
 playerInfo = [None, None, None, None, None]
+bps = None
+
+# screen args
 ls = [SW, SH, background, window_surface]
+
+# hold all stages
 levels = []
 
 # create first 3 stages
 for x in range(1,4):
-    pack = 'Levels/stage' + str(x) + '.json'
+    pack = 'Stages/stage' + str(x) + '.json'
     title = 'Stage ' + str(x)
     levels.append(PackMaker(ls,title,pack))
 
+maxStageNum = len(levels) - 1
 # -------------------------------------------------------------------------------------------
 
 gameMenu = GameMenu(SW, SH, manager)  # setup menu class
@@ -66,6 +78,7 @@ while is_running:
         if event.type == pygame.QUIT:
             is_running = False
 
+        # doesn't do jack?
         elif event.type == VIDEORESIZE:
             screen = pygame.display.set_mode(event.dict['size'], flags= pygame.RESIZABLE)
             screen.blit(pygame.transform.scale(background, event.dict['size']), (0, 0))
@@ -167,7 +180,7 @@ while is_running:
 
         manager.clear_and_reset()
         args = [option, option2]
-        won, score, playerInfo = levels[currentStage].getPart(currentPart)
+        won, score, playerInfo, bps = levels[currentStage].getPart(args, currentPart, playerInfo, score, bps)
         manager.clear_and_reset()  # reset GUI
 
         if not won:  # if lost launch replay menu
@@ -176,19 +189,32 @@ while is_running:
             manager.clear_and_reset()
             gameMenu.replay_menu()
 
-        elif won:  # if won launch next level menu
+        elif won:  # if won
 
             play = False
             manager.clear_and_reset()
-            currentPart += 1
-            gameMenu.nextLevel("next part")
 
-            if currentPart >= len(levels[currentStage].levels):
-                play = False
+            # if there are no more parts in the stage
+            if currentPart >= len(levels[currentStage].levels) - 1:
+
+                # reset player info and current part and increase current stage
                 score = 0
+                playerInfo = [None, None, None, None, None]
+                bps = None
                 currentStage += 1
-                manager.clear_and_reset()
-                gameMenu.nextLevel("next stage")
+                currentPart = 0
+
+                # if we ran out of stages go to main menu else next stage
+                if currentStage >= maxStageNum:
+                    gameMenu.main_menu()
+                else:
+                    manager.clear_and_reset()
+                    gameMenu.nextLevel("next stage")
+
+            # else if there are more parts increase counter and summon holy menu
+            else:
+                currentPart += 1
+                gameMenu.nextLevel("next part")
 
 
     window_surface.blit(background, (0, 0))

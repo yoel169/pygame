@@ -114,7 +114,7 @@ class GameMenu():
         label_rect = pygame.Rect(labelSize)
 
         label_rect.bottomright = (int(- self.SW / 2 + 200), -600)
-        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text='string',
+        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text=string,
                                             manager=self.manager, anchors=anchd)
 
         buttonSize = (0, 0, 150, 60)

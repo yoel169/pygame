@@ -1,12 +1,12 @@
 import pygame
 import random
+from Other.Constants import Constants
 from pygame.locals import (
     RLEACCEL
 )
 
 # Define constants for the screen width and height
-SCREEN_WIDTH = 1920
-SCREEN_HEIGHT = 1080
+SCREEN_WIDTH, SCREEN_HEIGHT = Constants.screenSize
 
 
 class Cloud(pygame.sprite.DirtySprite):

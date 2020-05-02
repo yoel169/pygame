@@ -1,11 +1,14 @@
 import pygame as py
 import pygame_gui as gui
 from pygame.locals import K_p
+from Other.Constants import Constants
 
 # ========================================= GAME HUD ===============================================
 
-SW2 = int(1920/2)
-SH2 = int(1080/2)
+SW, SH = Constants.screenSize
+
+SW2 = int(SW/2)
+SH2 = int(SW/2)
 
 
 class HUD:

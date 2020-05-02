@@ -1,4 +1,5 @@
 import pygame
+from Other.Constants import Constants
 
 # Import pygame.locals for easier access to key coordinates
 # Updated to conform to flake8 and black standards
@@ -15,9 +16,8 @@ from pygame.locals import (
 )
 
 # Define constants for the screen width and height
-SCREEN_WIDTH = 1920
-SCREEN_HEIGHT = 1080
-halfh = int (SCREEN_HEIGHT/2)
+SCREEN_WIDTH, SCREEN_HEIGHT = Constants.screenSize
+halfh = int(SCREEN_HEIGHT/2)
 
 # Define a player object by extending pygame.sprite.Sprite
 # The surface drawn on the screen is now an attribute of 'player'
