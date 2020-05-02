@@ -77,20 +77,20 @@ fileCounter = 1  # for saving the packs into diff json files
 while not exit:
 
     # get number of parts(levels)
-    levelC = int(input("How many parts do you want in your pack: "))
+    levelC = int(input("How many parts do you want in your stage: "))
 
     # LEVEL LOOP
     for y in range(1, levelC + 1):
 
         print('\n')
 
+        # get number of waves
+        print('-------- Part ' + str(y) + ' -------')
+        waves = int(input("How many waves do you want in your part: "))
+
         xp = int(input("How much xp for part: "))
 
         level = {'waves': [], 'xp': xp}  # level to hold all the info
-
-        # get number of waves
-        print('-------- Level ' + str(y) + ' -------')
-        waves = int(input("How many waves do you want in your part: "))
 
         # WAVES LOOP
         for x in range(1, waves + 1):
@@ -99,7 +99,7 @@ while not exit:
 
             # get max score for wave and init enemy and buff lists to be added
             maxScore = int(input("Max score for wave: "))
-            xpW = int(input("xp for wave: "))
+           # xpW = int(input("xp for wave: "))
             enemies = []
             buffs = []
             appender = [enemies, buffs]  # switch between lists
@@ -127,10 +127,15 @@ while not exit:
                     elif checker == 'group':
 
                         spawnT, spawnV = input("Enter spawn type and value: ").split()
-                        type_ = list(map(int, input("Enter " + script[x] + " types: ").split()))
-                        optional = validateRange("Enter % between enemy spawns: ", len(type_))
-
-                        appender[x].append(['group', spawnT, spawnV, {'type': type_, 'chance': optional}])
+                        pick = int(input("Enter a preset or 0 to cont: "))
+                        if pick in range(1,4):
+                            if pick == 1:
+                                print(" selected buff group [0 1 2] with 50/25/25 chance")
+                                appender[x].append(['group', spawnT, spawnV, {'type': [0,1,2], 'chance': [50, 25, 25]}])
+                        elif pick == 0:
+                            type_ = list(map(int, input("Enter " + script[x] + " types: ").split()))
+                            optional = validateRange("Enter % between enemy spawns: ", len(type_))
+                            appender[x].append(['group', spawnT, spawnV, {'type': type_, 'chance': optional}])
 
                     elif checker == 'single':
 
@@ -139,7 +144,7 @@ while not exit:
             if exit:
                 break
             else:
-                wave = {'maxScore': maxScore, 'xp': xpW, 'enemies': enemies, 'buffs':  buffs}
+                wave = {'maxScore': maxScore, 'enemies': enemies, 'buffs':  buffs}
                 level['waves'].append(wave)
 
         if exit:
@@ -160,13 +165,13 @@ while not exit:
             json.dump(levels, f, indent=3)
             print("level pack saved to", string)
 
-        check = input("rename file? y/n: ")
+        #check = input("rename file? y/n: ")
 
-        if check == 'y':
-                newString = input('name: ')
-                os.rename(string, newString)
+        #if check == 'y':
+        #        newString = input('name: ')
+        #        os.rename(string, newString)
 
-        anotherOne = input("Make another wave? y/n: ")
+        anotherOne = input("Make another stage? y/n: ")
 
         if anotherOne == 'n':
             exit = True

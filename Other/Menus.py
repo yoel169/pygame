@@ -109,12 +109,12 @@ class GameMenu():
                                                          text='Confirm', manager=self.manager,
                                                          anchors=anchd)
 
-    def nextLevel(self):
+    def nextLevel(self, string):
         labelSize = (0, 0, 500, 120)
         label_rect = pygame.Rect(labelSize)
 
         label_rect.bottomright = (int(- self.SW / 2 + 200), -600)
-        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text='you won!',
+        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text='string',
                                             manager=self.manager, anchors=anchd)
 
         buttonSize = (0, 0, 150, 60)

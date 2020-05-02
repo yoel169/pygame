@@ -1,10 +1,9 @@
 import pygame_gui
 import pygame
-from Outdated import Level1, Level2, Level3, Level4
 from Other.Menus import GameMenu
 from pygame.locals import VIDEORESIZE
 from Levels.LevelPackMaker import PackMaker
-# from Levels.Stage1 import WaveMaker
+
 pygame.init()
 
 SW, SH = pygame.display.Info().current_w, pygame.display.Info().current_h
@@ -28,22 +27,20 @@ gameReturn = False
 continueMenu = False
 clock = pygame.time.Clock()
 
-# levels
-args = [SW, SH, background, window_surface, option, option2]
-
-level1 = Level1.Level1(args)
-level2 = Level2.Level2(args)
-level3 = Level3.Level3(args)
-level4 = Level4.Level4(args)
-
-levels = [level1, level2, level3, level4]
-
+# stages and part tracker
 currentPart = 0
-playerInfo = [None, None, None, None, None]
-# -----------------------------------------------------------------------------------------
-ls = [SW, SH, background, window_surface]
+currentStage = 0
 
-stage1 = PackMaker(ls, 'Stage 1', 'Levels/stage1.json')
+playerInfo = [None, None, None, None, None]
+ls = [SW, SH, background, window_surface]
+levels = []
+
+# create first 3 stages
+for x in range(1,4):
+    pack = 'Levels/stage' + str(x) + '.json'
+    title = 'Stage ' + str(x)
+    levels.append(PackMaker(ls,title,pack))
+
 # -------------------------------------------------------------------------------------------
 
 gameMenu = GameMenu(SW, SH, manager)  # setup menu class
@@ -170,7 +167,7 @@ while is_running:
 
         manager.clear_and_reset()
         args = [option, option2]
-        won, score, playerInfo = stage1.getStage(args, currentPart, playerInfo, score)
+        won, score, playerInfo = levels[currentStage].getPart(currentPart)
         manager.clear_and_reset()  # reset GUI
 
         if not won:  # if lost launch replay menu
@@ -184,13 +181,15 @@ while is_running:
             play = False
             manager.clear_and_reset()
             currentPart += 1
-            gameMenu.nextLevel()
+            gameMenu.nextLevel("next part")
 
-            if currentPart >= len(stage1.levels):
+            if currentPart >= len(levels[currentStage].levels):
                 play = False
-                manager.clear_and_reset()
-                gameMenu.main_menu()
                 score = 0
+                currentStage += 1
+                manager.clear_and_reset()
+                gameMenu.nextLevel("next stage")
+
 
     window_surface.blit(background, (0, 0))
     manager.draw_ui(window_surface)

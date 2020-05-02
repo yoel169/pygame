@@ -15,13 +15,16 @@ class Unpacker:
         levels = []
         for level in self.data:  #levels
             for wave, value in level.items():  # waves
+                print(value)
                 waves = []
                 for values in value:  # wave info
                     for a, b in values.items():
                         maxscore = int(values['maxScore'])
                         enemies = values['enemies']
                         buffs = values['buffs']
-                    waves.append([maxscore,enemies,buffs])
+                    waves.append([maxscore, enemies, buffs])
             levels.append(waves)
 
         return levels
+
+#

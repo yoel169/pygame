@@ -17,18 +17,18 @@ from Levels.PackUnpacker import Unpacker
 
 
 class PackMaker:
-    def __init__(self, ls, stagenum, pack):
+    def __init__(self, ls, stagename, pack):
         args = ls  # width, height, bg, screen
         self.screen = args[3]
         self.background = args[2]
         self.SW = args[0]
         self.SH = args[1]
-        self.title = stagenum
+        self.title = stagename
         # --------------- REAL UNPACK HOURS -----------------
         newUnpacker = Unpacker(pack)
         self.levels = newUnpacker.getLevels()
 
-    def getStage(self, args, index, playerInfo, sc):
+    def getPart(self, args, index, playerInfo, sc):
 
         # ---------------- REALEST UNPACK HOURS -------------------
         level = self.levels[index]
