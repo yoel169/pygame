@@ -466,8 +466,8 @@ class Game:
                     elif hit.type == 1:
                         self.player.damage += hit.power
                     else:
-                        if self.player.bps <= self.player.bps:
-                            self.player.bps += hit.power
+                        if not self.player.bps <= self.player.bpsMax:
+                            self.player.bps - hit.power
                     print("power up!")
                     hit.kill()
 

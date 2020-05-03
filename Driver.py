@@ -9,6 +9,7 @@ from Saves.SaveLoad import PlayerHandler
 import datetime
 from Actors.Players import Player
 import json
+from Other.PlayerPanel import PlayerPanel
 
 # ================================== DRIVER CLASS FOR GAME ======================================
 
@@ -93,6 +94,8 @@ playerSave = {}
 gameMenu = GameMenu(SW, SH, manager)
 gameMenu.main_menu()
 
+# setup player info panel
+playerPanel = PlayerPanel(window_surface,manager,background)
 #input box
 #input_box1 = InputBox(100, 100, 140, 32)
 
@@ -146,16 +149,20 @@ while is_running:
                     filename = gameMenu.savelist_selection.get_single_selection()
                     if filename is not None:
                         playerSave = PlayerHandler.loadSave(playerHandler, filename)
+                        player.setInfo(playerSave['player'])
+                        option, option2 = playerSave['settings'][0], playerSave['settings'][1]
+                        currentStage, currentPart = playerSave['stage'][0], playerSave['stage'][1]
                     manager.clear_and_reset()
                     gameMenu.main_menu()
 
                 # save
                 elif event.ui_element == gameMenu.save_button:
                     if len(playerSave) == 0:
-                        time1 = datetime.datetimenow()
+                        time1 = datetime.datetime.now()
                         time1 = time1.strftime("%m-%d-%y %I %p")
-                        playerInfo = {'name': 'yoel', }
-                        # playerHandler.save(player,'yoel',[time1,time1],[option, option2])
+                        db = {'name': 'yoel', 'player': player.getInfo(), 'times': [time1,time1],
+                              'settings': [option, option2], 'stage': [currentStage, currentPart]}
+                        playerHandler.save(db)
 
                 # settings button
                 elif event.ui_element == gameMenu.setting_button:
@@ -175,9 +182,9 @@ while is_running:
                     continueMenu = True
 
                 # info button from main menu
-                elif event.ui_element == gameMenu.info_button:
-                    manager.clear_and_reset()
-                    gameMenu.info_menu()
+                #elif event.ui_element == gameMenu.info_button:
+                    #manager.clear_and_reset()
+                    #gameMenu.info_menu()
 
                 # next level button
                 elif event.ui_element == gameMenu.nextL_button:

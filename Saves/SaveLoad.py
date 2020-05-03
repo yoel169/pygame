@@ -1,22 +1,17 @@
-import json
-import pygame
 from os import listdir, path
-import datetime
+from pickle import dump, load
+
 
 class PlayerHandler():
     def __init__(self):
-        self.saveFile, self.player, self.playerInfo, self.dates, self.settings = {}, None, {}, [], {}
+        self.saveFile = {}
 
-    def save(self, player, info, dates, settings):
-        self.player, self.playerInfo, self.dates, self.settings = player, info, dates, settings
+    def save(self, db):
 
-        self.saveFile = {'name': self.player, 'playerinfo': self.playerinfo, 'dates': self.dates,
-                         'settings': self.settings}
+        string = 'Saves/' +str(db['name']) + '.sf'
 
-        string = str(info['name']) + '.save'
-
-        with open(string, 'w') as f:
-            json.dump(self.saveFile, f, indent=3)
+        with open(string, 'bw') as f:
+            dump(db, f)
 
     def getSaves(self):
         names = []
@@ -27,6 +22,8 @@ class PlayerHandler():
 
     def loadSave(self, filename):
         string = 'Saves/' + filename + '.sf'
-        with open(string, 'r') as f:
-            self.saveFile = json.load(f)
+        with open(string, 'rb') as f:
+            self.saveFile = load(f)
+            for keys in self.saveFile:
+                print(keys)
         return self.saveFile

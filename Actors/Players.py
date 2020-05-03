@@ -81,7 +81,10 @@ class Player(pygame.sprite.DirtySprite):
             self.health = self.maxHealth
 
     def getInfo(self):
-        return self.health, self.lives, self.damage, self.bspeed, self.pspeed
+        return self. arrows, self.health, self.maxHealth,self.lives, self.damage, self.pspeed, self.bspeed, self.bps, self.bpsMax
+
+    def setInfo(self, db):
+        self.arrows, self.health, self.maxHealth, self.lives, self.damage, self.pspeed, self.bspeed, self.bps, self.bpsMax = db
 
     # reset user back to defaults
     def reset(self):
@@ -93,3 +96,4 @@ class Player(pygame.sprite.DirtySprite):
         self.bspeed = 10
         self.pspeed = 5
         self.bps = 600
+        self.bpsMax = 300

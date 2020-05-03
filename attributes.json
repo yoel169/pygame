@@ -30,15 +30,15 @@
      {
          "colours":
          {
-             "normal_bg":"#45494e",
-             "hovered_bg":"#35393e",
+             "normal_bg":"#0CA2F9",
+             "hovered_bg":"#0080FF",
              "disabled_bg":"#25292e",
              "selected_bg":"#193754",
              "active_bg":"#193754",
              "dark_bg":"#15191e",
-             "normal_text":"#c5cbd8",
+             "normal_text":"#FFFFFF",
              "hovered_text":"#FFFFFF",
-             "selected_text":"#FFFFFF",
+             "selected_text":"#000000",
              "disabled_text":"#6d736f",
              "active_text":"#FFFFFF",
              "normal_border": "#DDDDDD",
@@ -54,7 +54,7 @@
          }
      },
 
-     "label":
+     "maintitle":
      {
          "colours":
          {
@@ -64,11 +64,41 @@
          },
          "font":
          {
-	     "name": "game dev",
+	     "name": "gameDev",
 	     "regular_path": "Other/gameDev.ttf",
              "size": "100",
              "bold": "0",
              "italic": "0"
+         },
+         "misc":
+         {
+             "text_shadow": "1",
+             "text_shadow_size": "1",
+             "text_shadow_offset": "0,0"
+         }
+     },
+
+	"playerpanel":
+     	{
+         "colours":
+         {
+             "dark_bg":"#89CFF0",
+             "normal_border": "#999999"
+         },
+         "misc":
+         {
+             "shape": "rounded_rectangle",
+             "shape_corner_radius": "10",
+             "border_width": "1",
+             "shadow_width": "15"
+         },
+	"label":
+     {
+         "colours":
+         {
+             "dark_bg": "#89CFF0",
+             "normal_text": "#c5cbd8",
+             "text_shadow": "#505050"
          },
          "misc":
          {

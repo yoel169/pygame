@@ -73,8 +73,9 @@
       work ;)
     * Constants class saves screen size and applies it to classes that need it
 ------------------------------------------------------------------------------------------------------------------------
-3.1 * Got a player handler class working for load and saving. Still need to finish it. Convert to pickle module.
+3.1 * Player can now save and load their progress. It saves their stats, stage and part, as well as settings.
     * Player gets passed between parts instead of passing the player values. Player gets reset to defaults after a stage.
     * Moved HUD labels around and added add money, part and time info.
     * Created a game config json file that saves the users screen preference. Changing the screen at settings will update
      it.
+    * Moved main menu selections to add a player info panel. Changed some colors yay finally.

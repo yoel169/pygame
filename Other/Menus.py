@@ -32,39 +32,39 @@ class GameMenu():
         buttonSize2 = (0, 0, 70, 60)
         save_load_rect = pygame.Rect(buttonSize2)
 
-        labelSize = (0, 0,1000, 150)
+        labelSize = (0, 0,1000, 110)
         label_rect = pygame.Rect(labelSize)
 
         label_rect.bottomright = (int( - self.SW / 2 + 500), -650)
         title = pygame_gui.elements.UILabel(relative_rect=label_rect, text= ' WORLD FLYING SHOOTER',
-                                            manager=self.manager, anchors=anchd)
+                                            manager=self.manager, anchors=anchd, object_id='maintitle')
 
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -450)
+        button_layout_rect.bottomright = (int(-self.SW / 2) - 200, -450)
         self.play_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
                                                    text='Play', manager=self.manager,
                                                    anchors=anchd, object_id='playbutton')
 
-        save_load_rect.bottomright = (int(-self.SW / 2) - 30, -380)
+        save_load_rect.bottomright = (int(-self.SW / 2) - 280, -380)
         self.save_button = pygame_gui.elements.UIButton(relative_rect=save_load_rect,
                                                         text='Save', manager=self.manager,
                                                         anchors=anchd)
 
-        save_load_rect.bottomright = (int(-self.SW / 2) + 50, -380)
+        save_load_rect.bottomright = (int(-self.SW / 2) -200, -380)
         self.load_button = pygame_gui.elements.UIButton(relative_rect=save_load_rect,
                                                         text='Load', manager=self.manager,
                                                         anchors=anchd)
 
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -310)
+        button_layout_rect.bottomright = (int(-self.SW / 2) -200, -310)
         self.info_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
                                                    text='Instructions', manager=self.manager,
                                                    anchors=anchd)
 
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -240)
+        button_layout_rect.bottomright = (int(-self.SW / 2) - 200, -240)
         self.setting_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
                                                    text='Settings', manager=self.manager,
                                                    anchors=anchd)
 
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -170)
+        button_layout_rect.bottomright = (int(-self.SW / 2) - 200, -170)
         self.quit_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
                                                    text='Quit', manager=self.manager,
                                                    anchors=anchd)
