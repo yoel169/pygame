@@ -2,7 +2,7 @@ import pygame_gui
 import pygame
 from Other.Menus import GameMenu
 from pygame.locals import VIDEORESIZE
-from Game.Game import PackMaker
+from Game.Game import Game
 from Other.Constants import Constants
 
 const = Constants()
@@ -50,7 +50,7 @@ levels = []
 for x in range(1,4):
     pack = 'Stages/stage' + str(x) + '.json'
     title = 'Stage ' + str(x)
-    levels.append(PackMaker(ls,title,pack))
+    levels.append(Game(ls, title, pack))
 
 maxStageNum = len(levels) - 1
 # -------------------------------------------------------------------------------------------
@@ -187,7 +187,15 @@ while is_running:
 
             play = False
             manager.clear_and_reset()
-            gameMenu.replay_menu()
+
+            # if lives reached 0 reset part
+            if playerInfo[1] == 0:
+                currentPart, bps, score = 0, None, 0
+                playerInfo = [None, None, None, None, None]
+
+                gameMenu.replay_menu('no more lives')
+            else:
+                gameMenu.replay_menu('try again?')
 
         elif won:  # if won
 
