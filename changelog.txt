@@ -70,3 +70,4 @@
     * Renamed some files like LevelPackMaker to game, ScriptMaker to GameMaker, and LevelpackUnpacker to GamePackUnpacker
       because it just makes more sense. Also outdated folder contains... well outdated code for referencing my hard
       work ;)
+    * Constants class saves screen size and applies it to classes that need it

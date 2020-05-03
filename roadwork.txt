@@ -1,13 +1,12 @@
 ----------------------------------------------------
                 Current track
 ----------------------------------------------------
-Create 5 more levels with new enemies/ and or buffs
+save / load menus
+create a menu for picking levels
+player level and xp system
 Work on a shop menu for upgrades.
 New player jet
-player level and xp system
 Work on different bullets
-create a menu for picking levels
-save / load menus
 Sandbox Mode
 
 ---------------------------------------------------
