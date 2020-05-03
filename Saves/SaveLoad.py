@@ -24,6 +24,4 @@ class PlayerHandler():
         string = 'Saves/' + filename + '.sf'
         with open(string, 'rb') as f:
             self.saveFile = load(f)
-            for keys in self.saveFile:
-                print(keys)
         return self.saveFile

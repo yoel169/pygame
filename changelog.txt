@@ -79,3 +79,4 @@
     * Created a game config json file that saves the users screen preference. Changing the screen at settings will update
      it.
     * Moved main menu selections to add a player info panel. Changed some colors yay finally.
+    * player info panel is there but not working correctly, the panel gets destroyed after player loads?

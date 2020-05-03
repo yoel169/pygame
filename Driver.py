@@ -152,6 +152,7 @@ while is_running:
                         player.setInfo(playerSave['player'])
                         option, option2 = playerSave['settings'][0], playerSave['settings'][1]
                         currentStage, currentPart = playerSave['stage'][0], playerSave['stage'][1]
+                        playerPanel.setPlayer(playerSave)
                     manager.clear_and_reset()
                     gameMenu.main_menu()
 
