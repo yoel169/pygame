@@ -78,7 +78,7 @@
          }
      },
 
-	"playerpanel":
+      "playerpanel":
      	{
          "colours":
          {
@@ -91,14 +91,24 @@
              "shape_corner_radius": "10",
              "border_width": "1",
              "shadow_width": "15"
-         },
-	"label":
-     {
+       	  }
+	},
+
+	"paneltitle":
+     	{
          "colours":
          {
              "dark_bg": "#89CFF0",
              "normal_text": "#c5cbd8",
              "text_shadow": "#505050"
+         },
+         "font":
+         {
+	     "name": "gameDev",
+	     "regular_path": "Other/gameDev.ttf",
+             "size": "25",
+             "bold": "0",
+             "italic": "0"
          },
          "misc":
          {
@@ -107,4 +117,5 @@
              "text_shadow_offset": "0,0"
          }
      }
+   
 }

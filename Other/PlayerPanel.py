@@ -33,9 +33,49 @@ class PlayerPanel:
                                                                     'top': 'top',
                                                                     'bottom': 'bottom'})
 
-        self.title_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 60, 5), (100, 20)),
-                                                text='Player Info',
+        self.title_label = gui.elements.UILabel(relative_rect=py.Rect((120, 10), (120, 30)),
+                                                text='Player Info', manager=self.manager, container=self.hud
+                                                , object_id='paneltitle')
+
+        self.stage_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 60, 25), (100, 20)),
+                                               text=('Part: ' + str(part) + '/' + str(partmax)),
+                                               manager=self.manager, container=self.hud)
+
+        self.time_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 50, 65), (200, 20)),
+                                               text=('Time: '),
+                                               manager=self.manager, container=self.hud)
+
+        self.life_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 50, 5), (200, 20)),
+                                               text='Lives: 0',
+                                               manager=self.manager, container=self.hud)
+
+        self.health_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 90, 25), (120, 20)),
+                                                 text='Health: 0',
+                                                 manager=self.manager, container=self.hud)
+
+        self.score_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 60, 65), (100, 20)),
+                                                text='Score: 0',
                                                 manager=self.manager, container=self.hud)
+
+        self.money_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 50, 45), (200, 20)),
+                                                text='Money: 0',
+                                                manager=self.manager, container=self.hud)
+
+        self.wave_label = gui.elements.UILabel(relative_rect=py.Rect((0, 5), (200, 20)),
+                                               text='wave: ',
+                                               manager=self.manager, container=self.hud)
+
+        self.damage_label = gui.elements.UILabel(relative_rect=py.Rect((0, 25), (200, 20)),
+                                                 text='damage: ',
+                                                 manager=self.manager, container=self.hud)
+
+        self.bps_label = gui.elements.UILabel(relative_rect=py.Rect((0, 45), (200, 20)),
+                                              text='bullets every: ',
+                                              manager=self.manager, container=self.hud)
+
+        self.bspeed_label = gui.elements.UILabel(relative_rect=py.Rect((0, 65), (200, 20)),
+                                                 text='bullet speed: ',
+                                                 manager=self.manager, container=self.hud)
 
     def update(self, wave, score, score2, health, health2, lives, damage, bps, bspeed, money, time):
         self.wave_label.set_text(('wave: ' + str(wave) + '/' + str(self.maxWaves)))
