@@ -72,3 +72,9 @@
       because it just makes more sense. Also outdated folder contains... well outdated code for referencing my hard
       work ;)
     * Constants class saves screen size and applies it to classes that need it
+------------------------------------------------------------------------------------------------------------------------
+3.1 * Got a player handler class working for load and saving. Still need to finish it. Convert to pickle module.
+    * Player gets passed between parts instead of passing the player values. Player gets reset to defaults after a stage.
+    * Moved HUD labels around and added add money, part and time info.
+    * Created a game config json file that saves the users screen preference. Changing the screen at settings will update
+     it.

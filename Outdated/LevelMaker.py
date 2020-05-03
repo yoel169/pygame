@@ -219,7 +219,7 @@ class LevelMaker:
                 for enemy in enemies:
                     if random.randint(0,100) == 0:
                         if enemy.type == 1:
-                            new_bullet = EBullet(enemy.rect.center, enemy.damage, enemy.speed + 5)
+                            new_bullet = EBullet(enemy.rect.center, enemy.damage, enemy.pspeed + 5)
                             bullets.add(new_bullet)
                             all_sprites.add(new_bullet)
 

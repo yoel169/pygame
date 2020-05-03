@@ -17,18 +17,20 @@ from Game.GamePackUnpacker import Unpacker
 
 
 class Game:
-    def __init__(self, ls, stagename, pack):
+    def __init__(self, ls, stagename, pack, pl):
         args = ls  # width, height, bg, screen
         self.screen = args[3]
         self.background = args[2]
         self.SW = args[0]
         self.SH = args[1]
         self.title = stagename
+        self.player = pl
         # --------------- REAL UNPACK HOURS -----------------
         newUnpacker = Unpacker(pack)
         self.levels = newUnpacker.getLevels()
 
-    def getPart(self, args, index, playerInfo, sc, bps):
+    # get part: args are user options, index is part #, and sc is score
+    def getPart(self, args, index, sc):
 
         # ---------------- REALEST UNPACK HOURS -------------------
         level = self.levels[index]
@@ -40,9 +42,9 @@ class Game:
         clock = py.time.Clock()  # time handler for game
         manual_start = 0  # shooting with space time handler if turned on
         auto_start = 0  # auto shooting time handler
-        sBooster = 0  # for auto shooting time control
         time_delta = 0  # time handler for manager
         score = sc  # player score
+        time = 0  # game time
 
         # INIT GAME VARIABLES
         won = False  # if user won
@@ -78,18 +80,6 @@ class Game:
             mouse = True
         # ===================================== END SHOOTING AND MOVEMENT SETUP ===================================
 
-        # CREATE and init PLAYER
-        player = Player(arrows)
-
-        add = False
-
-        for x in playerInfo:
-            if x is not None:
-                add = True
-        if add:
-           player.health, player.lives, player.damage, player.bspeed, player.pspeed = playerInfo
-           sBooster = bps
-
         # SPRITE GROUPS
         clouds = py.sprite.LayeredDirty()
         bullets = py.sprite.LayeredDirty()
@@ -98,7 +88,7 @@ class Game:
         all_sprites = py.sprite.LayeredDirty()
 
         # ADD PLAYER IN ALL SPRITES GROUP
-        all_sprites.add(player)
+        all_sprites.add(self.player)
 
         # INITIALIZE GAME
         py.init()
@@ -107,7 +97,7 @@ class Game:
         manager = gui.UIManager((self.SW, self.SH))
 
         # INIT  HUD WITH SCREEN SIZE, BACKGROUND, LEVEL NAME AND # OF WAVES
-        hud = HUD(self.screen, manager, self.background, levelTitle, maxWaves)
+        hud = HUD(self.screen, manager, self.background, levelTitle, index + 1, len(self.levels), maxWaves)
 
         # TIMER EVENTS FOR SPAWNING CLOUDS AND ENEMIES
         ADDCLOUD = py.USEREVENT + 1
@@ -187,10 +177,10 @@ class Game:
                     print("next wave!")
 
                 # LOSE ARGUMENT
-                if player.health <= 0:
+                if self.player.health <= 0:
                     won = False
-                    player.health = player.maxHealth
-                    player.lives -= 1
+                    self.player.health = self.player.maxHealth
+                    self.player.lives -= 1
                     running = False
                     exit = True
                     print("you died!")
@@ -227,8 +217,8 @@ class Game:
                         # SPACE IF TURNED ON
                         if event.key == K_SPACE and space:
                             manual_timer = py.time.get_ticks() - manual_start
-                            if manual_timer >= 600 - sBooster:
-                                new_bullet = Bullet1(player.rect.center, player.damage, player.bspeed)
+                            if manual_timer >= self.player.bps:
+                                new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
                                 bullets.add(new_bullet)
                                 all_sprites.add(new_bullet)
                                 manual_start = py.time.get_ticks()
@@ -239,14 +229,14 @@ class Game:
                     elif event.type == MOUSEMOTION and mouse:
                         currentP = py.mouse.get_pos()
                         customMouse = ((currentP[0] - 960) * 0.3, (currentP[1] - 540) * 0.3)
-                        player.rect.move_ip(customMouse)
+                        self.player.rect.move_ip(customMouse)
 
                     # MOUSE BUTTON EVENT IF TURNED ON
                     elif event.type == py.MOUSEBUTTONDOWN and event.button == 1 and space is not True and \
                             auto is not True:
                         manual_timer = py.time.get_ticks() - manual_start
-                        if manual_timer >= 600 - sBooster:
-                            new_bullet = Bullet1(player.rect.center, player.damage, player.bspeed)
+                        if manual_timer >= self.player.bps:
+                            new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
                             bullets.add(new_bullet)
                             all_sprites.add(new_bullet)
                             manual_start = py.time.get_ticks()
@@ -316,8 +306,8 @@ class Game:
 
                 # SPAWN PLAYER BULLETS IF AUTO SHOOT IS ON
                 auto_timer = py.time.get_ticks() - auto_start
-                if auto_timer >= 600 - sBooster and auto:
-                    new_bullet = Bullet1(player.rect.center, player.damage, player.bspeed)
+                if auto_timer >= self.player.bps and auto:
+                    new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
                     bullets.add(new_bullet)
                     all_sprites.add(new_bullet)
                     auto_start = py.time.get_ticks()
@@ -326,7 +316,7 @@ class Game:
                 for enemy in enemies:
                     if random.randint(1,100) == 1:
                         if enemy.type == 1:
-                            new_bullet = EBullet(enemy.rect.center, enemy.damage, enemy.speed + 5)
+                            new_bullet = EBullet(enemy.rect.center, enemy.damage, enemy.pspeed + 5)
                             bullets.add(new_bullet)
                             all_sprites.add(new_bullet)
 
@@ -461,32 +451,30 @@ class Game:
                                 score += enemy.points
 
                 # PLAYER AND ENEMY BULLET
-                hit = py.sprite.spritecollideany(player, bullets)
+                hit = py.sprite.spritecollideany(self.player, bullets)
                 if hit.__class__ == EBullet and hit != None:
-                    player.health -= hit.damage
+                    self.player.health -= hit.damage
                     print("you got hit by enemy bullet!")
                     hit.kill()
 
                 # PLAYER AND BUFF COLLISION
-                hit = py.sprite.spritecollideany(player, buffs)
+                hit = py.sprite.spritecollideany(self.player, buffs)
                 if hit != None:
                     if hit.type == 0:
-                        if not player.health >= player.maxHealth:
-                            player.health += hit.power
-                            if player.health > player.maxHealth:
-                                player.health = player.maxHealth
+                        if self.player.health <= self.player.maxHealth:
+                            self.player.health += hit.power
                     elif hit.type == 1:
-                        player.damage += hit.power
+                        self.player.damage += hit.power
                     else:
-                        if sBooster <= 300:
-                            sBooster += hit.power
+                        if self.player.bps <= self.player.bps:
+                            self.player.bps += hit.power
                     print("power up!")
                     hit.kill()
 
                 # ENEMY AND PLAYER COLLISION
-                hit = py.sprite.spritecollideany(player, enemies)
+                hit = py.sprite.spritecollideany(self.player, enemies)
                 if hit != None:
-                    player.health -= hit.damage
+                    self.player.health -= hit.damage
                     print("you got hit!")
                     hit.kill()
 
@@ -494,7 +482,7 @@ class Game:
 
                 # GET KEYS AND UPDATE PLAYER POSITION
                 pressed_keys = py.key.get_pressed()
-                player.update(pressed_keys)
+                self.player.update(pressed_keys)
 
                 # UPDATE REST OF SPRITES POSITIONS
                 enemies.update()
@@ -509,9 +497,11 @@ class Game:
                 for entity in all_sprites:
                     self.screen.blit(entity.surf, entity.rect)
 
+                time += 1
+
                 # UPDATE HUD AND DRAW IT
-                hud.update(currentWave, score, maxScore, player.health, player.maxHealth, player.lives,
-                           player.damage, 600 - sBooster, player.bspeed)
+                hud.update(currentWave, score, maxScore, self.player.health, self.player.maxHealth, self.player.lives,
+                           self.player.damage, self.player.bps, self.player.bspeed, 0, int(time /60))  # todo money variable
                 manager.draw_ui(self.screen)
 
                 # UPDATE SCREEN AND TICK CLOCK
@@ -521,6 +511,6 @@ class Game:
                 # ========================================= END GAME LOOP  ===========================================
             if exit:
                 print("exited")
-                return won, score, player.getInfo(), sBooster
+                return won, score, self.player
 
-        return won, score, player.getInfo(), sBooster
+        return won, score, self.player

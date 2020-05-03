@@ -12,7 +12,7 @@ SH2 = int(SW/2)
 
 
 class HUD:
-    def __init__(self, screen, manager, bg, title, waves):
+    def __init__(self, screen, manager, bg, title, part, partmax, waves):
 
         self.screen = screen
         self.manager = manager
@@ -35,21 +35,33 @@ class HUD:
                                                                     'top': 'top',
                                                                     'bottom': 'bottom'})
 
-        self.title_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 50, 5), (100, 20)),
+        self.title_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 60, 5), (100, 20)),
                                                 text=title,
                                                 manager=self.manager, container=self.hud)
 
-        self.score_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 100, 50), (200, 20)),
-                                                text='Score: 0',
+        self.part_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 60, 25), (100, 20)),
+                                                text=('Part: ' + str(part) + '/'+ str(partmax)),
                                                 manager=self.manager, container=self.hud)
 
-        self.health_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 50, 20), (200, 20)),
+        self.time_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 50, 65), (200, 20)),
+                                               text=('Time: '),
+                                               manager=self.manager, container=self.hud)
+
+        self.life_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 50, 5), (200, 20)),
+                                               text='Lives: 0',
+                                               manager=self.manager, container=self.hud)
+
+        self.health_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 90, 25), (120, 20)),
                                                  text='Health: 0',
                                                  manager=self.manager, container=self.hud)
 
-        self.life_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 90, 50), (120, 20)),
-                                               text='Lives: 0',
-                                               manager=self.manager, container=self.hud)
+        self.score_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 60, 65), (100, 20)),
+                                                text='Score: 0',
+                                                manager=self.manager, container=self.hud)
+
+        self.money_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 50, 45), (200, 20)),
+                                                text='Money: 0',
+                                                manager=self.manager, container=self.hud)
 
         self.wave_label = gui.elements.UILabel(relative_rect=py.Rect((0, 5), (200, 20)),
                                                  text='wave: ',
@@ -60,7 +72,7 @@ class HUD:
                                                 manager=self.manager, container=self.hud)
 
         self.bps_label = gui.elements.UILabel(relative_rect=py.Rect((0, 45), (200, 20)),
-                                                 text='dps: ',
+                                                 text='bullets every: ',
                                                  manager=self.manager, container=self.hud)
 
         self.bspeed_label = gui.elements.UILabel(relative_rect=py.Rect((0, 65), (200, 20)),
@@ -71,7 +83,7 @@ class HUD:
                                                text='pause',
                                                manager=self.manager, container=self.hud)
 
-    def update(self, wave, score, score2, health, health2, lives, damage, bps, bspeed):
+    def update(self, wave, score, score2, health, health2, lives, damage, bps, bspeed, money, time):
         self.wave_label.set_text(('wave: ' + str(wave) + '/' + str(self.maxWaves)))
         self.score_label.set_text(('Score: ' + str(score) + '/' + str(score2)))
         self.health_label.set_text(('Health: ' + str(health) + '/' + str(health2)))
@@ -79,6 +91,8 @@ class HUD:
         self.damage_label.set_text(('damage: ' + str(damage)))
         self.bps_label.set_text(('bullets every: ' + str(bps) + 'ms'))
         self.bspeed_label.set_text(('bullet speed: ' + str(bspeed)))
+        self.money_label.set_text(('Money: ') + str(money))
+        self.time_label.set_text('Time: ' + str(time) + 's')
 
     # pause game with button or by pressing p
     def pause(self):
