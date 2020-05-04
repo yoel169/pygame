@@ -193,6 +193,7 @@ while is_running:
 
                     if name is not None:
                         playerSave['times'][1] = time2
+                        playerSave['player'] = player.getInfo()
                         playerHandler.save(playerSave)
                     else:
                         if len(inputBoxD.text) != 0:
@@ -309,6 +310,12 @@ while is_running:
                     gameMenu.main_menu()
                     playerPanel.setPlayer(playerSave)
 
+                # quit button from next level menu
+                elif event.ui_element == gameMenu.quit_button3:
+                    manager.clear_and_reset()
+                    gameMenu.main_menu()
+                    playerPanel.setPlayer(playerSave)
+
                 # confirm button from launch menu
                 elif event.ui_element == gameMenu.launch_button:
 
@@ -357,25 +364,25 @@ while is_running:
         args = [option, option2]
         won, score, player = stages[currentStage].getPart(args, currentPart, score)
         manager.clear_and_reset()  # reset GUI
+
         playerSave['player'] = player.getInfo()  # update player save file
 
-        if not won:  # if lost launch replay menu
+        play = False
+        manager.clear_and_reset()
 
-            play = False
-            manager.clear_and_reset()
+        if not won:  # if lost launch replay menu
 
             # if lives reached 0 reset part
             if player.lives == 0:
                 currentPart, score = 0, 0
+                playerSave['stage'] = [currentStage, currentPart]
                 player.reset()
+                playerSave['player'] = player.getInfo()
                 gameMenu.replay_menu('no more lives')
             else:
                 gameMenu.replay_menu('try again?')
 
         elif won:  # if won
-
-            play = False
-            manager.clear_and_reset()
 
             # if there are no more parts in the stage
             if currentPart >= len(stages[currentStage].levels) - 1:
@@ -383,21 +390,24 @@ while is_running:
                 # reset player info and current part and increase current stage
                 score = 0
                 player.reset()
-                currentStage += 1
-                currentPart = 0
 
-                # if we ran out of stages go to main menu else next stage
+                # if we ran out of stages go to main menu else next stage todo make level selection menu
                 if currentStage >= maxStageNum:
-                    player.reset()
                     gameMenu.main_menu()
                     playerPanel.setPlayer(playerSave)
                 else:
+                    currentStage += 1
+                    currentPart = 0
                     manager.clear_and_reset()
+                    playerSave['stage'] = [currentStage, currentPart]
                     gameMenu.nextLevel("next stage")
 
-            # else if there are more parts increase counter and summon holy menu
+                playerSave['player'] = player.getInfo()
+
+            # else go to next part
             else:
                 currentPart += 1
+                playerSave['stage'] = [currentStage, currentPart]
                 gameMenu.nextLevel("next part")
 
     window_surface.blit(background, (0, 0))
@@ -407,3 +417,9 @@ while is_running:
     time_delta = clock.tick(60)
 
     pygame.display.update()
+
+time2 = datetime.datetime.now()
+time2 = time2.strftime("%m-%d-%y %I:%M:%S %p")
+playerSave['times'][1] = time2
+playerSave['player'] = player.getInfo()
+playerHandler.save(playerSave)

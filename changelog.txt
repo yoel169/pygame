@@ -84,4 +84,6 @@
     * Added a launch menu for first time users to pick or create a profile. It will save into the config json file and
       next time they load the game it will automatically load that profile. If the game is not working check the config
       file to see if the player name exists as save if not just make it empty "". DON'T COMMIT GAME CONFIG FILE TO REPO.
-    * XP system working.
+    * XP system working. Fixed known bugs with dps, stats not updating or saving.
+    * Game saves automatically now when you exit. Currently no way to make a new profile without reseting the game config
+      file to have no name.

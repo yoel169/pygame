@@ -475,8 +475,8 @@ class Game:
                     elif hit.type == 1:
                         self.player.damage += hit.power
                     else:
-                        if not self.player.bps <= self.player.bpsMax:
-                            self.player.bps - hit.power
+                        if self.player.bps >= self.player.bpsMax:
+                            self.player.bps -= hit.power
                     print("power up!")
                     hit.kill()
 
@@ -520,6 +520,8 @@ class Game:
                 # ========================================= END GAME LOOP  ===========================================
             if exit:
                 print("exited")
+                self.player.time += time
                 return won, score, self.player
 
+        self.player.time += time
         return won, score, self.player

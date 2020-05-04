@@ -41,6 +41,7 @@ class Player(pygame.sprite.DirtySprite):
         self.xp = 0
         self.level = 1
         self.money = 0
+        self.time = 0
 
     # Move the sprite based on user keypresses
     def update(self, pressed_keys):
@@ -86,11 +87,11 @@ class Player(pygame.sprite.DirtySprite):
 
     def getInfo(self):
         return self. arrows, self.health, self.maxHealth,self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \
-               self.bpsMax, self.score, self.xp, self.level, self.money
+               self.bpsMax, self.score, self.xp, self.level, self.money, self.time
 
     def setInfo(self, db):
         self.arrows, self.health, self.maxHealth, self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \
-        self.bpsMax, self.score, self.xp, self.level, self.money = db
+        self.bpsMax, self.score, self.xp, self.level, self.money, self.time = db
 
     # reset user back to defaults
     def reset(self):

@@ -55,7 +55,7 @@ class HUD:
                                                  text='Health: 0',
                                                  manager=self.manager, container=self.hud)
 
-        self.score_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 60, 65), (100, 20)),
+        self.score_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 60, 65), (150, 20)),
                                                 text='Score: 0',
                                                 manager=self.manager, container=self.hud)
 

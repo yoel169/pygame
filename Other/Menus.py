@@ -36,6 +36,7 @@ class GameMenu():
         self.shootMenu = None
         self.screenMenu = None
         self.movementMenu = None
+        self.quit_button3 = None
 
     def main_menu(self):
         buttonSize = (0, 0, 150, 60)
@@ -158,7 +159,7 @@ class GameMenu():
                                                             anchors=anchd)
 
         button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -240)
-        self.confirm = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
+        self.quit_button3 = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
                                                          text='quit to menu', manager=self.manager,
                                                          anchors=anchd)
 
@@ -207,7 +208,7 @@ class GameMenu():
 
         label_rect = pygame.Rect(labesize2)
         label_rect.bottomright = (int(- self.SW / 2 + 60), -400)
-        label2 = pygame_gui.elements.UILabel(relative_rect=label_rect, text='Or new profile',
+        label2 = pygame_gui.elements.UILabel(relative_rect=label_rect, text='Or new save',
                                              manager=self.manager, anchors=anchd, object_id='saveFL2')
 
         buttonSize = (0, 0, 150, 60)

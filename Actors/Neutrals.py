@@ -72,7 +72,7 @@ class Carrot(pygame.sprite.DirtySprite):
 class Buff(pygame.sprite.DirtySprite):
     def __init__(self, type):
         super(Buff, self).__init__()
-        self.type = type # health, damage, and bullet
+        self.type = type  # health, damage, and bullet
         if type == 0:
             self.surf = pygame.image.load("Media/healthbuff.png").convert()
             self.power = 25
