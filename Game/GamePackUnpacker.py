@@ -14,14 +14,16 @@ class Unpacker:
 
     def getPack(self):
         levels = []
-        for level in self.data:  #levels
+        xp = []
+        for level in self.data:  # parts
             waves= []
             for wave in level['waves']:  # waves
                 maxscore = int(wave['maxScore'])
                 enemies = wave['enemies']
                 buffs = wave['buffs']
                 waves.append([maxscore, enemies, buffs])
-            print(str(level['xp']))
-            levels.append([waves, level['xp']])
+            levels.append(waves)
+            xp.append(level['xp'])
 
-        return levels
+        #print(levels)
+        return levels, xp

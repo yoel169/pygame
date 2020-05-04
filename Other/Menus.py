@@ -33,6 +33,9 @@ class GameMenu():
         self.setting_button = None
         self.setting_button2 = None
         self.setting_button3 = None
+        self.shootMenu = None
+        self.screenMenu = None
+        self.movementMenu = None
 
     def main_menu(self):
         buttonSize = (0, 0, 150, 60)

@@ -100,7 +100,10 @@ if len(info["player"]) != 0:
     manager.clear_and_reset()
     gameMenu.main_menu()
     playerSave = playerHandler.loadSave(info["player"])
+    player.setInfo(playerSave['player'])
     playerPanel.setPlayer(playerSave)
+    option, option2 = playerSave['settings'][0], playerSave['settings'][1]
+    currentStage, currentPart = playerSave['stage'][0], playerSave['stage'][1]
 
 else:
     gameMenu.launchMenu(playerHandler.getSaves())
@@ -165,6 +168,10 @@ while is_running:
                         option, option2 = playerSave['settings'][0], playerSave['settings'][1]
                         currentStage, currentPart = playerSave['stage'][0], playerSave['stage'][1]
 
+                    info['player'] = playerSave['name']
+                    with open('gameconfig.json', 'w') as f:
+                        json.dump(info, f, indent=2)
+
                     manager.clear_and_reset()
                     playerPanel.setPlayer(playerSave)
                     gameMenu.main_menu()
@@ -185,9 +192,6 @@ while is_running:
                     time2 = time2.strftime("%m-%d-%y %I:%M:%S %p")
 
                     if name is not None:
-                        playerSave = PlayerHandler.loadSave(playerHandler, name)
-                        playerSave['player'] = player.getInfo()
-                        playerSave['settings'] = [option,option2]
                         playerSave['times'][1] = time2
                         playerHandler.save(playerSave)
                     else:
@@ -202,6 +206,10 @@ while is_running:
                         playerHandler.save(db)
                         playerSave = db
 
+                    info['player'] = playerSave['name']
+                    with open('gameconfig.json', 'w') as f:
+                        json.dump(info, f, indent=2)
+
                     inputbox = False
                     manager.clear_and_reset()
                     gameMenu.main_menu()
@@ -212,7 +220,7 @@ while is_running:
                     inputbox = False
                     manager.clear_and_reset()
                     gameMenu.main_menu()
-                    playerPanel.redraw()
+                    playerPanel.setPlayer(playerSave)
 
                 # settings button
                 elif event.ui_element == gameMenu.setting_button:
@@ -301,7 +309,7 @@ while is_running:
                     gameMenu.main_menu()
                     playerPanel.setPlayer(playerSave)
 
-                # launch game button
+                # confirm button from launch menu
                 elif event.ui_element == gameMenu.launch_button:
 
                     time2 = datetime.datetime.now()
@@ -319,7 +327,7 @@ while is_running:
                             name = inputBoxD.text
                         else:
                             name = 'player'
-                        db = {'name': name, 'player': player.getInfo(), 'times': [time1, time1],
+                        db = {'name': name, 'player': player.getInfo(), 'times': [time2, time2],
                               'settings': [option, option2], 'stage': [currentStage, currentPart]}
 
                         playerHandler.save(db)
@@ -348,8 +356,8 @@ while is_running:
         manager.clear_and_reset()
         args = [option, option2]
         won, score, player = stages[currentStage].getPart(args, currentPart, score)
-        player.score += score
         manager.clear_and_reset()  # reset GUI
+        playerSave['player'] = player.getInfo()  # update player save file
 
         if not won:  # if lost launch replay menu
 
@@ -368,8 +376,6 @@ while is_running:
 
             play = False
             manager.clear_and_reset()
-            # update player save file and panel
-            playerSave['player'] = player.getInfo()
 
             # if there are no more parts in the stage
             if currentPart >= len(stages[currentStage].levels) - 1:

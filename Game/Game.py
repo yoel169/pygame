@@ -27,8 +27,8 @@ class Game:
         self.player = pl
         # --------------- REAL UNPACK HOURS -----------------
         newUnpacker = Unpacker(pack)
-        self.levels, self.xp = newUnpacker.getPack()[0], newUnpacker.getPack()[1]
 
+        self.levels, self.xp = newUnpacker.getPack()
     # get part: args are user options, index is part #, and sc is score
     def getPart(self, args, index, sc):
 
@@ -36,7 +36,7 @@ class Game:
         level = self.levels[index]
         levelTitle = self.title
         maxWaves = len(level)
-        print(level)
+        maxScore = level[0][0]
         partXP = self.xp[index]
         # ---------------------------------------------------------
 
@@ -105,10 +105,9 @@ class Game:
         ADDCLOUD = py.USEREVENT + 1
         py.time.set_timer(ADDCLOUD, 5000)
 
-        # ====================================== START WAVE LOOP  ==========================================
+        # ====================================== START PART/WAVES LOOP  ==========================================
         for currentWave, wave in enumerate(level,1):
 
-            maxScore = wave[0]
             enemyL = wave[1]
             buffL = wave[2]
 
@@ -168,7 +167,13 @@ class Game:
 
                 # WIN BASED ON LAST ARGUMENT
                 if score >= maxScore and currentWave == maxWaves:
-                    self.player += partXP
+                    self.player.xp += partXP
+                    if index == 0:
+                        self.player.score += maxScore
+                    else:
+                        diff = maxScore - self.levels[index - 1][0][0]
+                        self.player.score += diff
+
                     won = True
                     exit = True
                     running = False
