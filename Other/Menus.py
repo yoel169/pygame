@@ -75,7 +75,7 @@ class GameMenu():
 
         label_rect.bottomright = (int(- self.SW / 2 + 200), -600)
         title = pygame_gui.elements.UILabel(relative_rect=label_rect, text=string,
-                                            manager=self.manager, anchors=anchd)
+                                            manager=self.manager, anchors=anchd, object_id='replay')
 
         buttonSize = (0, 0, 150, 60)
         button_layout_rect = pygame.Rect(buttonSize)
@@ -130,7 +130,7 @@ class GameMenu():
 
         label_rect.bottomright = (int(- self.SW / 2 + 200), -600)
         title = pygame_gui.elements.UILabel(relative_rect=label_rect, text=string,
-                                            manager=self.manager, anchors=anchd)
+                                            manager=self.manager, anchors=anchd, object_id='nextlevel')
 
         buttonSize = (0, 0, 150, 60)
         button_layout_rect = pygame.Rect(buttonSize)
@@ -167,7 +167,7 @@ class GameMenu():
                                                     text='Confirm', manager=self.manager,
                                                     anchors=anchd)
 
-    #description menu
+    # description menu
     def info_menu(self):
         labelSize = (0, 0, 500, 120)
         label_rect = pygame.Rect(labelSize)

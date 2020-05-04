@@ -1,5 +1,5 @@
 { 
-     "#playertheme":
+     "#biglabel":
      	{
          "colours":
          {
@@ -23,7 +23,7 @@
          }
 	},
 
-	"#smalltext" : 
+	"#smalllabel" : 
 	{
 	"colours":
          {
@@ -95,7 +95,6 @@
              "selected_border": "#8080B0",
              "active_border": "#8080B0"
          },
-
          "misc":
          {
              "tool_tip_delay": "1.5"
@@ -126,6 +125,16 @@
          }
      },
 
+	"replay" :
+	{
+	 "prototype" : "#smalllabel"
+	},
+
+	"nextlevel" :
+	{
+	 "prototype" : "#smalllabel"
+	},
+	
       "playerpanel":
      	{
          "colours":
@@ -140,17 +149,16 @@
              "border_width": "1",
              "shadow_width": "15"
        	  },
+	"label":
+	{
+	 "prototype": "#smalllabel"
+	}
+      },
 
 	"paneltitle":
      	{
-	 "prototype": "#playertheme"
+	 "prototype": "#biglabel"
         },
-
-	"label" :
-	{
-	 "protoype" : "#smalltext"
-	 }
-      },
 
 	"gamehud":
 	{
@@ -167,8 +175,48 @@
              "shadow_width": "15"
        	  }
 	},
-	"label":
+	"dobL" :
 	{
-	  "prototype" : "#smalltext"
-	}  
+	 "prototype": "#smalllabel"
+	},
+	"label1" :
+	{
+	 "prototype": "#smalllabel"
+	},
+	"stageL" :
+	{
+	 "prototype": "#smalllabel"
+	},
+	"livesL" :
+	{
+	 "prototype": "#smalllabel"
+	},
+	"hpL" :
+	{
+	 "prototype": "#smalllabel"
+	},
+	"hpL" :
+	{
+	 "prototype" : "#smalllabel"
+	},
+	"damL" :
+	{
+	 "prototype" : "#smalllabel"
+	},
+	"pspeedL" :
+	{
+	 "prototype" : "#smalllabel"
+	},
+	"bspeedL" :
+	{
+	 "prototype" : "#smalllabel"
+	},
+	"bpsL" :
+	{
+	 "prototype" : "#smalllabel"
+	},
+	"time2L" :
+	{
+	 "prototype" : "#smalllabel"
+	}
 }
