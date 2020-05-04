@@ -12,7 +12,7 @@ class Unpacker:
             self.data = json.load(f)
             # print(self.data)
 
-    def getLevels(self):
+    def getPack(self):
         levels = []
         for level in self.data:  #levels
             waves= []
@@ -21,6 +21,7 @@ class Unpacker:
                 enemies = wave['enemies']
                 buffs = wave['buffs']
                 waves.append([maxscore, enemies, buffs])
-            levels.append(waves) # append xp here , levels['xp']]
-            # print(levels)
+            print(str(level['xp']))
+            levels.append([waves, level['xp']])
+
         return levels

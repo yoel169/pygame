@@ -58,6 +58,7 @@ gameReturn = False
 continueMenu = False
 clock = pygame.time.Clock()
 time_delta = 0
+inputbox = False
 
 # user variables
 score = 0
@@ -77,7 +78,7 @@ ls = [SW, SH, background, window_surface]
 # hold all stages
 stages = []
 
-# create first 3 stages
+# Load first 3 stages
 for x in range(1,4):
     pack = 'Stages/stage' + str(x) + '.json'
     title = 'Stage ' + str(x)
@@ -89,15 +90,23 @@ maxStageNum = len(stages) - 1
 playerHandler = PlayerHandler()
 saveFiles = []
 playerSave = {}
+playerPanel = None
 
-# setup menu class and launch main menu
+# setup menu class
 gameMenu = GameMenu(SW, SH, manager)
-gameMenu.main_menu()
 
-# setup player info panel
-playerPanel = PlayerPanel(window_surface, manager, background)
-#input box
-#input_box1 = InputBox(100, 100, 140, 32)
+if len(info["player"]) != 0:
+    playerPanel = PlayerPanel(window_surface, manager, background)
+    manager.clear_and_reset()
+    gameMenu.main_menu()
+    playerSave = playerHandler.loadSave(info["player"])
+    playerPanel.setPlayer(playerSave)
+
+else:
+    gameMenu.launchMenu(playerHandler.getSaves())
+    inputbox = True
+    inputBoxD = InputBox(int(SW / 2) - 150, int(SH / 2) + 160, 30, 30)
+
 
 def playMusic():
     pygame.mixer.init()
@@ -108,6 +117,10 @@ def playMusic():
 
 #playMusic()
 
+# get current time
+time1 = datetime.datetime.now()
+time1 = time1.strftime("%m-%d-%y %I:%M:%S %p")
+
 while is_running:
 
     # update manager and window
@@ -117,7 +130,6 @@ while is_running:
         if event.type == pygame.QUIT:
             is_running = False
 
-        # doesn't do jack?
         elif event.type == VIDEORESIZE:
             screen = pygame.display.set_mode(event.dict['size'], flags= pygame.RESIZABLE)
             screen.blit(pygame.transform.scale(background, event.dict['size']), (0, 0))
@@ -130,7 +142,7 @@ while is_running:
                 if event.ui_element == gameMenu.quit_button:
                     is_running = False
 
-                # play button
+                #play button
                 elif event.ui_element == gameMenu.play_button:
                     play = True
 
@@ -144,7 +156,7 @@ while is_running:
                     saveFiles = playerHandler.getSaves()
                     gameMenu.load_menu(saveFiles)
 
-                # load menu confirm
+                # load menu confirm button and launch menu confirm
                 elif event.ui_element == gameMenu.loadConfirm_button:
                     filename = gameMenu.savelist_selection.get_single_selection()
                     if filename is not None:
@@ -152,18 +164,55 @@ while is_running:
                         player.setInfo(playerSave['player'])
                         option, option2 = playerSave['settings'][0], playerSave['settings'][1]
                         currentStage, currentPart = playerSave['stage'][0], playerSave['stage'][1]
+
+                    manager.clear_and_reset()
+                    playerPanel.setPlayer(playerSave)
+                    gameMenu.main_menu()
+
+                # save menu
+                elif event.ui_element == gameMenu.save_button:
+                    manager.clear_and_reset()
+                    saveFiles = playerHandler.getSaves()
+                    gameMenu.save_menu(saveFiles)
+                    inputBoxD = InputBox(int(SW /2) - 150, int(SH / 2)+ 160, 30, 30)
+                    inputbox = True
+
+                # save confirm button
+                elif event.ui_element == gameMenu.saveConfirm_button:
+
+                    name = gameMenu.savelist2_selection.get_single_selection()
+                    time2 = datetime.datetime.now()
+                    time2 = time2.strftime("%m-%d-%y %I:%M:%S %p")
+
+                    if name is not None:
+                        playerSave = PlayerHandler.loadSave(playerHandler, name)
+                        playerSave['player'] = player.getInfo()
+                        playerSave['settings'] = [option,option2]
+                        playerSave['times'][1] = time2
+                        playerHandler.save(playerSave)
+                    else:
+                        if len(inputBoxD.text) != 0:
+                            name = inputBoxD.text
+                        else:
+                            name = 'player'
+
+                        db = {'name': name, 'player': player.getInfo(), 'times': [time1, time1],
+                              'settings': [option, option2], 'stage': [currentStage, currentPart]}
+
+                        playerHandler.save(db)
+                        playerSave = db
+
+                    inputbox = False
                     manager.clear_and_reset()
                     gameMenu.main_menu()
                     playerPanel.setPlayer(playerSave)
 
-                # save
-                elif event.ui_element == gameMenu.save_button:
-                    if len(playerSave) == 0:
-                        time1 = datetime.datetime.now()
-                        time1 = time1.strftime("%m-%d-%y %I %p")
-                        db = {'name': 'yoel', 'player': player.getInfo(), 'times': [time1,time1],
-                              'settings': [option, option2], 'stage': [currentStage, currentPart]}
-                        playerHandler.save(db)
+                # cancel from save menu
+                elif event.ui_element == gameMenu.cancel_button:
+                    inputbox = False
+                    manager.clear_and_reset()
+                    gameMenu.main_menu()
+                    playerPanel.redraw()
 
                 # settings button
                 elif event.ui_element == gameMenu.setting_button:
@@ -218,7 +267,7 @@ while is_running:
 
                         # update game config file
                         with open('gameconfig.json', 'w') as f:
-                            info ={'screen': temp2}
+                            info['screen'] = temp2
                             json.dump(info, f, indent=2)
 
                     # update movement
@@ -232,6 +281,9 @@ while is_running:
                             option2 = 0
                             player.arrows = True
 
+                    # update save file
+                    playerSave['settings'] = [option, option2]
+
                     manager.clear_and_reset()
 
                     # check if settings was called from retry again or not
@@ -241,22 +293,62 @@ while is_running:
                         gameMenu.nextLevel()
                     else:
                         gameMenu.main_menu()
+                        playerPanel.setPlayer(playerSave)
 
                 # quit button called from replay menu
                 elif event.ui_element == gameMenu.quit_button2:
                     manager.clear_and_reset()
                     gameMenu.main_menu()
+                    playerPanel.setPlayer(playerSave)
+
+                # launch game button
+                elif event.ui_element == gameMenu.launch_button:
+
+                    time2 = datetime.datetime.now()
+                    time2 = time2.strftime("%m-%d-%y %I:%M:%S %p")
+
+                    filename = gameMenu.savelist_selection.get_single_selection()
+
+                    if filename is not None:
+                        playerSave = PlayerHandler.loadSave(playerHandler, filename)
+                        player.setInfo(playerSave['player'])
+                        option, option2 = playerSave['settings'][0], playerSave['settings'][1]
+                        currentStage, currentPart = playerSave['stage'][0], playerSave['stage'][1]
+                    else:
+                        if len(inputBoxD.text) != 0:
+                            name = inputBoxD.text
+                        else:
+                            name = 'player'
+                        db = {'name': name, 'player': player.getInfo(), 'times': [time1, time1],
+                              'settings': [option, option2], 'stage': [currentStage, currentPart]}
+
+                        playerHandler.save(db)
+                        playerSave = db
+
+                    info['player'] = playerSave['name']
+
+                    with open('gameconfig.json', 'w') as f:
+                        json.dump(info, f, indent=2)
+
+                    inputbox = False
+                    playerPanel = PlayerPanel(window_surface, manager, background)
+                    manager.clear_and_reset()
+                    gameMenu.main_menu()
+                    playerPanel.setPlayer(playerSave)
 
         manager.process_events(event)
-       # input_box1.handle_event(event)
+        if inputbox:
+            inputBoxD.handle_event(event)
 
-    #input_box1.update()
+    if inputbox:
+        inputBoxD.update()
 
     if play:
 
         manager.clear_and_reset()
         args = [option, option2]
         won, score, player = stages[currentStage].getPart(args, currentPart, score)
+        player.score += score
         manager.clear_and_reset()  # reset GUI
 
         if not won:  # if lost launch replay menu
@@ -276,6 +368,8 @@ while is_running:
 
             play = False
             manager.clear_and_reset()
+            # update player save file and panel
+            playerSave['player'] = player.getInfo()
 
             # if there are no more parts in the stage
             if currentPart >= len(stages[currentStage].levels) - 1:
@@ -290,6 +384,7 @@ while is_running:
                 if currentStage >= maxStageNum:
                     player.reset()
                     gameMenu.main_menu()
+                    playerPanel.setPlayer(playerSave)
                 else:
                     manager.clear_and_reset()
                     gameMenu.nextLevel("next stage")
@@ -301,7 +396,8 @@ while is_running:
 
     window_surface.blit(background, (0, 0))
     manager.draw_ui(window_surface)
-   #input_box1.draw(window_surface)
+    if inputbox:
+        inputBoxD.draw(window_surface)
     time_delta = clock.tick(60)
 
     pygame.display.update()

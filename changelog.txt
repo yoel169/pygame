@@ -79,3 +79,7 @@
     * Created a game config json file that saves the users screen preference. Changing the screen at settings will update
      it.
     * Moved main menu selections to add a player info panel. Changed some colors yay finally. Updated attributes file.
+    * Save/Load menus and player panel working. It's beautiful uwu. MOVING ON!
+    * Added a launch menu for first time users to pick or create a profile. It will save into the config json file and
+      next time they load the game it will automatically load that profile.
+    * I added xp to game but somethings broken so Ill fix that when I wake up lol.

@@ -1,5 +1,5 @@
 { 
-     "#biglabel":
+     "#mediumlabel":
      {
          "colours":
          {
@@ -23,6 +23,26 @@
          }
      },
 
+     "#biglabel":
+     {
+       "colours": {
+         "dark_bg": "#89CFF0",
+         "normal_text": "#c5cbd8",
+         "text_shadow": "#505050"
+       },
+       "font": {
+         "name": "gameDev",
+         "regular_path": "Other/gameDev.ttf",
+         "size": "50",
+         "bold": "0",
+         "italic": "0"
+       },
+       "misc": {
+         "text_shadow": "1",
+         "text_shadow_size": "1",
+         "text_shadow_offset": "0,0"
+       }
+     },
      "#smalllabel": 
       {
 	"colours":
@@ -143,34 +163,56 @@
 
      "replay" :
       {
-	 "prototype" : "#smalllabel"
+	 "prototype" : "#biglabel"
       },
 
-      "nextlevel" :
+      "saveFL" :
        {
-	 "prototype" : "#smalllabel"
+	 "prototype" : "#mediumlabel"
        },
-	
+
+      "saveFL2" :
+       {
+	 "prototype" : "#mediumlabel"
+       },
+
+	  "nextlevel" :
+       {
+	 "prototype" : "#biglabel"
+       },
+
+	"saveS":
+	{
+	  "colours":
+         {
+            "dark_bg":"#0CA2F9",
+            "normal_border": "#999999"
+         }
+	},
+    "loadS":
+	{
+	  "colours":
+         {
+            "dark_bg":"#0CA2F9",
+            "normal_border": "#999999"
+         }
+	},
+
       "playerpanel":
-       }
+      {
 	 "prototype": "#paneltheme"
        },
 
 	"paneltitle":
      	{
-	 "prototype": "#biglabel"
+	 "prototype": "#mediumlabel"
         },
 
 	"gamehud":
 	{
 	 "prototype": "#paneltheme"
 	},
-
-	"dobL" :
-	{
-	 "prototype": "#smalllabel"
-	},
-	"label1" :
+  "dobL" :
 	{
 	 "prototype": "#smalllabel"
 	},

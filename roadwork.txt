@@ -1,10 +1,9 @@
 ----------------------------------------------------
                 Current track
 ----------------------------------------------------
-save / load menus
-create a menu for picking levels
 player level and xp system
 Work on a shop menu for upgrades.
+create a menu for picking levels
 New player jet
 Work on different bullets
 Sandbox Mode
@@ -19,9 +18,11 @@ Actually make a description page.
 Game HUD: make it pretty!
 Make different difficulties: Easy, Medium, Hard, Insane.
 Save and load options for user to keep track (use JSON).
-Get game to rescale with window resize. * important
+Get proper window scaling with GUI.
+Add a delete function for profiles and properly update the config if its the profile being deleted.
 
 ---------------------------------------------------
                     Known Bugs
 ---------------------------------------------------
-Screen size not scale with smaller screens
+Screen size not scale with smaller screens.
+If you delete your save file or rename it you need to fix it in the config file under name update it or "" for none.

@@ -27,7 +27,7 @@ class Game:
         self.player = pl
         # --------------- REAL UNPACK HOURS -----------------
         newUnpacker = Unpacker(pack)
-        self.levels = newUnpacker.getLevels()
+        self.levels, self.xp = newUnpacker.getPack()[0], newUnpacker.getPack()[1]
 
     # get part: args are user options, index is part #, and sc is score
     def getPart(self, args, index, sc):
@@ -36,6 +36,8 @@ class Game:
         level = self.levels[index]
         levelTitle = self.title
         maxWaves = len(level)
+        print(level)
+        partXP = self.xp[index]
         # ---------------------------------------------------------
 
         # INIT TIME VARIABLES
@@ -166,6 +168,7 @@ class Game:
 
                 # WIN BASED ON LAST ARGUMENT
                 if score >= maxScore and currentWave == maxWaves:
+                    self.player += partXP
                     won = True
                     exit = True
                     running = False
@@ -449,6 +452,7 @@ class Game:
                             bullet.kill()
                             if enemy.health <= 0:
                                 score += enemy.points
+                                self.player.xp += enemy.xp
 
                 # PLAYER AND ENEMY BULLET
                 hit = py.sprite.spritecollideany(self.player, bullets)
