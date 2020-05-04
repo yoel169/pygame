@@ -1,6 +1,6 @@
 { 
      "#biglabel":
-     	{
+     {
          "colours":
          {
              "dark_bg": "#89CFF0",
@@ -21,10 +21,10 @@
              "text_shadow_size": "1",
              "text_shadow_offset": "0,0"
          }
-	},
+     },
 
-	"#smalllabel" : 
-	{
+     "#smalllabel": 
+      {
 	"colours":
          {
              "dark_bg": "#89CFF0",
@@ -46,6 +46,22 @@
              "text_shadow_offset": "0,0"
          }	
       },
+
+      "#paneltheme":
+       {
+         "colours":
+         {
+             "dark_bg":"#89CFF0",
+             "normal_border": "#999999"
+         },
+         "misc":
+         {
+             "shape": "rounded_rectangle",
+             "shape_corner_radius": "10",
+             "border_width": "1",
+             "shadow_width": "15"
+       	  }
+       },
 
      "defaults":
      {
@@ -125,35 +141,20 @@
          }
      },
 
-	"replay" :
-	{
+     "replay" :
+      {
 	 "prototype" : "#smalllabel"
-	},
+      },
 
-	"nextlevel" :
-	{
+      "nextlevel" :
+       {
 	 "prototype" : "#smalllabel"
-	},
+       },
 	
       "playerpanel":
-     	{
-         "colours":
-         {
-             "dark_bg":"#89CFF0",
-             "normal_border": "#999999"
-         },
-         "misc":
-         {
-             "shape": "rounded_rectangle",
-             "shape_corner_radius": "10",
-             "border_width": "1",
-             "shadow_width": "15"
-       	  },
-	"label":
-	{
-	 "prototype": "#smalllabel"
-	}
-      },
+       }
+	 "prototype": "#paneltheme"
+       },
 
 	"paneltitle":
      	{
@@ -162,19 +163,9 @@
 
 	"gamehud":
 	{
-	"colours":
-         {
-             "dark_bg":"#89CFF0",
-             "normal_border": "#999999"
-         },
-         "misc":
-         {
-             "shape": "rounded_rectangle",
-             "shape_corner_radius": "10",
-             "border_width": "1",
-             "shadow_width": "15"
-       	  }
+	 "prototype": "#paneltheme"
 	},
+
 	"dobL" :
 	{
 	 "prototype": "#smalllabel"
