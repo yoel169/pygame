@@ -95,7 +95,7 @@ gameMenu = GameMenu(SW, SH, manager)
 gameMenu.main_menu()
 
 # setup player info panel
-playerPanel = PlayerPanel(window_surface,manager,background)
+playerPanel = PlayerPanel(window_surface, manager, background)
 #input box
 #input_box1 = InputBox(100, 100, 140, 32)
 
@@ -152,9 +152,9 @@ while is_running:
                         player.setInfo(playerSave['player'])
                         option, option2 = playerSave['settings'][0], playerSave['settings'][1]
                         currentStage, currentPart = playerSave['stage'][0], playerSave['stage'][1]
-                        playerPanel.setPlayer(playerSave)
                     manager.clear_and_reset()
                     gameMenu.main_menu()
+                    playerPanel.setPlayer(playerSave)
 
                 # save
                 elif event.ui_element == gameMenu.save_button:

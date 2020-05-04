@@ -19,7 +19,7 @@ class PlayerPanel:
         self.player = []
         self.stageinfo = []
         hud_size = (SW2 - 50, SH2 - 470, 500, 380)
-        hud_rect = py.Rect(hud_size)
+        self.hud_rect = py.Rect(hud_size)
 
         hudW = 500
         hudH = 380
@@ -27,17 +27,28 @@ class PlayerPanel:
 
         # todo: container for ui elements
 
-        self.playerpanel = gui.elements.ui_panel.UIPanel(relative_rect=hud_rect, starting_layer_height=3, manager=self.manager,
+        self.playerpanel = gui.elements.ui_panel.UIPanel(relative_rect=self.hud_rect, starting_layer_height=3, manager=self.manager,
                                                          object_id='playerpanel', anchors={'left': 'left',
                                                                     'right': 'right',
                                                                     'top': 'top',
                                                                     'bottom': 'bottom'})
 
-        self.title_label = gui.elements.UILabel(relative_rect=py.Rect((100, 10), (300, 30)),
+        self.title_label = gui.elements.UILabel(relative_rect=py.Rect((75, 5), (300, 22)),
                                                 text='Player Info: ', manager=self.manager, container=self.playerpanel
                                                 , object_id='paneltitle')
 
     def setPlayer(self, db):
+
+        self.playerpanel = gui.elements.ui_panel.UIPanel(relative_rect=self.hud_rect, starting_layer_height=3,
+                                                         manager=self.manager,
+                                                         object_id='playerpanel', anchors={'left': 'left',
+                                                                                           'right': 'right',
+                                                                                           'top': 'top',
+                                                                                           'bottom': 'bottom'})
+
+        self.title_label = gui.elements.UILabel(relative_rect=py.Rect((75, 5), (300, 22)),
+                                                text='Player Info: ', manager=self.manager, container=self.playerpanel
+                                                , object_id='paneltitle')
 
         self.player = db['player']
         self.stageinfo = db['stage']
