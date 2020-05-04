@@ -82,5 +82,6 @@
 -----------------------------------------------------------------------------------------------------------------------
 3.2 * Save/Load menus and player panel working. It's beautiful uwu. MOVING ON!
     * Added a launch menu for first time users to pick or create a profile. It will save into the config json file and
-      next time they load the game it will automatically load that profile.
+      next time they load the game it will automatically load that profile. If the game is not working check the config
+      file to see if the player name exists as save if not just make it empty "".
     * XP system working.
