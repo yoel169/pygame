@@ -54,6 +54,7 @@ class Game:
         checker2 = True # spawning single enemies
         customMouse = ()  # custom mouse position if movement with mouse is on
         exit = False  # exit game
+        kim_exit = False
         auto = True  # default auto to on
         space = False  # default space shooting to off
         mouse = False  # default mouse movement to off
@@ -204,6 +205,7 @@ class Game:
                         running = False
                         won = False
                         exit = True
+                        kim_exit = True
                         print("quit called")
 
                     # --------------------------------- PRESSED KEY EVENTS --------------------------------
@@ -521,7 +523,8 @@ class Game:
             if exit:
                 print("exited")
                 self.player.time += time
-                return won, score, self.player
+                return won, score, self.player, kim_exit
 
+        # idek if this gets called down here
         self.player.time += time
-        return won, score, self.player
+        return won, score, self.player, kim_exit

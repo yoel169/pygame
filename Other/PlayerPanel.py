@@ -27,16 +27,6 @@ class PlayerPanel:
 
         # todo: container for ui elements
 
-        self.playerpanel = gui.elements.ui_panel.UIPanel(relative_rect=self.hud_rect, starting_layer_height=3, manager=self.manager,
-                                                         object_id='playerpanel', anchors={'left': 'left',
-                                                                    'right': 'right',
-                                                                    'top': 'top',
-                                                                    'bottom': 'bottom'})
-
-        self.title_label = gui.elements.UILabel(relative_rect=py.Rect((75, 5), (300, 28)),
-                                                text='Player Info: ', manager=self.manager, container=self.playerpanel
-                                                , object_id='paneltitle')
-
     def setPlayer(self, db):
 
         self.playerpanel = gui.elements.ui_panel.UIPanel(relative_rect=self.hud_rect, starting_layer_height=3,
@@ -47,7 +37,7 @@ class PlayerPanel:
                                                                                            'bottom': 'bottom'})
 
         self.title_label = gui.elements.UILabel(relative_rect=py.Rect((75, 5), (300, 28)),
-                                                text=('Player: ' + str(db['name'])), manager=self.manager, container=self.playerpanel
+                                                text=('Welcome ' + str(db['name'])), manager=self.manager, container=self.playerpanel
                                                 , object_id='paneltitle')
 
         self.player = db['player']

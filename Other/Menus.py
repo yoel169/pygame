@@ -2,277 +2,190 @@ import pygame
 import pygame_gui
 from Other.InputBox import InputBox
 from Other.GuiHelper import GuiHelper
+
+
 # ====================================== MENUS FOR GAME ===============================================
-pygame.init()
-
-anchd = {'left': 'right', 'right': 'right', 'top': 'bottom', 'bottom': 'bottom'}
-
+# For buttons use 70 pixel space between buttons in height
 
 class GameMenu():
     def __init__(self, width, height, manager):
         self.SW = width
         self.SH = height
         self.manager = manager
-        self.replay_button = None
-        self.play_button = None
-        self.info_button = None
-        self.quit_button = None
-        self.quit_button2 = None
-        self.confirm = None
-        self.dropMenu = None
-        self.setting_button2 = None
-        self.movementMenu = None
-        self.nextL_button = None
-        self.setting_button3 = None
-        self.savelist_selection = None
-        self.savelist2_selection = None
-        self.loadConfirm_button = None
-        self.saveConfirm_button = None
-        self.cancel_button = None
-        self.launch_button = None
-        self.load_button = None
-        self.save_button = None
-        self.setting_button = None
-        self.setting_button2 = None
-        self.setting_button3 = None
-        self.shootMenu = None
-        self.screenMenu = None
-        self.movementMenu = None
-        self.quit_button3 = None
+
+        # main menu
+        self.play_b = None
+        self.info_b = None
+        self.setting_b = None
+        self.quit_b = None
+
+        # replay
+        self.replay_b = None
+        self.quit_replay_b = None
+
+        # settings
+        self.movement_selection = None
+        self.screen_selection = None
+        self.shoot_selection = None
+        self.confirm_setting_b = None
+
+        # next level
+        self.next_level_b = None
+        self.quit_next_level_b = None
+
+        # profile select
+        self.save_selection = None
+        self.launch_hub_b = None
+        self.quit_launcher_b = None
+
+        # player hub
+        self.start_b = None
+        self.unlocks_b = None
+        self.stats_b = None
+        self.back_b = None
+
+        # gui helper maker
         self.maker = GuiHelper(self.SW, self.SH, self.manager)
         self.SW2 = int(self.SW / 2)
         self.SH2 = int(self.SH / 2)
-        self.back_b = None
 
     def main_menu(self):
-        buttonSize = (0, 0, 150, 60)
-        button_layout_rect = pygame.Rect(buttonSize)
+        # buttonS2 = (70, 60)
 
-        buttonSize2 = (0, 0, 70, 60)
-        save_load_rect = pygame.Rect(buttonSize2)
+        title = self.maker.make_label(self.SW2 + 500, 300, 1000, 110, 'WORLD FLYING SHOOTER', 'maintitle')
 
-        labelSize = (0, 0,1000, 110)
-        label_rect = pygame.Rect(labelSize)
+        button_s = (150, 60)
+        height = self.SH2 + 20
 
-        label_rect.bottomright = (int( - self.SW / 2 + 500), -650)
-        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text= ' WORLD FLYING SHOOTER',
-                                            manager=self.manager, anchors=anchd, object_id='maintitle')
+        self.play_b = self.maker.make_button(self.SW2, height, button_s[0], button_s[1], 'Play')
 
-        button_layout_rect.bottomright = (int(-self.SW / 2) - 200, -450)
-        self.play_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                   text='Play', manager=self.manager,
-                                                   anchors=anchd, object_id='playbutton')
+        self.info_b = self.maker.make_button(self.SW2, height + 70, button_s[0], button_s[1], 'How to Play')
 
-        save_load_rect.bottomright = (int(-self.SW / 2) - 280, -380)
-        self.save_button = pygame_gui.elements.UIButton(relative_rect=save_load_rect,
-                                                        text='Save', manager=self.manager,
-                                                        anchors=anchd)
+        self.setting_b = self.maker.make_button(self.SW2, height + (70 * 2), button_s[0], button_s[1], 'Settings')
 
-        save_load_rect.bottomright = (int(-self.SW / 2) -200, -380)
-        self.load_button = pygame_gui.elements.UIButton(relative_rect=save_load_rect,
-                                                        text='Load', manager=self.manager,
-                                                        anchors=anchd)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) -200, -310)
-        self.info_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                   text='Instructions', manager=self.manager,
-                                                   anchors=anchd)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) - 200, -240)
-        self.setting_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                   text='Settings', manager=self.manager,
-                                                   anchors=anchd)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) - 200, -170)
-        self.quit_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                   text='Quit', manager=self.manager,
-                                                   anchors=anchd)
+        self.quit_b = self.maker.make_button(self.SW2, height + (70 * 3), button_s[0], button_s[1], 'Quit')
 
     def replay_menu(self, string):
-        labelSize = (0, 0, 220, 90)
-        label_rect = pygame.Rect(labelSize)
+        title = self.maker.make_label(self.SW2 + 50, self.SH2, 240, 90, string, 'replay')
 
-        label_rect.bottomright = (int(- self.SW / 2) + 90, -600)
-        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text=string,
-                                            manager=self.manager, anchors=anchd, object_id='replay')
+        button_s = (150, 60)
 
-        buttonSize = (0, 0, 150, 60)
-        button_layout_rect = pygame.Rect(buttonSize)
+        self.replay_b = self.maker.make_button(self.SW2, self.SH2 + 150, button_s[0], button_s[1], 'try again')
 
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -400)
-        self.replay_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                          text='try again', manager=self.manager,
-                                                          anchors=anchd)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -320)
-        self.setting_button2 = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                          text='settings', manager=self.manager,
-                                                          anchors=anchd)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -240)
-        self.quit_button2 = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                   text='quit to menu', manager=self.manager,
-                                                   anchors=anchd)
+        self.quit_replay_b = self.maker.make_button(self.SW2, self.SH2 + 270, button_s[0], button_s[1], 'exit')
 
     def settings_menu(self):
+        button_s = (150, 60)
 
-        shootDSize = (0, 0, 200, 70)
-        dD_rect = pygame.Rect(shootDSize)
+        self.movement_selection = self.maker.make_selection_list(self.SW2, self.SH2, 200, 70,
+                                                                 ['arrow keys', "wads keys", "mouse"], 'movementS')
 
-        dD_rect.bottomright = (int(- self.SW / 2 + 50), -550)
-        self.movementMenu = pygame_gui.elements.UISelectionList(dD_rect, ['arrow keys', "wads keys", "mouse"],
-                                                             self.manager,
-                                                             allow_multi_select=False, anchors=anchd)
+        self.screen_selection = self.maker.make_selection_list(self.SW2, self.SH2 + 100, 200, 70,
+                                                               ["fullscreen", "hardware accelerated",
+                                                                "windowed"], 'screenS')
 
-        dD_rect.bottomright = (int(- self.SW / 2 + 50), -450)
-        self.screenMenu = pygame_gui.elements.UISelectionList(dD_rect, ["fullscreen", "hardware accelerated",
-                                                                        "windowed"], self.manager,
-                                                              allow_multi_select=False, anchors=anchd)
-        shootDSize = (0, 0, 200, 70)
-        dD_rect = pygame.Rect(shootDSize)
+        self.shoot_selection = self.maker.make_selection_list(self.SW2, self.SH2 + 200, 200, 70,
+                                                              ['auto', "space", "mouse"], 'shootS')
 
-        dD_rect.bottomright = (int(- self.SW / 2 + 50), -350)
-        self.shootMenu = pygame_gui.elements.UISelectionList(dD_rect,['auto', "space", "mouse"], self.manager,
-                                                    allow_multi_select=False, anchors=anchd)
+        self.confirm_setting_b = self.maker.make_button(self.SW2 - 30, self.SH2 + 300, button_s[0], button_s[1], 'exit')
 
-        buttonSize = (0, 0, 150, 60)
-        button_layout_rect = pygame.Rect(buttonSize)
+    def next_level(self, string):
+        label_size = (240, 90)
+        button_s = (150, 60)
 
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 20, -200)
-        self.confirm = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                         text='Confirm', manager=self.manager,
-                                                         anchors=anchd)
+        title = self.maker.make_label(self.SW2 + 50, self.SH2, label_size[0], label_size[1], string, 'nextlevel')
 
-    def nextLevel(self, string):
-        labelSize = (0, 0, 240, 90)
-        label_rect = pygame.Rect(labelSize)
+        self.next_level_b = self.maker.make_button(self.SW2, self.SH2 + 150, button_s[0], button_s[1], 'try again?')
 
-        label_rect.bottomright = (int(- self.SW / 2 + 110), -600)
-        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text=string,
-                                            manager=self.manager, anchors=anchd, object_id='nextlevel')
-
-        buttonSize = (0, 0, 150, 60)
-        button_layout_rect = pygame.Rect(buttonSize)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -400)
-        self.nextL_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                          text='next level', manager=self.manager,
-                                                          anchors=anchd)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -320)
-        self.setting_button3 = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                            text='settings', manager=self.manager,
-                                                            anchors=anchd)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 50, -240)
-        self.quit_button3 = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                         text='quit to menu', manager=self.manager,
-                                                         anchors=anchd)
+        self.quit_next_level_b = self.maker.make_button(self.SW2, self.SH2 + 270, button_s[0], button_s[1], 'exit')
 
     # pick between file saves
     def load_menu(self, names):
-        labelSize = (0, 0, 150, 40)
-        label_rect = pygame.Rect(labelSize)
+        todo = ''
+        # labelSize = (0, 0, 150, 40)
+        # label_rect = pygame.Rect(labelSize)
+        #
+        # label_rect.bottomright = (int(- self.SW / 2) + 20, -700)
+        # label1 = pygame_gui.elements.UILabel(relative_rect=label_rect, text='Pick a save',
+        #                                      manager=self.manager, anchors=anchd, object_id='saveFL')
+        #
+        # shootDSize = (0, 0, 200, 150)
+        # dD_rect = pygame.Rect(shootDSize)
+        #
+        # dD_rect.bottomright = (int(- self.SW / 2 + 50), -520)
+        # self.savelist_selection = pygame_gui.elements.UISelectionList(dD_rect, names, object_id='loadS',
+        #                                                         manager =self.manager, allow_multi_select=False,
+        #                                                               anchors=anchd)
+        #
+        # buttonSize = (0, 0, 150, 60)
+        # button_layout_rect = pygame.Rect(buttonSize)
+        #
+        # button_layout_rect.bottomright = (int(-self.SW / 2) + 20, -400)
+        # self.loadConfirm_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
+        #                                             text='Confirm', manager=self.manager,
+        #                                             anchors=anchd)
 
-        label_rect.bottomright = (int(- self.SW / 2) + 20, -700)
-        label1 = pygame_gui.elements.UILabel(relative_rect=label_rect, text='Pick a save',
-                                             manager=self.manager, anchors=anchd, object_id='saveFL')
-
-        shootDSize = (0, 0, 200, 150)
-        dD_rect = pygame.Rect(shootDSize)
-
-        dD_rect.bottomright = (int(- self.SW / 2 + 50), -520)
-        self.savelist_selection = pygame_gui.elements.UISelectionList(dD_rect, names, object_id='loadS',
-                                                                manager =self.manager, allow_multi_select=False,
-                                                                      anchors=anchd)
-
-        buttonSize = (0, 0, 150, 60)
-        button_layout_rect = pygame.Rect(buttonSize)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 20, -400)
-        self.loadConfirm_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                    text='Confirm', manager=self.manager,
-                                                    anchors=anchd)
     # save menu
     def save_menu(self, names):
+        todo = ''
 
-        labelSize = (0, 0, 150, 40)
-        label_rect = pygame.Rect(labelSize)
-        labesize2 = (0,0,210,40)
+        # labelSize = (0, 0, 150, 40)
+        # label_rect = pygame.Rect(labelSize)
+        # labesize2 = (0,0,210,40)
+        #
+        # label_rect.bottomright = (int(- self.SW / 2) + 25, -700)
+        # label1 = pygame_gui.elements.UILabel(relative_rect=label_rect, text='Pick a save',
+        #                                     manager=self.manager, anchors=anchd, object_id='saveFL')
+        #
+        # shootDSize = (0, 0, 200, 150)
+        # dD_rect = pygame.Rect(shootDSize)
+        #
+        # dD_rect.bottomright = (int(- self.SW / 2 + 50), -500)
+        # self.savelist2_selection = pygame_gui.elements.UISelectionList(dD_rect, names, object_id= 'saveS',
+        #                                                         manager= self.manager, allow_multi_select=False,
+        #                                                                anchors=anchd)
+        #
+        # label_rect = pygame.Rect(labesize2)
+        # label_rect.bottomright = (int(- self.SW / 2 + 60), -400)
+        # label2 = pygame_gui.elements.UILabel(relative_rect=label_rect, text='Or new save',
+        #                                      manager=self.manager, anchors=anchd, object_id='saveFL2')
+        #
+        # buttonSize = (0, 0, 150, 60)
+        # button_layout_rect = pygame.Rect(buttonSize)
+        #
+        # button_layout_rect.bottomright = (int(-self.SW / 2) - 100, -170)
+        # self.saveConfirm_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
+        #                                             text='Confirm', manager=self.manager,
+        #                                             anchors=anchd)
+        #
+        # button_layout_rect.bottomright = (int(-self.SW / 2) + 100, -170)
+        # self.cancel_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
+        #                                                        text='Cancel', manager=self.manager,
+        #                                                        anchors=anchd)
 
-        label_rect.bottomright = (int(- self.SW / 2) + 25, -700)
-        label1 = pygame_gui.elements.UILabel(relative_rect=label_rect, text='Pick a save',
-                                            manager=self.manager, anchors=anchd, object_id='saveFL')
-
-        shootDSize = (0, 0, 200, 150)
-        dD_rect = pygame.Rect(shootDSize)
-
-        dD_rect.bottomright = (int(- self.SW / 2 + 50), -500)
-        self.savelist2_selection = pygame_gui.elements.UISelectionList(dD_rect, names, object_id= 'saveS',
-                                                                manager= self.manager, allow_multi_select=False,
-                                                                       anchors=anchd)
-
-        label_rect = pygame.Rect(labesize2)
-        label_rect.bottomright = (int(- self.SW / 2 + 60), -400)
-        label2 = pygame_gui.elements.UILabel(relative_rect=label_rect, text='Or new save',
-                                             manager=self.manager, anchors=anchd, object_id='saveFL2')
-
-        buttonSize = (0, 0, 150, 60)
-        button_layout_rect = pygame.Rect(buttonSize)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) - 100, -170)
-        self.saveConfirm_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                    text='Confirm', manager=self.manager,
-                                                    anchors=anchd)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 100, -170)
-        self.cancel_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                               text='Cancel', manager=self.manager,
-                                                               anchors=anchd)
-
-    # description menu
+    # description menu TODO
     def info_menu(self):
-        labelSize = (0, 0, 500, 120)
-        label_rect = pygame.Rect(labelSize)
+        todo = ''
+        # labelSize = (0, 0, 500, 120)
+        # label_rect = pygame.Rect(labelSize)
+        #
+        # label_rect.bottomright = (int(- self.SW / 2 + 200), -600)
+        # title = pygame_gui.elements.UILabel(relative_rect=label_rect, text='no exit',
+        #                                     manager=self.manager, anchors=anchd)
 
-        label_rect.bottomright = (int(- self.SW / 2 + 200), -600)
-        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text='no exit',
-                                            manager=self.manager, anchors=anchd)
+    def launch_menu(self, names):
+        label1 = self.maker.make_label(self.SW2, self.SH2 - 170, 210, 40, 'Load a Save', 'l1')
 
-    def launchMenu(self, names):
+        self.save_selection = self.maker.make_selection_list(self.SW2, self.SH2, 200, 150, names, 'saveS')
 
-        labesize2 = (0, 0, 210, 40)
+        label2 = self.maker.make_label(self.SW2, self.SH2 + 100, 210, 40, 'Or New Profile', 'l2')
 
-        shootDSize = (0, 0, 200, 150)
-        dD_rect = pygame.Rect(shootDSize)
+        self.launch_hub_b = self.maker.make_button(self.SW2 + 50, self.SH2 + 300, 150, 60, 'Go')
+        self.quit_launcher_b = self.maker.make_button(self.SW2 - 100, self.SH2 + 300, 150, 60, 'Back')
 
-        dD_rect.bottomright = (int(- self.SW / 2 + 50), -480)
-        self.savelist_selection = pygame_gui.elements.UISelectionList(dD_rect, names, object_id='saveS',
-                                                                       manager=self.manager, allow_multi_select=False,
-                                                                       anchors=anchd)
-
-        label_rect = pygame.Rect(labesize2)
-        label_rect.bottomright = (int(- self.SW / 2 + 60), -380)
-        label2 = pygame_gui.elements.UILabel(relative_rect=label_rect, text='Or new profile',
-                                             manager=self.manager, anchors=anchd, object_id='saveFL2')
-
-        buttonSize = (0, 0, 150, 60)
-        button_layout_rect = pygame.Rect(buttonSize)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) - 60, -170)
-        self.launch_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                               text='Confirm', manager=self.manager,
-                                                               anchors=anchd)
-
-        button_layout_rect.bottomright = (int(-self.SW / 2) + 110, -170)
-        self.quit_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                          text='Back', manager=self.manager,
-                                                          anchors=anchd)
-
-    def playerHubMenu(self):
-
-        self.playnext_b = self.maker.makebutton(400, 400, 150, 60, 'play')
-        self.unlocks_b = self.maker.makebutton(400, 470, 150, 60, 'unlocks')
-        self.stats_b =  self.maker.makebutton(400, 540, 150, 60, 'stats')
-        self.setting_b = self.maker.makebutton(400, 610, 150, 60, 'settings')
-        self.back_b = self.maker.makebutton(400, 680, 150, 60, 'back')
+    def player_hub(self):
+        self.start_b = self.maker.make_button(400, 400, 150, 60, 'play')
+        self.unlocks_b = self.maker.make_button(400, 470, 150, 60, 'unlocks')
+        self.stats_b = self.maker.make_button(400, 540, 150, 60, 'stats')
+        self.setting_b = self.maker.make_button(400, 610, 150, 60, 'settings')
+        self.back_b = self.maker.make_button(400, 680, 150, 60, 'back')

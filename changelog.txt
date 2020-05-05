@@ -88,5 +88,4 @@
     * Game saves automatically now when you exit. Currently no way to make a new profile without reseting the game config
       file to have no name.
 ------------------------------------------------------------------------------------------------------------------------
-3.3 * Working on a seperate menu loop as a player hub. Unfinished so game is currently broken. It won't rely on a game
-      config anymore cause it's too problematic.
+3.3 * Player hub update. Cleaned up a lot of code in menu class and moved some driver code to player hub.

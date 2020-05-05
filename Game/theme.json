@@ -144,13 +144,13 @@
     }
   },
   "screenS": {
-     "colours": {
+    "colours": {
       "dark_bg": "#0CA2F9",
       "normal_border": "#999999"
     }
   },
   "shootS": {
-     "colours": {
+    "colours": {
       "dark_bg": "#0CA2F9",
       "normal_border": "#999999"
     }

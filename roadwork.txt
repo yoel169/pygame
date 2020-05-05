@@ -25,4 +25,3 @@ Add a delete function for profiles and properly update the config if its the pro
                     Known Bugs
 ---------------------------------------------------
 Screen size not scale with smaller screens.
-If you delete your save file or rename it you need to fix it in the config file under name update it or "" for none.

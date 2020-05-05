@@ -1,6 +1,8 @@
 import pygame_gui
 import pygame
 
+
+# Helps make GUI elements like buttons, labels, and selections. Returns element.
 class GuiHelper:
 
     def __init__(self, SW, SH, manager):
@@ -9,7 +11,7 @@ class GuiHelper:
         self.manager = manager
         self.anchor = {'left': 'left', 'right': 'right', 'top': 'top', 'bottom': 'bottom'}
 
-    def makebutton(self, x,y,w,h, string):
+    def make_button(self, x, y, w, h, string):
 
         buttonSize = (0, 0, w, h)
         button_layout_rect = pygame.Rect(buttonSize)
@@ -28,7 +30,7 @@ class GuiHelper:
         return pygame_gui.elements.UILabel(relative_rect=label_rect, text=string,
                                              manager=self.manager, anchors=self.anchor, object_id= id)
 
-    def makeselectionlist(self, x,y,w,h, strings, id):
+    def make_selection_list(self, x,y,w,h, strings, id):
 
         selectionSize = (0, 0, w, h)
         dD_rect = pygame.Rect(selectionSize)

@@ -35,6 +35,7 @@ class PlayerHub:
         won = False
         play = False
         inputbox = False
+        kim_exit = False
 
         # user variables
         score = 0
@@ -45,9 +46,9 @@ class PlayerHub:
 
         # create player handler for load, save
         player_handler = PlayerHandler()
-        save_files = []
-        player_save = {}
-        player_panel = None
+        save_files = []  # get a list of save files found
+        player_save = {}  # hold players data for player panel and for saving
+        player_panel = None  # info panel about player
 
         # ---------------------------------------------------- stages ------------------------------------------
         # hold all stages
@@ -70,13 +71,13 @@ class PlayerHub:
         # ----------------------------------------------------------------------------------------------------------
 
         # CREATE GUI MANAGER and menu object
-        manager = gui.UIManager((self.SW, self.SH))
+        manager = gui.UIManager((self.SW, self.SH), 'Game/theme.json')
         gameMenu = GameMenu(self.SW, self.SH, manager)
 
         # launch load/save menu and create input box
-        gameMenu.launchMenu(player_handler.getSaves())
+        gameMenu.launch_menu(player_handler.getSaves())
         inputbox = True
-        inputboxd = InputBox(int(self.SW / 2) - 150, int(self.SH / 2) + 160, 30, 30)
+        inputboxd = InputBox(int(self.SW / 2) - 200, int(self.SH / 2) + 130, 30, 30)
 
         while running:
 
@@ -87,7 +88,7 @@ class PlayerHub:
 
                 # QUIT EVENT
                 if event.type == py.QUIT or event.type == QUIT:
-                    running = False
+                    running, kim_exit = False, True
 
                 elif event.type == py.KEYDOWN:
 
@@ -99,26 +100,45 @@ class PlayerHub:
                 if event.type == py.USEREVENT:
                     if event.user_type == gui.UI_BUTTON_PRESSED:
 
+                        # go back button from hub
                         if event.ui_element == gameMenu.back_b:
                             running = False
 
-                        # confirm button from play launch
-                        if event.ui_element == gameMenu.launch_button:
+                        # quit button called from replay menu or next level menu
+                        elif event.ui_element == gameMenu.quit_replay_b or event.ui_element == gameMenu.quit_replay_b:
+                            manager.clear_and_reset()
+                            gameMenu.player_hub()
+                            player_panel.setPlayer(player_save)
 
-                            name1 = gameMenu.savelist_selection.get_single_selection()
+                        # next level button from retry or win menu
+                        elif event.ui_element == gameMenu.next_level_b or event.ui_element == gameMenu.replay_b:
+                            play = True
+
+                        # confirm button from play launch
+                        elif event.ui_element == gameMenu.launch_hub_b:
+
+                            # get name selection and name from input box
+                            name1 = gameMenu.save_selection.get_single_selection()
                             name2 = inputboxd.text
 
+                            # feed it to launch handler to get a player save according to names and update setting
                             player_save = player_handler.launch(name1,name2,option,option2)
                             option, option2 = player_save['settings'][0], player_save['settings'][1]
 
+                            # set the player and stage info based from save file
                             player.setInfo(player_save['player'])
                             current_stage, current_part = player_save['stage'][0], player_save['stage'][1]
 
+                            # turn off inputbox, launch player hub and show player panel
                             inputbox = False
                             player_panel = PlayerPanel(self.screen, manager, self.background)
                             manager.clear_and_reset()
-                            gameMenu.playerHubMenu()
+                            gameMenu.player_hub()
                             player_panel.setPlayer(player_save)
+
+                        # start next stage/ part
+                        elif event.ui_element == gameMenu.start_b:
+                            play = True
 
                 manager.process_events(event)
                 if inputbox:
@@ -126,6 +146,61 @@ class PlayerHub:
 
             if inputbox:
                 inputboxd.update()
+
+            # load next stage/part
+            if play:
+                manager.clear_and_reset()
+                args = [option, option2]
+                won, score, player, kim_exit = stages[current_stage].getPart(args, current_part, score)
+                manager.clear_and_reset()  # reset GUI
+
+                if kim_exit:
+                    running = False
+
+                player_save['player'] = player.getInfo()  # update player save file
+
+                play = False
+                manager.clear_and_reset()
+
+                if not won:  # if lost launch replay menu
+
+                    # if lives reached 0 reset part
+                    if player.lives == 0:
+                        current_part, score = 0, 0
+                        player_save['stage'] = [current_stage, current_part]
+                        player.reset()
+                        player_save['player'] = player.getInfo()
+                        gameMenu.replay_menu('no more lives')
+                    else:
+                        gameMenu.replay_menu('try again?')
+
+                elif won:  # if won
+
+                    # if there are no more parts in the stage
+                    if current_part >= len(stages[current_stage].levels) - 1:
+
+                        # reset player info and current part and increase current stage
+                        score = 0
+                        player.reset()
+
+                        # if we ran out of stages go to main menu else next stage todo make level selection menu
+                        if current_stage >= maxstagenum:
+                            gameMenu.main_menu()
+                            player_panel.setPlayer(player_save)
+                        else:
+                            current_stage += 1
+                            current_part = 0
+                            manager.clear_and_reset()
+                            player_save['stage'] = [current_stage, current_part]
+                            gameMenu.next_level("next stage")
+
+                        player_save['player'] = player.getInfo()
+
+                    # else go to next part
+                    else:
+                        current_part += 1
+                        player_save['stage'] = [current_stage, current_part]
+                        gameMenu.next_level("next part")
 
             # redraw bg and update gui
             self.screen.blit(self.background, (0, 0))
@@ -136,3 +211,5 @@ class PlayerHub:
             # UPDATE SCREEN AND TICK CLOCK
             py.display.update()
             time_delta = clock.tick(60)
+
+        return kim_exit
