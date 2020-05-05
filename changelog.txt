@@ -89,3 +89,4 @@
       file to have no name.
 ------------------------------------------------------------------------------------------------------------------------
 3.3 * Player hub update. Cleaned up a lot of code in menu class and moved some driver code to player hub.
+    * gameconfig does not save last player anymore.
