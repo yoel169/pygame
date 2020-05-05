@@ -18,7 +18,7 @@ class PlayerPanel:
         self.background = bg
         self.player = []
         self.stageinfo = []
-        hud_size = (SW2 - 50, SH2 - 470, 500, 380)
+        hud_size = (500, 300, 500, 380)
         self.hud_rect = py.Rect(hud_size)
 
         hudW = 500
@@ -54,11 +54,11 @@ class PlayerPanel:
         self.stageinfo = db['stage']
         self.times = db['times']
 
-        self.dob_label = gui.elements.UILabel(relative_rect=py.Rect((100, 50), (250, 20)),
+        self.dob_label = gui.elements.UILabel(relative_rect=py.Rect((100, 50), (260, 20)),
                                            text=('created: ' + str(self.times[0])), manager=self.manager,
                                               container=self.playerpanel, object_id='dobL')
 
-        self.time2_label = gui.elements.UILabel(relative_rect=py.Rect((100, 80), (250, 20)),
+        self.time2_label = gui.elements.UILabel(relative_rect=py.Rect((100, 80), (260, 20)),
                                               text=('last saved: ' + str(self.times[1])), manager=self.manager,
                                               container=self.playerpanel, object_id='time2L')
 

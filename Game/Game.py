@@ -515,7 +515,7 @@ class Game:
 
                 # UPDATE SCREEN AND TICK CLOCK
                 py.display.update()
-                clock.tick(60)
+                time_delta = clock.tick(60)
 
                 # ========================================= END GAME LOOP  ===========================================
             if exit:

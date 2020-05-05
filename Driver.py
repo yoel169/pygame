@@ -3,6 +3,7 @@ import pygame
 from Other.Menus import GameMenu
 from pygame.locals import VIDEORESIZE
 from Game.Game import Game
+from Game.PlayerHub import PlayerHub
 from Other.Constants import Constants
 from Other.InputBox import InputBox
 from Saves.SaveLoad import PlayerHandler
@@ -95,20 +96,20 @@ playerPanel = None
 # setup menu class
 gameMenu = GameMenu(SW, SH, manager)
 
-if len(info["player"]) != 0:
-    playerPanel = PlayerPanel(window_surface, manager, background)
-    manager.clear_and_reset()
-    gameMenu.main_menu()
-    playerSave = playerHandler.loadSave(info["player"])
-    player.setInfo(playerSave['player'])
-    playerPanel.setPlayer(playerSave)
-    option, option2 = playerSave['settings'][0], playerSave['settings'][1]
-    currentStage, currentPart = playerSave['stage'][0], playerSave['stage'][1]
-
-else:
-    gameMenu.launchMenu(playerHandler.getSaves())
-    inputbox = True
-    inputBoxD = InputBox(int(SW / 2) - 150, int(SH / 2) + 160, 30, 30)
+# if len(info["player"]) != 0:
+#     playerPanel = PlayerPanel(window_surface, manager, background)
+#     manager.clear_and_reset()
+#     gameMenu.main_menu()
+#     playerSave = playerHandler.loadSave(info["player"])
+#     player.setInfo(playerSave['player'])
+#     playerPanel.setPlayer(playerSave)
+#     option, option2 = playerSave['settings'][0], playerSave['settings'][1]
+#     currentStage, currentPart = playerSave['stage'][0], playerSave['stage'][1]
+#
+# else:
+#     gameMenu.launchMenu(playerHandler.getSaves())
+#     inputbox = True
+#     inputBoxD = InputBox(int(SW / 2) - 150, int(SH / 2) + 160, 30, 30)
 
 
 def playMusic():
@@ -123,6 +124,10 @@ def playMusic():
 # get current time
 time1 = datetime.datetime.now()
 time1 = time1.strftime("%m-%d-%y %I:%M:%S %p")
+
+hub = PlayerHub(ls)
+
+gameMenu.main_menu()
 
 while is_running:
 
@@ -147,7 +152,7 @@ while is_running:
 
                 #play button
                 elif event.ui_element == gameMenu.play_button:
-                    play = True
+                    hub.run(option, option2, option3)
 
                 # replay button if exit or lost
                 elif event.ui_element == gameMenu.replay_button:
@@ -418,8 +423,8 @@ while is_running:
 
     pygame.display.update()
 
-time2 = datetime.datetime.now()
-time2 = time2.strftime("%m-%d-%y %I:%M:%S %p")
-playerSave['times'][1] = time2
-playerSave['player'] = player.getInfo()
-playerHandler.save(playerSave)
+# time2 = datetime.datetime.now()
+# time2 = time2.strftime("%m-%d-%y %I:%M:%S %p")
+# playerSave['times'][1] = time2
+# playerSave['player'] = player.getInfo()
+# playerHandler.save(playerSave)

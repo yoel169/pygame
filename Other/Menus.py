@@ -1,7 +1,9 @@
 import pygame
 import pygame_gui
 from Other.InputBox import InputBox
+from Other.GuiHelper import GuiHelper
 # ====================================== MENUS FOR GAME ===============================================
+pygame.init()
 
 anchd = {'left': 'right', 'right': 'right', 'top': 'bottom', 'bottom': 'bottom'}
 
@@ -37,6 +39,10 @@ class GameMenu():
         self.screenMenu = None
         self.movementMenu = None
         self.quit_button3 = None
+        self.maker = GuiHelper(self.SW, self.SH, self.manager)
+        self.SW2 = int(self.SW / 2)
+        self.SH2 = int(self.SH / 2)
+        self.back_b = None
 
     def main_menu(self):
         buttonSize = (0, 0, 150, 60)
@@ -234,20 +240,8 @@ class GameMenu():
                                             manager=self.manager, anchors=anchd)
 
     def launchMenu(self, names):
-        labelSize = (0, 0, 1000, 110)
-        label_rect = pygame.Rect(labelSize)
 
-        label_rect.bottomright = (int(- self.SW / 2 + 500), -750)
-        title = pygame_gui.elements.UILabel(relative_rect=label_rect, text=' WORLD FLYING SHOOTER',
-                                            manager=self.manager, anchors=anchd, object_id='maintitle')
-
-        labelSize = (0, 0, 150, 40)
-        label_rect = pygame.Rect(labelSize)
         labesize2 = (0, 0, 210, 40)
-
-        label_rect.bottomright = (int(- self.SW / 2) + 25, -650)
-        label1 = pygame_gui.elements.UILabel(relative_rect=label_rect, text='Pick a save',
-                                             manager=self.manager, anchors=anchd, object_id='saveFL')
 
         shootDSize = (0, 0, 200, 150)
         dD_rect = pygame.Rect(shootDSize)
@@ -272,5 +266,13 @@ class GameMenu():
 
         button_layout_rect.bottomright = (int(-self.SW / 2) + 110, -170)
         self.quit_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                                          text='Exit', manager=self.manager,
+                                                          text='Back', manager=self.manager,
                                                           anchors=anchd)
+
+    def playerHubMenu(self):
+
+        self.playnext_b = self.maker.makebutton(400, 400, 150, 60, 'play')
+        self.unlocks_b = self.maker.makebutton(400, 470, 150, 60, 'unlocks')
+        self.stats_b =  self.maker.makebutton(400, 540, 150, 60, 'stats')
+        self.setting_b = self.maker.makebutton(400, 610, 150, 60, 'settings')
+        self.back_b = self.maker.makebutton(400, 680, 150, 60, 'back')
