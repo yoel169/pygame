@@ -4,22 +4,18 @@
 player level and xp system
 Work on a shop menu for upgrades.
 create a menu for picking levels
-New player jet
+New player jets
 Work on different bullets
 Sandbox Mode
 
 ---------------------------------------------------
              To dos that im too lazy to do
 ---------------------------------------------------
-Make game pretty for god sakes.
 Get better sprites.
 Get sounds.
 Actually make a description page.
-Game HUD: make it pretty!
 Make different difficulties: Easy, Medium, Hard, Insane.
-Save and load options for user to keep track (use JSON).
 Get proper window scaling with GUI.
-Add a delete function for profiles and properly update the config if its the profile being deleted.
 
 ---------------------------------------------------
                     Known Bugs
