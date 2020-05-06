@@ -96,3 +96,5 @@
       CHANGED ONE VARIABLE* sigh.
     * Implemented xp and money properly.
     * Got HUD pretty, still gotta add xp and money properly but thats for another day.
+------------------------------------------------------------------------------------------------------------------------
+3.4  *Added a mini menu when you pause for continuing or exit.

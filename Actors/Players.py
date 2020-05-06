@@ -19,6 +19,7 @@ from pygame.locals import (
 SCREEN_WIDTH, SCREEN_HEIGHT = Constants.screenSize
 halfh = int(SCREEN_HEIGHT/2)
 
+
 # Define a player object by extending pygame.sprite.Sprite
 # The surface drawn on the screen is now an attribute of 'player'
 class Player(pygame.sprite.DirtySprite):

@@ -2,13 +2,13 @@ import pygame as py
 import pygame_gui as gui
 from pygame.locals import K_p
 from Other.Constants import Constants
-
+from Other.GuiHelper import GuiHelper
 # ========================================= GAME HUD ===============================================
 
 SW, SH = Constants.screenSize
 
 SW2 = int(SW/2)
-SH2 = int(SW/2)
+SH2 = int(SH/2)
 
 
 class HUD:
@@ -18,7 +18,7 @@ class HUD:
         self.manager = manager
         self.background = bg
         self.maxWaves = waves
-
+        self.maker = GuiHelper(SW, SH, manager)
         hud_size = (650, 0, 650, 140)
         hud_rect = py.Rect(hud_size)
 
@@ -99,10 +99,15 @@ class HUD:
         runner = True
         clock = py.time.Clock()
 
+        pause_panel = self.maker.make_panel(SW2 - 150, SH2 - 150, 200, 200, 'pause_panel')
+        cont_button = self.maker.make_button(120,70,70,50,'continue', pause_panel)
+        exit_button = self.maker.make_button(120,140,70,50,'exit', pause_panel)
+
+        exit = False
+
         while(runner):
 
             time_delta = clock.tick(60)
-            exit = False
 
             for event in py.event.get():
                 if event.type == py.QUIT:
@@ -114,7 +119,11 @@ class HUD:
 
                 if event.type == py.USEREVENT:
                     if event.user_type == gui.UI_BUTTON_PRESSED:
-                        if event.ui_element == self.pause_button:
+                        if event.ui_element == self.pause_button or event.ui_element == cont_button:
+                            runner = False
+
+                        elif event.ui_element == exit_button:
+                            exit = True
                             runner = False
 
                 self.manager.process_events(event)
@@ -125,3 +134,8 @@ class HUD:
             self.manager.draw_ui(self.screen)
 
             py.display.update()
+
+        cont_button.kill()
+        exit_button.kill()
+        pause_panel.kill()
+        return exit

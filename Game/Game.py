@@ -306,8 +306,10 @@ class Game:
                         if event.user_type == gui.UI_BUTTON_PRESSED:
                             if event.ui_element == hud.pause_button:
                                 py.mixer.music.pause()
-                                hud.pause()
+                                exit = hud.pause()
                                 py.mixer.music.unpause()
+                                if exit:
+                                    running = False
 
                     # MANAGER PROCESS HUD GUI EVENTS
                     manager.process_events(event)
@@ -526,6 +528,6 @@ class Game:
                 self.player.time += time
                 return won, score, self.player, kim_exit
 
-        # idek if this gets called down here
+        # for when all the waves are done
         self.player.time += time
         return won, score, self.player, kim_exit

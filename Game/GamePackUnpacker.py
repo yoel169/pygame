@@ -1,6 +1,4 @@
 import json
-import pygame as py
-import random
 
 # =================================== UNPACK A WAVE PACK ===================================
 

@@ -1,5 +1,4 @@
 import json
-import os
 
 # =========================================== LEVEL PACK SCRIPT TO MAKE LEVELS =========================================
 # Follow the prompts to make level packs. If you need help check description or documentation on scripter tab.

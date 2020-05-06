@@ -1,15 +1,10 @@
 import pygame_gui as gui
 import pygame as py
 from Other.Menus import GameMenu
-from pygame.locals import VIDEORESIZE
 from Actors.Players import Player
-import json
-from Other.PlayerPanel import PlayerPanel
 from Game.Game import Game
-from Other.Constants import Constants
 from Other.InputBox import InputBox
 from Saves.SaveLoad import PlayerHandler
-import datetime
 from pygame.locals import (
     K_ESCAPE,
     QUIT)
@@ -189,6 +184,7 @@ class PlayerHub:
                         # reset player info and current part and increase current stage
                         score = 0
                         player.reset()
+                        player_save['player'] = player.getInfo()
 
                         # if we ran out of stages go to main menu else next stage todo make level selection menu
                         if current_stage >= maxstagenum:
@@ -199,8 +195,6 @@ class PlayerHub:
                             manager.clear_and_reset()
                             player_save['stage'] = [current_stage, current_part]
                             gameMenu.next_level("next stage")
-
-                        player_save['player'] = player.getInfo()
 
                     # else go to next part
                     else:

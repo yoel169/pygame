@@ -112,7 +112,9 @@
       "active_border": "#8080B0"
     },
     "misc": {
-      "tool_tip_delay": "1.5"
+      "tool_tip_delay": "1.5",
+      "shape": "rounded_rectangle",
+      "shape_corner_radius": "1"
     }
   },
   "maintitle": {
@@ -171,6 +173,9 @@
     }
   },
   "playerpanel": {
+    "prototype": "#paneltheme"
+  },
+  "pause_panel": {
     "prototype": "#paneltheme"
   },
   "namepanel": {
