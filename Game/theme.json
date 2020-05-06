@@ -173,6 +173,12 @@
   "playerpanel": {
     "prototype": "#paneltheme"
   },
+  "namepanel": {
+    "prototype": "#paneltheme"
+  },
+  "playername": {
+    "prototype": "#mediumlabel"
+  },
   "paneltitle": {
     "prototype": "#mediumlabel"
   },
@@ -182,7 +188,7 @@
   "l2": {
     "prototype": "#mediumlabel"
   },
-  "gamehud": {
+  "HUD": {
     "prototype": "#paneltheme"
   },
   "dobL": {
@@ -210,6 +216,39 @@
     "prototype": "#smalllabel"
   },
   "time2L": {
+    "prototype": "#smalllabel"
+  },
+  "hud_wave": {
+    "prototype": "#smalllabel"
+  },
+  "hud_part": {
+    "prototype": "#smalllabel"
+  },
+  "hud_time": {
+    "prototype": "#smalllabel"
+  },
+  "hud_life": {
+    "prototype": "#smalllabel"
+  },
+  "hud_health": {
+    "prototype": "#smalllabel"
+  },
+  "hud_score": {
+    "prototype": "#smalllabel"
+  },
+  "hud_money": {
+    "prototype": "#smalllabel"
+  },
+  "hud_damage": {
+    "prototype": "#smalllabel"
+  },
+  "hud_stage": {
+    "prototype": "#smalllabel"
+  },
+  "hud_bps": {
+    "prototype": "#smalllabel"
+  },
+  "hud_bspeed": {
     "prototype": "#smalllabel"
   }
 }

@@ -9,9 +9,9 @@ from pygame.locals import (
 SCREEN_WIDTH , SCREEN_HEIGHT = Constants.screenSize
 
 
-class EnenmyJet(pygame.sprite.DirtySprite):
+class EnenemyJet(pygame.sprite.DirtySprite):
     def __init__(self, type):
-        super(EnenmyJet, self).__init__()
+        super(EnenemyJet, self).__init__()
         self.type = type
         #  initialize based on enemy type, B, B+, G
         if type == 0:
@@ -20,21 +20,24 @@ class EnenmyJet(pygame.sprite.DirtySprite):
             self.damage = 10
             self.health = 10
             self.points = 1
-            self.xp = 1
+            self.xp = 3
+            self.money = 1
         elif type == 1:
             self.surf = pygame.image.load("Media/bluejetplus.png").convert()
             self.speed = random.randint(6, 10)
             self.damage = 12
             self.health = 20
             self.points = 2
-            self.xp = 20
+            self.xp = 9
+            self.money = 3
         elif type ==2:
             self.surf = pygame.image.load("Media/greenjet.png").convert()
             self.speed = random.randint(4, 8)
             self.damage = 20
             self.health = 30
             self.points = 3
-            self.xp = 15
+            self.xp = 6
+            self.money = 2
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.surf.get_rect(
             center=(

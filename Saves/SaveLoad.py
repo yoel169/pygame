@@ -10,6 +10,10 @@ class PlayerHandler():
 
     def save(self, db):
 
+        time2 = datetime.datetime.now()
+        time2 = time2.strftime("%m-%d-%y %I:%M:%S %p")
+        db['times'][1] = time2
+
         string = 'Saves/' +str(db['name']) + '.sf'
 
         with open(string, 'bw') as f:
@@ -20,6 +24,7 @@ class PlayerHandler():
         for file in listdir('Saves/'):
             if file.endswith('.sf'):
                 names.append(path.splitext(file)[0])
+        names.sort()
         return names
 
     def loadSave(self, filename):
@@ -28,6 +33,7 @@ class PlayerHandler():
             self.saveFile = load(f)
         return self.saveFile
 
+    # used at player selection launch scree, either loads a player save or makes a new one
     def launch(self, name1, name2, opt1, opt2):
 
         time2 = datetime.datetime.now()
@@ -43,7 +49,7 @@ class PlayerHandler():
                 name = name2
             else:
                 name = 'player'
-            db = {'name': name, 'player': Player(False).getInfo(), 'times': [time2, time2],
+            db = {'name': name, 'player': Player(True).getInfo(), 'times': [time2, time2],
                   'settings': [opt1, opt2], 'stage': [0, 0]}
 
             self.save(db)

@@ -31,24 +31,22 @@ class PlayerHub:
         time_delta = 0
         clock = py.time.Clock()
         running = True
-        player = Player(False)
+        player = Player(True)
         won = False
         play = False
         inputbox = False
         kim_exit = False
+        save = False  # saving player flag
 
         # user variables
         score = 0
-        tracker = 0
         option = opt1  # 0 for auto shooting, 1 for space, 2 for mouse
         option2 = opt2  # 0 for arrows, 1 for wads, 2 for mouse
-        option3 = opt3  # 0 for windowed, 2 for fullscreen, 3 for hw
+        # option3 = opt3  # 0 for windowed, 2 for fullscreen, 3 for hw
 
-        # create player handler for load, save
+        # create player handler for player save handling
         player_handler = PlayerHandler()
-        save_files = []  # get a list of save files found
         player_save = {}  # hold players data for player panel and for saving
-        player_panel = None  # info panel about player
 
         # ---------------------------------------------------- stages ------------------------------------------
         # hold all stages
@@ -89,12 +87,14 @@ class PlayerHub:
                 # QUIT EVENT
                 if event.type == py.QUIT or event.type == QUIT:
                     running, kim_exit = False, True
+                    save = True
 
                 elif event.type == py.KEYDOWN:
 
                     # ESC
                     if event.key == K_ESCAPE:
                         running = False
+                        save = True
                         print('esc pressed')
 
                 if event.type == py.USEREVENT:
@@ -103,12 +103,17 @@ class PlayerHub:
                         # go back button from hub
                         if event.ui_element == gameMenu.back_b:
                             running = False
+                            save = True
+
+                        # exit at profile selection menu
+                        elif event.ui_element == gameMenu.quit_launcher_b:
+                            running = False
+                            save = False
 
                         # quit button called from replay menu or next level menu
-                        elif event.ui_element == gameMenu.quit_replay_b or event.ui_element == gameMenu.quit_replay_b:
+                        elif event.ui_element == gameMenu.quit_replay_b or event.ui_element == gameMenu.quit_next_level_b:
                             manager.clear_and_reset()
-                            gameMenu.player_hub()
-                            player_panel.setPlayer(player_save)
+                            gameMenu.player_hub(player_save)
 
                         # next level button from retry or win menu
                         elif event.ui_element == gameMenu.next_level_b or event.ui_element == gameMenu.replay_b:
@@ -131,10 +136,8 @@ class PlayerHub:
 
                             # turn off inputbox, launch player hub and show player panel
                             inputbox = False
-                            player_panel = PlayerPanel(self.screen, manager, self.background)
                             manager.clear_and_reset()
-                            gameMenu.player_hub()
-                            player_panel.setPlayer(player_save)
+                            gameMenu.player_hub(player_save)
 
                         # start next stage/ part
                         elif event.ui_element == gameMenu.start_b:
@@ -156,6 +159,10 @@ class PlayerHub:
 
                 if kim_exit:
                     running = False
+
+                # save
+                player_save['player'] = player.getInfo()
+                player_handler.save(player_save)
 
                 player_save['player'] = player.getInfo()  # update player save file
 
@@ -185,8 +192,7 @@ class PlayerHub:
 
                         # if we ran out of stages go to main menu else next stage todo make level selection menu
                         if current_stage >= maxstagenum:
-                            gameMenu.main_menu()
-                            player_panel.setPlayer(player_save)
+                            gameMenu.player_hub(player_save)
                         else:
                             current_stage += 1
                             current_part = 0
@@ -211,5 +217,10 @@ class PlayerHub:
             # UPDATE SCREEN AND TICK CLOCK
             py.display.update()
             time_delta = clock.tick(60)
+
+        # save before exiting
+        if save:
+            player_save['player'] = player.getInfo()
+            player_handler.save(player_save)
 
         return kim_exit

@@ -10,7 +10,7 @@ from pygame.locals import (
 import random
 from Actors.Players import Player
 from Actors.Neutrals import Cloud, Bullet1, Buff
-from Actors.Enemies import EnenmyJet, EBullet
+from Actors.Enemies import EnenemyJet, EBullet
 from Game.GamePackUnpacker import Unpacker
 
 # ============================= Updated wave pack reader and game maker using script =================================
@@ -97,7 +97,7 @@ class Game:
         py.init()
 
         # CREATE GUI MANAGER
-        manager = gui.UIManager((self.SW, self.SH))
+        manager = gui.UIManager((self.SW, self.SH), 'Game/theme.json')
 
         # INIT  HUD WITH SCREEN SIZE, BACKGROUND, LEVEL NAME AND # OF WAVES
         hud = HUD(self.screen, manager, self.background, levelTitle, index + 1, len(self.levels), maxWaves)
@@ -256,7 +256,7 @@ class Game:
                         for x in enemyL:
                             if x[1] == 'time':
                                 if x[0] == 'single':
-                                    new_enemy = EnenmyJet(int(x[3]))
+                                    new_enemy = EnenemyJet(int(x[3]))
                                     enemies.add(new_enemy)
                                     all_sprites.add(new_enemy)
                                     print("spawned single enemy from timer")
@@ -267,7 +267,7 @@ class Game:
                                     for index, x in enumerate(dc['chance'], 0):
                                         acc += int(x)
                                         if num < acc:
-                                            new_enemy = EnenmyJet(int(dc['type'][index]))
+                                            new_enemy = EnenemyJet(int(dc['type'][index]))
                                             enemies.add(new_enemy)
                                             all_sprites.add(new_enemy)
                                             print("spawned an enemy from group timer")
@@ -326,7 +326,7 @@ class Game:
                 for enemy in enemies:
                     if random.randint(1,100) == 1:
                         if enemy.type == 1:
-                            new_bullet = EBullet(enemy.rect.center, enemy.damage, enemy.pspeed + 5)
+                            new_bullet = EBullet(enemy.rect.center, enemy.damage, enemy.speed + 5)
                             bullets.add(new_bullet)
                             all_sprites.add(new_bullet)
 
@@ -372,7 +372,7 @@ class Game:
                         if x[1] == 'score':
                             if x[0] == 'single' and score % int(x[2]) == 0 and checker2 and score != 0:
 
-                                new_enemy = EnenmyJet(int(x[3]))
+                                new_enemy = EnenemyJet(int(x[3]))
                                 enemies.add(new_enemy)
                                 all_sprites.add(new_enemy)
                                 checker2 = False
@@ -432,7 +432,7 @@ class Game:
                             if y in range(1, int(x[2]) + 1):
                                 print("enemy created from random #", y, int(x[2]))
                                 if x[0] == 'single':
-                                    new_enemy = EnenmyJet(int(x[3]))
+                                    new_enemy = EnenemyJet(int(x[3]))
                                     enemies.add(new_enemy)
                                     all_sprites.add(new_enemy)
                                 elif x[0] == 'group':
@@ -442,7 +442,7 @@ class Game:
                                     for index, x in enumerate(dc['chance'], 0):
                                         acc += int(x)
                                         if num < acc:
-                                            new_enemy = EnenmyJet(int(dc['type'][index]))
+                                            new_enemy = EnenemyJet(int(dc['type'][index]))
                                             enemies.add(new_enemy)
                                             all_sprites.add(new_enemy)
                                             break
@@ -460,6 +460,7 @@ class Game:
                             if enemy.health <= 0:
                                 score += enemy.points
                                 self.player.xp += enemy.xp
+                                self.player.money += enemy.money
 
                 # PLAYER AND ENEMY BULLET
                 hit = py.sprite.spritecollideany(self.player, bullets)
@@ -512,7 +513,7 @@ class Game:
 
                 # UPDATE HUD AND DRAW IT
                 hud.update(currentWave, score, maxScore, self.player.health, self.player.maxHealth, self.player.lives,
-                           self.player.damage, self.player.bps, self.player.bspeed, 0, int(time /60))  # todo money variable
+                           self.player.damage, self.player.bps, self.player.bspeed, self.player.money, int(time /60))
                 manager.draw_ui(self.screen)
 
                 # UPDATE SCREEN AND TICK CLOCK

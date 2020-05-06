@@ -90,3 +90,9 @@
 ------------------------------------------------------------------------------------------------------------------------
 3.3 * Player hub update. Cleaned up a lot of code in menu class and moved some driver code to player hub.
     * gameconfig does not save last player anymore.
+    * Moves some GUI stuff around on player hub.
+    * Player save file now saves after every game even if you dont exit, and saves again when you exit player hub. I was
+      tired of losing progress when debugging and running into an exception. *collects random buff: CRASHED BECAUSE YOU
+      CHANGED ONE VARIABLE* sigh.
+    * Implemented xp and money properly.
+    * Got HUD pretty, still gotta add xp and money properly but thats for another day.

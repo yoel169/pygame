@@ -1,7 +1,6 @@
 ----------------------------------------------------
                 Current track
 ----------------------------------------------------
-player level and xp system
 Work on a shop menu for upgrades.
 create a menu for picking levels
 New player jets

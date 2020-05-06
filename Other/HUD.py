@@ -17,10 +17,9 @@ class HUD:
         self.screen = screen
         self.manager = manager
         self.background = bg
-        self.conf = None
         self.maxWaves = waves
 
-        hud_size = (650, 0, 620, 100)
+        hud_size = (650, 0, 650, 140)
         hud_rect = py.Rect(hud_size)
 
         hudW = 620
@@ -30,53 +29,53 @@ class HUD:
         # todo: container for hud and rest of ui elements
 
         self.hud = gui.elements.ui_panel.UIPanel(relative_rect=hud_rect, starting_layer_height=3, manager=self.manager,
-                                                 object_id='gamehud',anchors={'left': 'left',
+                                                 object_id='HUD',anchors={'left': 'left',
                                                                     'right': 'right',
                                                                     'top': 'top',
                                                                     'bottom': 'bottom'})
 
         self.title_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 60, 5), (100, 20)),
                                                 text=title,
-                                                manager=self.manager, container=self.hud)
+                                                manager=self.manager, container=self.hud, object_id='hud_stage')
 
         self.part_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 60, 25), (100, 20)),
                                                 text=('Part: ' + str(part) + '/'+ str(partmax)),
-                                                manager=self.manager, container=self.hud)
+                                                manager=self.manager, container=self.hud, object_id='hud_part')
 
         self.time_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 50, 65), (200, 20)),
-                                               text=('Time: '),
+                                               text=('Time: '),  object_id='hud_time',
                                                manager=self.manager, container=self.hud)
 
         self.life_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 50, 5), (200, 20)),
-                                               text='Lives: 0',
+                                               text='Lives: 0', object_id='hud_life',
                                                manager=self.manager, container=self.hud)
 
         self.health_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 90, 25), (120, 20)),
-                                                 text='Health: 0',
+                                                 text='Health: 0', object_id='hud_health',
                                                  manager=self.manager, container=self.hud)
 
-        self.score_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 60, 65), (150, 20)),
-                                                text='Score: 0',
+        self.score_label = gui.elements.UILabel(relative_rect=py.Rect((halfw - 80, 65), (150, 20)),
+                                                text='Score: 0', object_id='hud_score',
                                                 manager=self.manager, container=self.hud)
 
         self.money_label = gui.elements.UILabel(relative_rect=py.Rect((halfw + 50, 45), (200, 20)),
-                                                text='Money: 0',
+                                                text='Money: 0', object_id='hud_money',
                                                 manager=self.manager, container=self.hud)
 
         self.wave_label = gui.elements.UILabel(relative_rect=py.Rect((0, 5), (200, 20)),
-                                                 text='wave: ',
+                                                 text='wave: ', object_id='hud_wave',
                                                  manager=self.manager, container=self.hud)
 
         self.damage_label = gui.elements.UILabel(relative_rect=py.Rect((0, 25), (200, 20)),
-                                                text='damage: ',
+                                                text='damage: ', object_id='hud_damage',
                                                 manager=self.manager, container=self.hud)
 
         self.bps_label = gui.elements.UILabel(relative_rect=py.Rect((0, 45), (200, 20)),
-                                                 text='bullets every: ',
+                                                 text='bullets every: ', object_id='hud_bps',
                                                  manager=self.manager, container=self.hud)
 
         self.bspeed_label = gui.elements.UILabel(relative_rect=py.Rect((0, 65), (200, 20)),
-                                                 text='bullet speed: ',
+                                                 text='bullet speed: ', object_id='hud_bspeed',
                                                  manager=self.manager, container=self.hud)
 
         self.pause_button = gui.elements.UIButton(relative_rect=py.Rect((hudW - 90, 20), (70, 50)),

@@ -10,7 +10,7 @@ from pygame.locals import (
 import random
 from Actors.Players import Player
 from Actors.Neutrals import Cloud, Bullet1, Buff
-from Actors.Enemies import EnenmyJet, EBullet
+from Actors.Enemies import EnenemyJet, EBullet
 
 # ================================================ OUTED LEVEL MAKER ==================================================
 
@@ -183,7 +183,7 @@ class LevelMaker:
 
                     # ENEMY SPAWN EVENT
                     elif event.type == ADDENEMY:
-                        new_enemy = EnenmyJet(eTypes[counter])
+                        new_enemy = EnenemyJet(eTypes[counter])
                         enemies.add(new_enemy)
                         all_sprites.add(new_enemy)
 
