@@ -63,7 +63,7 @@
     },
     "misc": {
       "shape": "rounded_rectangle",
-      "shape_corner_radius": "10",
+      "shape_corner_radius": "25",
       "border_width": "1",
       "shadow_width": "15"
     }
@@ -114,7 +114,7 @@
     "misc": {
       "tool_tip_delay": "1.5",
       "shape": "rounded_rectangle",
-      "shape_corner_radius": "1"
+      "shape_corner_radius": "9"
     }
   },
   "maintitle": {
@@ -170,6 +170,22 @@
     "colours": {
       "dark_bg": "#0CA2F9",
       "normal_border": "#999999"
+    }
+  },
+  "pick_ddm": {
+    "misc" : {
+      "shape": "rounded_rectangle",
+      "shape_corner_radius": "12"
+    },
+    "drop_down_menu.#selected_option": {
+      "misc": {
+        "shape": "rounded_rectangle",
+        "shape_corner_radius": "12"
+      }, "#drop_down_options_list":
+        {
+          "shape": "rounded_rectangle",
+           "shape_corner_radius": "12"
+        }
     }
   },
   "playerpanel": {
@@ -254,6 +270,9 @@
     "prototype": "#smalllabel"
   },
   "hud_bspeed": {
+    "prototype": "#smalllabel"
+  },
+   "hud_xp": {
     "prototype": "#smalllabel"
   }
 }

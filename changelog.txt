@@ -97,4 +97,8 @@
     * Implemented xp and money properly.
     * Got HUD pretty, still gotta add xp and money properly but thats for another day.
 ------------------------------------------------------------------------------------------------------------------------
-3.4  *Added a mini menu when you pause for continuing or exit.
+3.4 * Added a mini menu when you pause for continuing or exit.
+    * HUD: updated code, moved stuff around, and added xp.
+    * Added a level selection option below continue. It will reset your progress with any stage that you last left of.
+    * Made buttons rounded edges. yessir.
+    * Made the name panel more centered ish.

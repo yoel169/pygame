@@ -47,6 +47,8 @@ class Game:
         time_delta = 0  # time handler for manager
         score = sc  # player score
         time = 0  # game time
+        xp_counter = 0  # counters for how much xp and money player gets for round
+        money_counter = 0
 
         # INIT GAME VARIABLES
         won = False  # if user won
@@ -171,9 +173,11 @@ class Game:
                     self.player.xp += partXP
                     if index == 0:
                         self.player.score += maxScore
+                        xp_counter += maxScore
                     else:
                         diff = maxScore - self.levels[index - 1][0][0]
                         self.player.score += diff
+                        xp_counter += diff
 
                     won = True
                     exit = True
@@ -463,6 +467,8 @@ class Game:
                                 score += enemy.points
                                 self.player.xp += enemy.xp
                                 self.player.money += enemy.money
+                                money_counter += enemy.money
+                                xp_counter += enemy.xp
 
                 # PLAYER AND ENEMY BULLET
                 hit = py.sprite.spritecollideany(self.player, bullets)
@@ -515,7 +521,7 @@ class Game:
 
                 # UPDATE HUD AND DRAW IT
                 hud.update(currentWave, score, maxScore, self.player.health, self.player.maxHealth, self.player.lives,
-                           self.player.damage, self.player.bps, self.player.bspeed, self.player.money, int(time /60))
+                           self.player.damage, self.player.bps, self.player.bspeed, money_counter, xp_counter, int(time /60))
                 manager.draw_ui(self.screen)
 
                 # UPDATE SCREEN AND TICK CLOCK

@@ -46,6 +46,7 @@ class PlayerHub:
         # ---------------------------------------------------- stages ------------------------------------------
         # hold all stages
         stages = []
+        stage_names = []
 
         # screen args
         ls = [self.SW, self.SH, self.background, self.screen]
@@ -54,6 +55,7 @@ class PlayerHub:
         for x in range(1, 4):
             pack = 'Stages/stage' + str(x) + '.json'
             title = 'Stage ' + str(x)
+            stage_names.append(title)
             stages.append(Game(ls, title, pack, player))
 
         # stages and part tracker
@@ -108,10 +110,20 @@ class PlayerHub:
                         # quit button called from replay menu or next level menu
                         elif event.ui_element == gameMenu.quit_replay_b or event.ui_element == gameMenu.quit_next_level_b:
                             manager.clear_and_reset()
-                            gameMenu.player_hub(player_save)
+                            gameMenu.player_hub(player_save, stage_names)
 
                         # next level button from retry or win menu
                         elif event.ui_element == gameMenu.next_level_b or event.ui_element == gameMenu.replay_b:
+                            play = True
+
+                        # go button for selecting a stage
+                        elif event.ui_element == gameMenu.pick_b:
+                            selection = gameMenu.pick_ddm.selected_option
+                            for count, x in enumerate(stage_names, 0):
+                                if selection == x:
+                                    player_save['stage'] = current_stage, current_part = count, 0
+                                    player.reset()
+                                    player_save['player'] = player.getInfo()
                             play = True
 
                         # confirm button from play launch
@@ -132,10 +144,10 @@ class PlayerHub:
                             # turn off inputbox, launch player hub and show player panel
                             inputbox = False
                             manager.clear_and_reset()
-                            gameMenu.player_hub(player_save)
+                            gameMenu.player_hub(player_save, stage_names)
 
                         # start next stage/ part
-                        elif event.ui_element == gameMenu.start_b:
+                        elif event.ui_element == gameMenu.cont_b:
                             play = True
 
                 manager.process_events(event)
@@ -183,24 +195,24 @@ class PlayerHub:
 
                         # reset player info and current part and increase current stage
                         score = 0
+                        current_part = 0
                         player.reset()
                         player_save['player'] = player.getInfo()
 
                         # if we ran out of stages go to main menu else next stage todo make level selection menu
                         if current_stage >= maxstagenum:
-                            gameMenu.player_hub(player_save)
+                            gameMenu.player_hub(player_save, stage_names)
                         else:
                             current_stage += 1
-                            current_part = 0
                             manager.clear_and_reset()
-                            player_save['stage'] = [current_stage, current_part]
                             gameMenu.next_level("next stage")
 
                     # else go to next part
                     else:
                         current_part += 1
-                        player_save['stage'] = [current_stage, current_part]
                         gameMenu.next_level("next part")
+
+                    player_save['stage'] = [current_stage, current_part]
 
             # redraw bg and update gui
             self.screen.blit(self.background, (0, 0))

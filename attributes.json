@@ -1,73 +1,4 @@
 {
-  "#mediumlabel": {
-    "colours": {
-      "dark_bg": "#89CFF0",
-      "normal_text": "#c5cbd8",
-      "text_shadow": "#505050"
-    },
-    "font": {
-      "name": "gameDev",
-      "regular_path": "Other/gameDev.ttf",
-      "size": "30",
-      "bold": "0",
-      "italic": "0"
-    },
-    "misc": {
-      "text_shadow": "1",
-      "text_shadow_size": "1",
-      "text_shadow_offset": "0,0"
-    }
-  },
-  "#biglabel": {
-    "colours": {
-      "dark_bg": "#89CFF0",
-      "normal_text": "#c5cbd8",
-      "text_shadow": "#505050"
-    },
-    "font": {
-      "name": "gameDev",
-      "regular_path": "Other/gameDev.ttf",
-      "size": "50",
-      "bold": "0",
-      "italic": "0"
-    },
-    "misc": {
-      "text_shadow": "1",
-      "text_shadow_size": "1",
-      "text_shadow_offset": "0,0"
-    }
-  },
-  "#smalllabel": {
-    "colours": {
-      "dark_bg": "#89CFF0",
-      "normal_text": "#c5cbd8",
-      "text_shadow": "#505050"
-    },
-    "font": {
-      "name": "gameDev",
-      "regular_path": "Other/gameDev.ttf",
-      "size": "20",
-      "bold": "0",
-      "italic": "0"
-    },
-    "misc": {
-      "text_shadow": "1",
-      "text_shadow_size": "1",
-      "text_shadow_offset": "0,0"
-    }
-  },
-  "#paneltheme": {
-    "colours": {
-      "dark_bg": "#89CFF0",
-      "normal_border": "#999999"
-    },
-    "misc": {
-      "shape": "rounded_rectangle",
-      "shape_corner_radius": "10",
-      "border_width": "1",
-      "shadow_width": "15"
-    }
-  },
   "defaults": {
     "colours": {
       "normal_bg": "#45494e",
@@ -112,7 +43,9 @@
       "active_border": "#8080B0"
     },
     "misc": {
-      "tool_tip_delay": "1.5"
+      "tool_tip_delay": "1.5",
+      "shape": "rounded_rectangle",
+      "shape_corner_radius": "9"
     }
   },
   "maintitle": {
@@ -133,83 +66,5 @@
       "text_shadow_size": "1",
       "text_shadow_offset": "0,0"
     }
-  },
-  "replay": {
-    "prototype": "#biglabel"
-  },
-  "movementS": {
-    "colours": {
-      "dark_bg": "#0CA2F9",
-      "normal_border": "#999999"
-    }
-  },
-  "screenS": {
-     "colours": {
-      "dark_bg": "#0CA2F9",
-      "normal_border": "#999999"
-    }
-  },
-  "shootS": {
-     "colours": {
-      "dark_bg": "#0CA2F9",
-      "normal_border": "#999999"
-    }
-  },
-  "nextlevel": {
-    "prototype": "#biglabel"
-  },
-  "saveS": {
-    "colours": {
-      "dark_bg": "#0CA2F9",
-      "normal_border": "#999999"
-    }
-  },
-  "loadS": {
-    "colours": {
-      "dark_bg": "#0CA2F9",
-      "normal_border": "#999999"
-    }
-  },
-  "playerpanel": {
-    "prototype": "#paneltheme"
-  },
-  "paneltitle": {
-    "prototype": "#mediumlabel"
-  },
-  "l1": {
-    "prototype": "#mediumlabel"
-  },
-  "l2": {
-    "prototype": "#mediumlabel"
-  },
-  "gamehud": {
-    "prototype": "#paneltheme"
-  },
-  "dobL": {
-    "prototype": "#smalllabel"
-  },
-  "stageL": {
-    "prototype": "#smalllabel"
-  },
-  "livesL": {
-    "prototype": "#smalllabel"
-  },
-  "hpL": {
-    "prototype": "#smalllabel"
-  },
-  "damL": {
-    "prototype": "#smalllabel"
-  },
-  "pspeedL": {
-    "prototype": "#smalllabel"
-  },
-  "bspeedL": {
-    "prototype": "#smalllabel"
-  },
-  "bpsL": {
-    "prototype": "#smalllabel"
-  },
-  "time2L": {
-    "prototype": "#smalllabel"
   }
 }
