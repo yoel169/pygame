@@ -484,7 +484,8 @@ class Game:
                         if self.player.health <= self.player.maxHealth:
                             self.player.health += hit.power
                     elif hit.type == 1:
-                        self.player.damage += hit.power
+                        if self.player.damage <= self.player.damage_max:
+                            self.player.damage += hit.power
                     else:
                         if self.player.bps >= self.player.bpsMax:
                             self.player.bps -= hit.power

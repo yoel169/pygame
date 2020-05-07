@@ -1,5 +1,6 @@
 from Other.GuiHelper import GuiHelper
 from Other.PlayerPanel import PlayerPanel
+import pygame as py
 
 
 # ====================================== MENUS FOR GAME ===============================================
@@ -39,12 +40,14 @@ class GameMenu():
 
         # player hub
         self.cont_b = None
-        self.unlocks_b = None
+        self.store_b = None
         self.stats_b = None
         self.back_b = None
         self.player_panel = PlayerPanel(self.manager)
         self.pick_b = None
         self.pick_ddm = None
+
+        # store hub
 
         # gui helper maker
         self.maker = GuiHelper(self.SW, self.SH, self.manager)
@@ -54,7 +57,7 @@ class GameMenu():
     def main_menu(self):
         # buttonS2 = (70, 60)
 
-        title = self.maker.make_label(self.SW2 + 500, 300, 1000, 110, 'WORLD FLYING SHOOTER', 'maintitle', None)
+        title = self.maker.make_label(self.SW2, 200, 1000, 110, 'WORLD FLYING SHOOTER', 'maintitle', None)
 
         button_s = (150, 60)
         height = self.SH2 + 20
@@ -68,42 +71,45 @@ class GameMenu():
         self.quit_b = self.maker.make_button(self.SW2, height + (70 * 3), button_s[0], button_s[1], 'Quit', None)
 
     def replay_menu(self, string):
-        title = self.maker.make_label(self.SW2 + 50, self.SH2, 240, 90, string, 'replay', None)
+        title = self.maker.make_label(self.SW2, self.SH2 - 90, 240, 90, string, 'replay', None)
 
         button_s = (150, 60)
 
-        self.replay_b = self.maker.make_button(self.SW2, self.SH2 + 150, button_s[0], button_s[1], 'play again', None)
+        self.replay_b = self.maker.make_button(self.SW2, self.SH2 + 100, button_s[0], button_s[1], 'play again',
+                                               None)
 
-        self.quit_replay_b = self.maker.make_button(self.SW2, self.SH2 + 220, button_s[0], button_s[1], 'back to hub',
+        self.quit_replay_b = self.maker.make_button(self.SW2, self.SH2 + 200, button_s[0], button_s[1],
+                                                    'back to hub',
                                                     None)
 
     def settings_menu(self):
         button_s = (150, 60)
 
-        self.movement_selection = self.maker.make_selection_list(self.SW2, self.SH2, 200, 70,
+        self.movement_selection = self.maker.make_selection_list(self.SW2, self.SH2 - 70, 200, 70,
                                                                  ['arrow keys', "wads keys", "mouse"], 'movementS',
                                                                  None)
 
-        self.screen_selection = self.maker.make_selection_list(self.SW2, self.SH2 + 100, 200, 70,
+        self.screen_selection = self.maker.make_selection_list(self.SW2, self.SH2 + 20, 200, 70,
                                                                ["fullscreen", "hardware accelerated",
                                                                 "windowed"], 'screenS', None)
 
-        self.shoot_selection = self.maker.make_selection_list(self.SW2, self.SH2 + 200, 200, 70,
+        self.shoot_selection = self.maker.make_selection_list(self.SW2, self.SH2 + 110, 200, 70,
                                                               ['auto', "space", "mouse"], 'shootS', None)
 
-        self.confirm_setting_b = self.maker.make_button(self.SW2 - 30, self.SH2 + 300, button_s[0], button_s[1], 'exit'
+        self.confirm_setting_b = self.maker.make_button(self.SW2, self.SH2 + 300, button_s[0], button_s[1], 'exit'
                                                         , None)
 
     def next_level(self, string):
         label_size = (240, 90)
         button_s = (150, 60)
 
-        title = self.maker.make_label(self.SW2 + 50, self.SH2, label_size[0], label_size[1], string, 'nextlevel', None)
+        title = self.maker.make_label(self.SW2, self.SH2 - 90, label_size[0], label_size[1], string, 'nextlevel',
+                                      None)
 
-        self.next_level_b = self.maker.make_button(self.SW2, self.SH2 + 150, button_s[0], button_s[1], string
+        self.next_level_b = self.maker.make_button(self.SW2, self.SH2 + 100, button_s[0], button_s[1], string
                                                    , None)
 
-        self.quit_next_level_b = self.maker.make_button(self.SW2, self.SH2 + 220, button_s[0], button_s[1],
+        self.quit_next_level_b = self.maker.make_button(self.SW2, self.SH2 + 200, button_s[0], button_s[1],
                                                         'back to hub'
                                                         , None)
 
@@ -187,18 +193,18 @@ class GameMenu():
 
         self.save_selection = self.maker.make_selection_list(self.SW2, self.SH2, 200, 150, names, 'saveS', None)
 
-        label2 = self.maker.make_label(self.SW2, self.SH2 + 100, 210, 40, 'Or New Profile', 'l2', None)
+        label2 = self.maker.make_label(self.SW2, self.SH2 + 120, 210, 40, 'Or New Profile', 'l2', None)
 
-        self.launch_hub_b = self.maker.make_button(self.SW2 + 50, self.SH2 + 300, 150, 60, 'Go', None)
-        self.quit_launcher_b = self.maker.make_button(self.SW2 - 100, self.SH2 + 300, 150, 60, 'Back', None)
+        self.launch_hub_b = self.maker.make_button(self.SW2 + 80, self.SH2 + 300, 150, 60, 'Go', None)
+        self.quit_launcher_b = self.maker.make_button(self.SW2 - 80, self.SH2 + 300, 150, 60, 'Back', None)
 
     # player hub
     def player_hub(self, player_save, stages):
         # menu buttons
         self.cont_b = self.maker.make_button(400, 330, 150, 60, 'continue', None)
-        self.pick_b = self.maker.make_button(300, 400, 50, 60, 'Go', None)
-        self.pick_ddm = self.maker.make_drop_down_menu(300, 340, 100, 60, 'pick_ddm', stages)
-        self.unlocks_b = self.maker.make_button(400, 470, 150, 60, 'unlocks', None)
+        self.pick_b = self.maker.make_button(350, 400, 50, 60, 'Go', None)
+        self.pick_ddm = self.maker.make_drop_down_menu(425, 400, 100, 60, 'pick_ddm', stages)
+        self.store_b = self.maker.make_button(400, 470, 150, 60, 'store', None)
         self.stats_b = self.maker.make_button(400, 540, 150, 60, 'stats', None)
         self.setting_b = self.maker.make_button(400, 610, 150, 60, 'settings', None)
         self.back_b = self.maker.make_button(400, 680, 150, 60, 'save and exit', None)
@@ -206,17 +212,21 @@ class GameMenu():
         # player info panel
         self.player_panel.setPlayer(player_save)
 
-        #  -------------------------------------- player name panel ------------------------------------------
-        name_panel = self.maker.make_panel(self.SW2 - 300, 80, 400, 180, 'namepanel')
+        #  ====================================== player name panel ==============================================
+        name_panel = self.maker.make_panel(self.SW2 - 100, 100, 400, 180, 'namepanel')
 
         # title
         string = "Welcome Back " + str(player_save['name'])
-        player_name = self.maker.make_label(330, 40, 300, 30, string, 'playername', name_panel)
+        player_name = self.maker.make_label(200, 30, 300, 30, string, 'playername', name_panel)
 
-        # times
+        #  --------------------------------------------- times -----------------------------------------------------
         times = player_save['times']
         string = 'Created: ' + str(times[0])
-        dob_label = self.maker.make_label(320, 80, 260, 20, string, 'dobL', name_panel)
+        dob_label = self.maker.make_label(200, 60, 260, 20, string, 'dobL', name_panel)
 
         string = 'Last played: ' + str(times[1])
-        last_save_label = self.maker.make_label(320, 120, 260, 20, string, 'time2L', name_panel)
+        last_save_label = self.maker.make_label(200, 90, 260, 20, string, 'time2L', name_panel)
+
+        player = player_save['player']
+        total_time = self.maker.make_label(200, 120, 260, 20, ('total game time: ' + str(player[13]) + 's'),
+                                                'gametime', name_panel)

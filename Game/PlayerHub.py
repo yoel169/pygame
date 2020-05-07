@@ -4,6 +4,7 @@ from Other.Menus import GameMenu
 from Actors.Players import Player
 from Game.Game import Game
 from Other.InputBox import InputBox
+from Other.Store import Store
 from Saves.SaveLoad import PlayerHandler
 from pygame.locals import (
     K_ESCAPE,
@@ -69,10 +70,13 @@ class PlayerHub:
         manager = gui.UIManager((self.SW, self.SH), 'Game/theme.json')
         gameMenu = GameMenu(self.SW, self.SH, manager)
 
+        # store
+        store = Store(self.screen, self.background, manager)
+
         # launch load/save menu and create input box
         gameMenu.launch_menu(player_handler.getSaves())
         inputbox = True
-        inputboxd = InputBox(int(self.SW / 2) - 200, int(self.SH / 2) + 130, 30, 30)
+        inputboxd = InputBox(int(self.SW / 2) - 100, int(self.SH / 2) + 160, 30, 30)
 
         while running:
 
@@ -125,6 +129,11 @@ class PlayerHub:
                                     player.reset()
                                     player_save['player'] = player.getInfo()
                             play = True
+
+                        # store button
+                        elif event.ui_element == gameMenu.store_b:
+                            manager.clear_and_reset()
+                            store.run(player)
 
                         # confirm button from play launch
                         elif event.ui_element == gameMenu.launch_hub_b:

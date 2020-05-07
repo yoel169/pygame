@@ -29,30 +29,30 @@ class HUD:
 
         # todo: container for hud and rest of ui elements
 
-        self.hud = self.maker.make_panel(650, 0, 650, 140, 'HUD')
+        self.hud = self.maker.make_panel(SW2, 75, 650, 140, 'HUD')
 
         part_string = 'Part: ' + str(part) + '/' + str(partmax)
 
         # left
-        self.damage_label = self.maker.make_label(200, 45, 200, 20, '', 'hud_damage', self.hud)
-        self.bps_label = self.maker.make_label(200, 65, 200, 20, '', 'hud_bps', self.hud)
-        self.bspeed_label = self.maker.make_label(200, 85, 200, 20, '', 'hud_bspeed', self.hud)
+        self.damage_label = self.maker.make_label(100, 15, 200, 20, '', 'hud_damage', self.hud)
+        self.bps_label = self.maker.make_label(100, 35, 200, 20, '', 'hud_bps', self.hud)
+        self.bspeed_label = self.maker.make_label(100, 55, 200, 20, '', 'hud_bspeed', self.hud)
 
         # middle section (stage info)
-        self.title_label = self.maker.make_label(halfw + 30, 25, 150, 20, title, 'hud_stage', self.hud)
-        self.part_label = self.maker.make_label(halfw + 30, 45, 150, 20, part_string, 'hud_part', self.hud)
-        self.wave_label = self.maker.make_label(halfw + 30, 65, 150, 20, '', 'hud_wave', self.hud)
-        self.score_label = self.maker.make_label(halfw + 30, 100, 150, 20, '', 'hud_part', self.hud)
+        self.title_label = self.maker.make_label(halfw - 35, 15, 150, 20, title, 'hud_stage', self.hud)
+        self.part_label = self.maker.make_label(halfw - 35, 35, 150, 20, part_string, 'hud_part', self.hud)
+        self.wave_label = self.maker.make_label(halfw - 35, 55, 150, 20, '', 'hud_wave', self.hud)
+        self.score_label = self.maker.make_label(halfw - 35, 75, 150, 20, '', 'hud_part', self.hud)
 
         # right
-        self.life_label = self.maker.make_label(hudW - 110, 25, 200, 20, '', 'hud_life', self.hud)
-        self.health_label = self.maker.make_label(hudW - 110, 45, 200, 20, '', 'hud_health', self.hud)
-        self.money_label = self.maker.make_label(hudW - 110, 65, 200, 20, '', 'hud_money', self.hud)
-        self.xp_label = self.maker.make_label(hudW - 110, 85, 200, 20, '', 'hud_xp', self.hud)
+        self.life_label = self.maker.make_label(halfw + 110, 15, 150, 20, '', 'hud_life', self.hud)
+        self.health_label = self.maker.make_label(halfw + 110, 35, 150, 20, '', 'hud_health', self.hud)
+        self.money_label = self.maker.make_label(halfw + 110, 55, 150, 20, '', 'hud_money', self.hud)
+        self.xp_label = self.maker.make_label(halfw + 110, 85, 75, 20, '', 'hud_xp', self.hud)
 
         # right right
-        self.pause_button = self.maker.make_button(hudW - 60, 70, 70, 50, 'menu', self.hud)
-        self.time_label = self.maker.make_label(hudW - 25, 95, 150, 20, '', 'hud_time', self.hud)
+        self.pause_button = self.maker.make_button(halfw + 230, 45, 70, 50, 'menu', self.hud)
+        self.time_label = self.maker.make_label(halfw + 230, 85, 150, 20, '', 'hud_time', self.hud)
 
     def update(self, wave, score, score2, health, health2, lives, damage, bps, bspeed, money, xp, time):
         self.wave_label.set_text(('wave: ' + str(wave) + '/' + str(self.maxWaves)))
@@ -68,9 +68,9 @@ class HUD:
 
     # pause game with button or by pressing p
     def pause(self):
-        pause_panel = self.maker.make_panel(SW2 - 150, SH2 - 150, 200, 200, 'pause_panel')
-        cont_button = self.maker.make_button(120, 70, 80, 50, 'continue', pause_panel)
-        exit_button = self.maker.make_button(120, 140, 80, 50, 'exit', pause_panel)
+        pause_panel = self.maker.make_panel(SW2, SH2 - 150, 200, 200, 'pause_panel')
+        cont_button = self.maker.make_button(100, 50, 80, 50, 'continue', pause_panel)
+        exit_button = self.maker.make_button(100, 100, 80, 50, 'exit', pause_panel)
 
         exit = False
         runner = True

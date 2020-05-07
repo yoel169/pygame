@@ -111,6 +111,9 @@
       "selected_border": "#8080B0",
       "active_border": "#8080B0"
     },
+    "label": {
+      "prototype": "#smalllabel"
+    },
     "misc": {
       "tool_tip_delay": "1.5",
       "shape": "rounded_rectangle",
@@ -173,7 +176,7 @@
     }
   },
   "pick_ddm": {
-    "misc" : {
+    "misc": {
       "shape": "rounded_rectangle",
       "shape_corner_radius": "12"
     },
@@ -181,11 +184,11 @@
       "misc": {
         "shape": "rounded_rectangle",
         "shape_corner_radius": "12"
-      }, "#drop_down_options_list":
-        {
-          "shape": "rounded_rectangle",
-           "shape_corner_radius": "12"
-        }
+      },
+      "#drop_down_options_list": {
+        "shape": "rounded_rectangle",
+        "shape_corner_radius": "12"
+      }
     }
   },
   "playerpanel": {
@@ -208,6 +211,18 @@
   },
   "l2": {
     "prototype": "#mediumlabel"
+  },
+  "gametime": {
+    "prototype": "#smalllabel"
+  },
+  "playerpoints": {
+    "prototype": "#smalllabel"
+  },
+  "store_panel" : {
+    "prototype": "#paneltheme",
+    "labels": {
+      "prototype": "#smalllabel"
+    }
   },
   "HUD": {
     "prototype": "#paneltheme"
@@ -272,7 +287,7 @@
   "hud_bspeed": {
     "prototype": "#smalllabel"
   },
-   "hud_xp": {
+  "hud_xp": {
     "prototype": "#smalllabel"
   }
 }

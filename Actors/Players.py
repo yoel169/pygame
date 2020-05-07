@@ -17,7 +17,7 @@ from pygame.locals import (
 
 # Define constants for the screen width and height
 SCREEN_WIDTH, SCREEN_HEIGHT = Constants.screenSize
-halfh = int(SCREEN_HEIGHT/2)
+halfh = int(SCREEN_HEIGHT / 2)
 
 
 # Define a player object by extending pygame.sprite.Sprite
@@ -27,22 +27,39 @@ class Player(pygame.sprite.DirtySprite):
         super(Player, self).__init__()
         self.surf = pygame.image.load("Media/jet.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
-        self.rect = self.surf.get_rect(center = (20, halfh ))
+        self.rect = self.surf.get_rect(center=(20, halfh))
         self._layer = 1
         self.arrows = option
+
+        # player starting stats that can change from store
+        self.base_hp = 100
         self.maxHealth = 100
-        self.health = self.maxHealth
-        self.lives = 2
-        self.pspeed = 5
-        self.damage = 10
-        self.bspeed = 10
-        self.bps = 600  # ms
+        self.base_lives = 2
+        self.base_pspeed = 5
+        self.pspeed_max = 5
+        self.base_damage = 5
+        self.damage_max = 30
+        self.base_bps = 600
         self.bpsMax = 300
+        self.base_bspeed = 10
+        self.base_xp = 500
+        self.base_xp_multiplier = 2
+
+        # player current stats that can change through game
+        self.health = self.maxHealth
+        self.lives = self.base_lives
+        self.pspeed = self.base_pspeed
+        self.damage = self.base_damage
+        self.bspeed = self.base_bspeed
+        self.bps = self.base_bps
+
+        # player collectibles
         self.score = 0
         self.xp = 0
         self.level = 1
         self.money = 0
         self.time = 0
+        self.player_points = 0
 
     # Move the sprite based on user keypresses
     def update(self, pressed_keys):
@@ -80,28 +97,37 @@ class Player(pygame.sprite.DirtySprite):
         if self.rect.bottom >= SCREEN_HEIGHT:
             self.rect.bottom = SCREEN_HEIGHT
 
+        # if player goes under max make it equal max
         if self.bps < self.bpsMax:
             self.bps = self.bpsMax
 
+        # if player goes over max make it equal to max
         if self.health > self.maxHealth:
             self.health = self.maxHealth
 
+        # if player reaches xp for the level increase level, special case for level 1
+        if self.level == 1 and self.xp >= self.base_xp * self.level:
+            self.level += 1
+            self.player_points += 1
+        elif self.xp >= self.base_xp * (self.level - 1) * self.base_xp_multiplier:
+            self.level += 1
+            self.player_points += 1
+
     def getInfo(self):
-        return self. arrows, self.health, self.maxHealth,self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \
-               self.bpsMax, self.score, self.xp, self.level, self.money, self.time
+        return self.arrows, self.health, self.maxHealth, self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \
+               self.bpsMax, self.score, self.xp, self.level, self.money, self.time, self.base_lives, self.base_pspeed, \
+               self.base_hp, self.base_bps, self.base_xp, self.base_xp_multiplier, self.base_damage, self.player_points, self.pspeed_max
 
     def setInfo(self, db):
         self.arrows, self.health, self.maxHealth, self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \
-        self.bpsMax, self.score, self.xp, self.level, self.money, self.time = db
+        self.bpsMax, self.score, self.xp, self.level, self.money, self.time, self.base_lives, self.base_pspeed, \
+        self.base_hp, self.base_bps, self.base_xp, self.base_xp_multiplier, self.base_damage, self.player_points, self.pspeed_max = db
 
     # reset user back to defaults
     def reset(self):
-        self.maxHealth = 100
-        self.health = self.maxHealth
-        self.lives = 2
-        self.pspeed = 0
-        self.damage = 10
-        self.bspeed = 10
-        self.pspeed = 5
-        self.bps = 600
-        self.bpsMax = 300
+        self.health = self.base_hp
+        self.lives = self.base_lives
+        self.pspeed = self.base_pspeed
+        self.damage = self.base_damage
+        self.bspeed = self.base_bspeed
+        self.bps = self.base_bps

@@ -102,3 +102,10 @@
     * Added a level selection option below continue. It will reset your progress with any stage that you last left of.
     * Made buttons rounded edges. yessir.
     * Made the name panel more centered ish.
+------------------------------------------------------------------------------------------------------------------------
+3.5 * Reworked all the GUI menus to make elements position go on centered instead of bottom right. Took a while to move
+      everything but its done. NOT TOUCHING THAT AGAIN.
+    * Added some parts of the store menu and concepts. Not functioning yet.
+    * Reduced money given by enemies by a factor or 4. Enemy health by half and player damage by half. Buffs also got a
+      reduction.
+    * Added some player variables to get ready for the store so any old save won't work.

@@ -18,26 +18,26 @@ class EnenemyJet(pygame.sprite.DirtySprite):
             self.surf = pygame.image.load("Media/bluejet.png").convert()
             self.speed = random.randint(4, 8)
             self.damage = 10
-            self.health = 10
+            self.health = 5
             self.points = 1
             self.xp = 3
-            self.money = 1
+            self.money = 0.25
         elif type == 1:
             self.surf = pygame.image.load("Media/bluejetplus.png").convert()
             self.speed = random.randint(6, 10)
             self.damage = 12
-            self.health = 20
+            self.health = 10
             self.points = 2
             self.xp = 9
-            self.money = 3
+            self.money = 0.75
         elif type ==2:
             self.surf = pygame.image.load("Media/greenjet.png").convert()
             self.speed = random.randint(4, 8)
             self.damage = 20
-            self.health = 30
+            self.health = 15
             self.points = 3
             self.xp = 6
-            self.money = 2
+            self.money = 0.5
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.surf.get_rect(
             center=(
