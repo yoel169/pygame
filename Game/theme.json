@@ -221,8 +221,152 @@
   "store_panel" : {
     "prototype": "#paneltheme",
     "labels": {
-      "prototype": "#smalllabel"
+      "prototype": "#mediumlabel"
     }
+  },
+  "store_title": {
+    "prototype": "#smalllabel"
+  },
+  "store_pmoney": {
+    "prototype": "#smalllabel"
+  },
+  "jet_panel": {
+    "prototype": "#smalllabel"
+  },
+  "store_jet": {
+    "prototype": "#smalllabel"
+  },
+  "health_panel": {
+    "prototype": "#smalllabel"
+  },
+  "store_ht": {
+    "prototype": "#smalllabel"
+  },
+  "store_hb": {
+    "prototype": "#smalllabel"
+  },
+  "store_hm": {
+    "prototype": "#smalllabel"
+  },
+  "store_hcl": {
+    "prototype": "#smalllabel"
+  },
+  "store_hprice": {
+    "prototype": "#smalllabel"
+  },
+  "damage_panel": {
+    "prototype": "#smalllabel"
+  },
+  "store_ht": {
+    "prototype": "#smalllabel"
+  },
+  "store_db": {
+    "prototype": "#smalllabel"
+  },
+  "store_dm": {
+    "prototype": "#smalllabel"
+  },
+  "store_dcl": {
+    "prototype": "#smalllabel"
+  },
+  "store_dprice": {
+    "prototype": "#smalllabel"
+  },
+  "speed_panel": {
+    "prototype": "#smalllabel"
+  },
+  "store_st": {
+    "prototype": "#smalllabel"
+  },
+  "store_sb": {
+    "prototype": "#smalllabel"
+  },
+  "store_sm": {
+    "prototype": "#smalllabel"
+  },
+  "store_scl": {
+    "prototype": "#smalllabel"
+  },
+  "store_sprice": {
+    "prototype": "#smalllabel"
+  },
+  "buff_panel": {
+    "prototype": "#smalllabel"
+  },
+  "store_buff": {
+    "prototype": "#smalllabel"
+  },
+  "ob_panel": {
+    "prototype": "#smalllabel"
+  },
+  "store_obt": {
+    "prototype": "#smalllabel"
+  },
+  "store_obb": {
+    "prototype": "#smalllabel"
+  },
+  "store_obbm": {
+    "prototype": "#smalllabel"
+  },
+  "store_obcl": {
+    "prototype": "#smalllabel"
+  },
+  "store_obprice": {
+    "prototype": "#smalllabel"
+  },
+  "sp_panel": {
+    "prototype": "#smalllabel"
+  },
+  "store_spbt": {
+    "prototype": "#smalllabel"
+  },
+  "store_spb": {
+    "prototype": "#smalllabel"
+  },
+  "store_spbm": {
+    "prototype": "#smalllabel"
+  },
+  "store_spcl": {
+    "prototype": "#smalllabel"
+  },
+  "store_spprice": {
+    "prototype": "#smalllabel"
+  },
+  "game_panel": {
+    "prototype": "#smalllabel"
+  },
+  "store_game": {
+    "prototype": "#smalllabel"
+  },
+  "mon_panel": {
+    "prototype": "#smalllabel"
+  },
+  "store_mont": {
+    "prototype": "#smalllabel"
+  },
+  "store_monb": {
+    "prototype": "#smalllabel"
+  },
+  "store_moncl": {
+    "prototype": "#smalllabel"
+  },
+  "store_monprice": {
+    "prototype": "#smalllabel"
+  },
+  "xp_panel": {
+    "prototype": "#smalllabel"
+  },
+  "store_xpbt": {
+    "prototype": "#smalllabel"
+  },
+  "store_xpb": {
+    "prototype": "#smalllabel"
+  },
+  "store_xpcl": {
+    "prototype": "#smalllabel"
+  },
+  "store_xpprice": {
+    "prototype": "#smalllabel"
   },
   "HUD": {
     "prototype": "#paneltheme"
