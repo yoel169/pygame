@@ -44,6 +44,12 @@ class Player(pygame.sprite.DirtySprite):
         self.base_bspeed = 10
         self.base_xp = 500
         self.base_xp_multiplier = 2
+        self.xp_gain_multiplier = 1
+        self.money_gain_multiplier = 1
+        self.support_buff_multiplier = 1
+        self.offensive_buff_multiplier = 1
+        self.store = [False, 0, 0, 0, 0, 0, 0, 0]  # Store, health, dam, speed, money, xp, support buffs, often buffs
+        self.unlocks = [False, 0, 0, 0]  # unlock store for bullet trees
 
         # player current stats that can change through game
         self.health = self.maxHealth
@@ -97,13 +103,18 @@ class Player(pygame.sprite.DirtySprite):
         if self.rect.bottom >= SCREEN_HEIGHT:
             self.rect.bottom = SCREEN_HEIGHT
 
-        # if player goes under max make it equal max
+        # if player goes under/over max make it equal max
         if self.bps < self.bpsMax:
             self.bps = self.bpsMax
 
-        # if player goes over max make it equal to max
         if self.health > self.maxHealth:
             self.health = self.maxHealth
+
+        if self.damage > self.damage_max:
+            self.damage = self.damage_max
+
+        if self.pspeed > self.pspeed_max:
+            self.pspeed = self.pspeed_max
 
         # if player reaches xp for the level increase level, special case for level 1
         if self.level == 1 and self.xp >= self.base_xp * self.level:
@@ -116,12 +127,16 @@ class Player(pygame.sprite.DirtySprite):
     def getInfo(self):
         return self.arrows, self.health, self.maxHealth, self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \
                self.bpsMax, self.score, self.xp, self.level, self.money, self.time, self.base_lives, self.base_pspeed, \
-               self.base_hp, self.base_bps, self.base_xp, self.base_xp_multiplier, self.base_damage, self.player_points, self.pspeed_max
+               self.base_hp, self.base_bps, self.base_xp, self.base_xp_multiplier, self.base_damage, self.player_points, \
+               self.pspeed_max, self.money_gain_multiplier, self.xp_gain_multiplier, self.offensive_buff_multiplier, \
+               self.support_buff_multiplier, self.store, self.unlocks, self.damage_max
 
     def setInfo(self, db):
         self.arrows, self.health, self.maxHealth, self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \
         self.bpsMax, self.score, self.xp, self.level, self.money, self.time, self.base_lives, self.base_pspeed, \
-        self.base_hp, self.base_bps, self.base_xp, self.base_xp_multiplier, self.base_damage, self.player_points, self.pspeed_max = db
+        self.base_hp, self.base_bps, self.base_xp, self.base_xp_multiplier, self.base_damage, self.player_points, \
+        self.pspeed_max, self.money_gain_multiplier, self.xp_gain_multiplier, self.offensive_buff_multiplier, \
+        self.support_buff_multiplier, self.store, self.unlocks, self.damage_max= db
 
     # reset user back to defaults
     def reset(self):

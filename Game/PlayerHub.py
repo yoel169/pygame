@@ -86,9 +86,10 @@ class PlayerHub:
             for event in py.event.get():
 
                 # QUIT EVENT
-                if event.type == py.QUIT or event.type == QUIT:
+                if event.type == py.QUIT:
                     running, kim_exit = False, True
                     save = True
+                    print("exited and saved")
 
                 elif event.type == py.KEYDOWN:
 
@@ -97,6 +98,7 @@ class PlayerHub:
                         running = False
                         save = True
                         print('esc pressed')
+                        print("exited and saved")
 
                 if event.type == py.USEREVENT:
                     if event.user_type == gui.UI_BUTTON_PRESSED:

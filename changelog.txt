@@ -61,7 +61,7 @@
       the random is but I honestly its amazing what I've done.
     * Created tabs in documentation for proper placement.
 -----------------------------------------------------------------------------------------------------------------------
-3.0 ** Welcome to 3.0 baby! A lot has changed since 1.0 version. We're now int he automation era.
+3.0 ** Welcome to 3.0 baby! A lot has changed since 1.0 version. We're now in the automation era.
     * Changes level style. So game consists of stages, and each stage has multiple parts or levels. So stages are
       packs of parts (levels). The first 3 stages are implemented and you can play them right now. The player info like
       health, damage, and bullet speeds transfer over between each part and reset when a stage is done. What about waves?
@@ -109,3 +109,4 @@
     * Reduced money given by enemies by a factor or 4. Enemy health by half and player damage by half. Buffs also got a
       reduction.
     * Added some player variables to get ready for the store so any old save won't work.
+    * Stores 80% there just have to implement it into the player.

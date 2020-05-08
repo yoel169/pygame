@@ -15,11 +15,17 @@ store and unlocks, at least: 2 new enemies and new stages, stage picker menu and
 ---------------------------------------------------
 Get proper window scaling with GUI.
 Get better sprites.
+I don't know if the time counter in player works right.
 Get sounds.
 Actually make a description page.
 Make a game summary page after every stage/ part.
 Make different difficulties: Easy, Medium, Hard, Insane.
 
+* Need to add all the labels and panels from store into theme json file, they are added by their object id name.
+* Unless you can find a way to automatically set the same theme for all labels inside a panel (I tried but couldn't get it
+  to work) that way you don't have to add them all individually cause they basically all take small label prototype.
+* Take a look at my store class and my elite german engineering. Glaze in my perfect back button size in the store.
+* Need to make player bullet track menu for user to spend their unlock points on. Check docs.
 
 ---------------------------------------------------
                     Known Bugs
