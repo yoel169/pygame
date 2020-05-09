@@ -22,6 +22,7 @@ halfh = int(SCREEN_HEIGHT / 2)
 
 # Define a player object by extending pygame.sprite.Sprite
 # The surface drawn on the screen is now an attribute of 'player'
+
 class Player(pygame.sprite.DirtySprite):
     def __init__(self, option):
         super(Player, self).__init__()
@@ -66,6 +67,38 @@ class Player(pygame.sprite.DirtySprite):
         self.money = 0
         self.time = 0
         self.player_points = 0
+
+        # dict for all the info
+        self.info = {"self.arrows": self.arrows,
+                "self.health": self.health,
+                "self.maxHealth": self.maxHealth,
+                "self.lives": self.lives,
+                "self.damage": self.damage,
+                "self.pspeed": self.pspeed,
+                "self.bspeed": self.bspeed,
+                "self.bps": self.bps,
+                "self.bpsMax": self.bpsMax,
+                "self.score": self.score,
+                "self.xp": self.xp,
+                "self.level": self.level,
+                "self.money": self.money,
+                "self.time": self.time,
+                "self.base_lives": self.base_lives,
+                "self.base_pspeed": self.base_pspeed,
+                "self.base_hp": self.base_hp,
+                "self.base_bps": self.base_bps,
+                "self.base_xp": self.base_xp,
+                "self.base_xp_multiplier": self.base_xp_multiplier,
+                "self.base_damage": self.base_damage,
+                "self.player_points": self.player_points,
+                "self.pspeed_max": self.pspeed_max,
+                "self.money_gain_multiplier": self.money_gain_multiplier,
+                "self.xp_gain_multiplier": self.xp_gain_multiplier,
+                "self.offensive_buff_multiplier": self.offensive_buff_multiplier,
+                "self.support_buff_multiplier": self.support_buff_multiplier,
+                "self.store": self.store,
+                "self.unlocks": self.unlocks,
+                "self.damage_max": self.damage_max}
 
     # Move the sprite based on user keypresses
     def update(self, pressed_keys):
@@ -124,19 +157,27 @@ class Player(pygame.sprite.DirtySprite):
             self.level += 1
             self.player_points += 1
 
-    def getInfo(self):
-        return self.arrows, self.health, self.maxHealth, self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \
-               self.bpsMax, self.score, self.xp, self.level, self.money, self.time, self.base_lives, self.base_pspeed, \
-               self.base_hp, self.base_bps, self.base_xp, self.base_xp_multiplier, self.base_damage, self.player_points, \
-               self.pspeed_max, self.money_gain_multiplier, self.xp_gain_multiplier, self.offensive_buff_multiplier, \
-               self.support_buff_multiplier, self.store, self.unlocks, self.damage_max
+    def getInfo(self, db):
+        list = []
+        for x in self.info:
+            list.append(self.info[x])
+        return tuple(list)
 
     def setInfo(self, db):
+        counter = 0
+        for x in self.info:
+            if counter >= len(db):
+                break
+            else:
+                self.info[x] = db[counter]
+                counter += 1
+        """
         self.arrows, self.health, self.maxHealth, self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \
         self.bpsMax, self.score, self.xp, self.level, self.money, self.time, self.base_lives, self.base_pspeed, \
         self.base_hp, self.base_bps, self.base_xp, self.base_xp_multiplier, self.base_damage, self.player_points, \
         self.pspeed_max, self.money_gain_multiplier, self.xp_gain_multiplier, self.offensive_buff_multiplier, \
-        self.support_buff_multiplier, self.store, self.unlocks, self.damage_max= db
+        self.support_buff_multiplier, self.store, self.unlocks, self.damage_max = db
+        """
 
     # reset user back to defaults
     def reset(self):

@@ -150,6 +150,7 @@ class PlayerHub:
 
                             # set the player and stage info based from save file
                             player.setInfo(player_save['player'])
+                            player_save['player'] = player.getInfo(player_save)
                             current_stage, current_part = player_save['stage'][0], player_save['stage'][1]
 
                             # turn off inputbox, launch player hub and show player panel
@@ -179,7 +180,7 @@ class PlayerHub:
                     running = False
 
                 # save
-                player_save['player'] = player.getInfo()
+                player_save['player'] = player.getInfo(self)
                 player_handler.save(player_save)
 
                 player_save['player'] = player.getInfo()  # update player save file
@@ -237,7 +238,7 @@ class PlayerHub:
 
         # save before exiting
         if save:
-            player_save['player'] = player.getInfo()
+            player_save['player'] = player.getInfo(self)
             player_handler.save(player_save)
 
         return kim_exit
