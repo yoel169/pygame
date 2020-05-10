@@ -55,7 +55,7 @@ class PlayerHub:
         for x in range(1, 4):
             pack = 'Stages/stage' + str(x) + '.json'
             title = 'Stage ' + str(x)
-            stage_names.append(title)
+            # stage_names.append(title)
             stages.append(Game(ls, title, pack, player))
 
         # stages and part tracker
@@ -137,7 +137,7 @@ class PlayerHub:
                             player = store.run(player)
 
                             player_save['player'] = player.getInfo()
-                            player_handler.save(player_save)
+                            #player_handler.save(player_save)
 
                             manager.clear_and_reset()
                             gameMenu.player_hub(player_save, stage_names)
@@ -157,6 +157,10 @@ class PlayerHub:
                             player.setInfo(player_save['player'])
                             player_save['player'] = player.getInfo()
                             current_stage, current_part = player_save['stage'][0], player_save['stage'][1]
+
+                            for x in player.stages_beat:
+                                title = 'Stage ' + str(x)
+                                stage_names.append(title)
 
                             # turn off inputbox, launch player hub and show player panel
                             inputbox = False
@@ -212,6 +216,11 @@ class PlayerHub:
                         score = 0
                         current_part = 0
                         player.reset()
+
+                        if (current_stage + 1) not in player.stages_beat:
+                            player.stages_beat.append(current_stage + 1)
+                            stage_names.append(('Stage ' + str(current_stage + 1)))
+
                         player_save['player'] = player.getInfo()
 
                         # if we ran out of stages go to main menu else next stage todo make level selection menu

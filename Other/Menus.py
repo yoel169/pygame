@@ -228,5 +228,5 @@ class GameMenu():
         last_save_label = self.maker.make_label(200, 90, 260, 20, string, 'time2L', name_panel)
 
         player = player_save['player']
-        total_time = self.maker.make_label(200, 120, 260, 20, ('total game time: ' + str(player[13]) + 's'),
+        total_time = self.maker.make_label(200, 120, 260, 20, ('total game time: ' + str(player['time']) + 's'),
                                                 'gametime', name_panel)

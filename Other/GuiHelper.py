@@ -82,6 +82,9 @@ class GuiHelper:
         size_rect = pygame.Rect(size)
         size_rect.center = (x, y)
 
+        if len(stages) == 0:
+            stages = ['']
+
         return pygame_gui.elements.UIDropDownMenu(options_list=stages, starting_option=stages[0],
                                                   relative_rect=size_rect,
                                                   manager=self.manager, object_id=id)

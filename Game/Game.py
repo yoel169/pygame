@@ -13,6 +13,7 @@ from Actors.Neutrals import Cloud, Bullet1, Buff
 from Actors.Enemies import EnenemyJet, EBullet
 from Game.GamePackUnpacker import Unpacker
 
+
 # ============================= Updated wave pack reader and game maker using script =================================
 
 
@@ -29,6 +30,7 @@ class Game:
         newUnpacker = Unpacker(pack)
 
         self.levels, self.xp = newUnpacker.getPack()
+
     # get part: args are user options, index is part #, and sc is score
     def getPart(self, args, index, sc):
 
@@ -53,7 +55,7 @@ class Game:
         # INIT GAME VARIABLES
         won = False  # if user won
         checker = True  # for spawning single buffs
-        checker2 = True # spawning single enemies
+        checker2 = True  # spawning single enemies
         customMouse = ()  # custom mouse position if movement with mouse is on
         exit = False  # exit game
         kim_exit = False
@@ -109,7 +111,7 @@ class Game:
         py.time.set_timer(ADDCLOUD, 5000)
 
         # ====================================== START PART/WAVES LOOP  ==========================================
-        for currentWave, wave in enumerate(level,1):
+        for currentWave, wave in enumerate(level, 1):
 
             enemyL = wave[1]
             buffL = wave[2]
@@ -328,7 +330,7 @@ class Game:
 
                 # SPAWNING ENEMY BULLETS
                 for enemy in enemies:
-                    if random.randint(1,100) == 1:
+                    if random.randint(1, 100) == 1:
                         if enemy.type == 1:
                             new_bullet = EBullet(enemy.rect.center, enemy.damage, enemy.speed + 5)
                             bullets.add(new_bullet)
@@ -347,26 +349,27 @@ class Game:
                                 checker2 = False
                                 print("buff spawned at score " + str(score))
                             elif x[0] == 'group' and score % int(x[2]) == 0 and buffScoreChecker[pos] and score != 0:
-                                    num = random.randint(1, 100)
-                                    acc = 0
-                                    dc = x[3]
-                                    for index, x in enumerate(dc['chance'], 0):
-                                        acc += int(x)
-                                        if num < acc:
-                                            new_buff = Buff(int(dc['type'][index]))
-                                            buffs.add(new_buff)
-                                            all_sprites.add(new_buff)
-                                            buffScoreChecker[pos] = False
-                                            print("buff spawned at score " + str(score))
-                                            break
+                                num = random.randint(1, 100)
+                                acc = 0
+                                dc = x[3]
+                                for index, x in enumerate(dc['chance'], 0):
+                                    acc += int(x)
+                                    if num < acc:
+                                        new_buff = Buff(int(dc['type'][index]))
+                                        buffs.add(new_buff)
+                                        all_sprites.add(new_buff)
+                                        buffScoreChecker[pos] = False
+                                        print("buff spawned at score " + str(score))
+                                        break
 
                 # RESET BUFF SPAWN QUEUE
                 if scoreCheck == 2 or scoreCheck == 3:
                     for pos, x in enumerate(buffL, 0):
                         if x[1] == 'score':
-                            if x[0] == 'single' and score % int(x[2]) != 0 and score !=0 and not checker:
+                            if x[0] == 'single' and score % int(x[2]) != 0 and score != 0 and not checker:
                                 checker2 = True
-                            elif x[0] == 'group' and score % int(x[2]) != 0 and score !=0 and not buffScoreChecker[pos]:
+                            elif x[0] == 'group' and score % int(x[2]) != 0 and score != 0 and not buffScoreChecker[
+                                pos]:
                                 buffScoreChecker[pos] = True
                                 print("group buff reset")
 
@@ -400,9 +403,9 @@ class Game:
                 if scoreCheck == 1 or scoreCheck == 3:
                     for pos, x in enumerate(enemyL, 0):
                         if x[1] == 'score':
-                            if x[0] == 'single' and score % int(x[2]) != 0 and score !=0:
+                            if x[0] == 'single' and score % int(x[2]) != 0 and score != 0:
                                 checker2 = True
-                            elif x[1] == 'group' and score % int(x[2]) != 0 and score !=0:
+                            elif x[1] == 'group' and score % int(x[2]) != 0 and score != 0:
                                 enemyScoreChecker[pos] = True
 
                 # ============================= SPAWNING BUFFS AND ENEMIES FROM RANDOM =========================
@@ -520,7 +523,8 @@ class Game:
 
                 # UPDATE HUD AND DRAW IT
                 hud.update(currentWave, score, maxScore, self.player.health, self.player.maxHealth, self.player.lives,
-                           self.player.damage, self.player.bps, self.player.bspeed, money_counter, xp_counter, int(time /60))
+                           self.player.base_lives, self.player.damage, self.player.damage_max, self.player.bps,
+                           self.player.bpsMax, self.player.bspeed, money_counter, xp_counter, int(time / 60))
                 manager.draw_ui(self.screen)
 
                 # UPDATE SCREEN AND TICK CLOCK

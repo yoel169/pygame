@@ -54,13 +54,14 @@ class HUD:
         self.pause_button = self.maker.make_button(halfw + 230, 45, 70, 50, 'menu', self.hud)
         self.time_label = self.maker.make_label(halfw + 230, 85, 150, 20, '', 'hud_time', self.hud)
 
-    def update(self, wave, score, score2, health, health2, lives, damage, bps, bspeed, money, xp, time):
+    def update(self, wave, score, score2, health, health2, lives, lives2, damage, damage2, bps, bps2, bspeed,
+               money, xp, time):
         self.wave_label.set_text(('wave: ' + str(wave) + '/' + str(self.maxWaves)))
         self.score_label.set_text(('Score: ' + str(score) + '/' + str(score2)))
         self.health_label.set_text(('Health: ' + str(health) + '/' + str(health2)))
-        self.life_label.set_text(('Lives: ' + str(lives)))
-        self.damage_label.set_text(('damage: ' + str(damage)))
-        self.bps_label.set_text(('bullets every: ' + str(bps) + 'ms'))
+        self.life_label.set_text(('Lives: ' + str(lives)) + '/' + str(lives2))
+        self.damage_label.set_text(('damage: ' + str(damage)) + '/' + str(damage2))
+        self.bps_label.set_text(('bullets every: ' + str(bps) + 'ms' + '/' + str(bps2) + 'ms'))
         self.bspeed_label.set_text(('bullet speed: ' + str(bspeed)))
         self.money_label.set_text('Money: ' + str(money))
         self.time_label.set_text('Time: ' + str(time) + 's')

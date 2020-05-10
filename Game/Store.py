@@ -177,6 +177,8 @@ class Store:
                                               xp_panel)
         xp_buy_b = self.maker.make_button(550, 35, 50, 50, 'Buy', xp_panel)
 
+        #self.player.money = 1000
+
         while runner:
 
             time_delta = clock.tick(60)
@@ -219,12 +221,12 @@ class Store:
                                 self.buy(5)
 
                         elif event.ui_element == xp_buy_b:
-                            if self.player.money >= (self.player.store[6] + 1) * 50:
-                                self.buy(6)
-
-                        elif event.ui_element == mon_buy_b:
                             if self.player.money >= (self.player.store[7] + 1) * 50:
                                 self.buy(7)
+
+                        elif event.ui_element == mon_buy_b:
+                            if self.player.money >= (self.player.store[6] + 1) * 50:
+                                self.buy(6)
 
                 self.manager.process_events(event)
 
@@ -326,15 +328,15 @@ class Store:
 
             elif pos == 2:
                 if values_dam[track[self.player.store[2]]][0] == 'base':
-                    self.player.base_hp += values_hp[hp_track[self.player.store[2]]][1]
+                    self.player.base_damage += values_dam[track[self.player.store[2]]][1]
                 else:
-                    self.player.damage_max += values_hp[hp_track[self.player.store[2]]][1]
+                    self.player.damage_max += values_dam[track[self.player.store[2]]][1]
 
             else:
                 if values_speed[track[self.player.store[3]]][0] == 'base':
-                    self.player.pspeed += values_hp[hp_track[self.player.store[3]]][1]
+                    self.player.pspeed += values_speed[track[self.player.store[3]]][1]
                 else:
-                    self.player.pspeed_max += values_hp[hp_track[self.player.store[3]]][1]
+                    self.player.pspeed_max += values_speed[track[self.player.store[3]]][1]
 
         elif pos in range(4, 6):
 
@@ -354,9 +356,9 @@ class Store:
             self.player.money -= (self.player.store[pos] + 1) * 50
 
             if pos == 6:
-                self.player.xp_gain_multiplier = game_multipliers[self.player.store[pos]]
-            else:
                 self.player.money_gain_multiplier = game_multipliers[self.player.store[pos]]
+            else:
+                self.player.xp_gain_multiplier = game_multipliers[self.player.store[pos]]
 
         self.player.store[pos] += 1
         print(str(pos))

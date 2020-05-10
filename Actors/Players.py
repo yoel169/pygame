@@ -30,6 +30,8 @@ class Player(pygame.sprite.DirtySprite):
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.surf.get_rect(center=(20, halfh))
         self._layer = 1
+
+        # do not set variables above here
         self.arrows = option
 
         # player starting stats that can change from store
@@ -67,38 +69,41 @@ class Player(pygame.sprite.DirtySprite):
         self.money = 0
         self.time = 0
         self.player_points = 0
+        self.stages_beat = []
 
         # dict for all the info
-        self.info = {"self.arrows": self.arrows,
-                "self.health": self.health,
-                "self.maxHealth": self.maxHealth,
-                "self.lives": self.lives,
-                "self.damage": self.damage,
-                "self.pspeed": self.pspeed,
-                "self.bspeed": self.bspeed,
-                "self.bps": self.bps,
-                "self.bpsMax": self.bpsMax,
-                "self.score": self.score,
-                "self.xp": self.xp,
-                "self.level": self.level,
-                "self.money": self.money,
-                "self.time": self.time,
-                "self.base_lives": self.base_lives,
-                "self.base_pspeed": self.base_pspeed,
-                "self.base_hp": self.base_hp,
-                "self.base_bps": self.base_bps,
-                "self.base_xp": self.base_xp,
-                "self.base_xp_multiplier": self.base_xp_multiplier,
-                "self.base_damage": self.base_damage,
-                "self.player_points": self.player_points,
-                "self.pspeed_max": self.pspeed_max,
-                "self.money_gain_multiplier": self.money_gain_multiplier,
-                "self.xp_gain_multiplier": self.xp_gain_multiplier,
-                "self.offensive_buff_multiplier": self.offensive_buff_multiplier,
-                "self.support_buff_multiplier": self.support_buff_multiplier,
-                "self.store": self.store,
-                "self.unlocks": self.unlocks,
-                "self.damage_max": self.damage_max}
+        # self.info = {"self.arrows": self.arrows,
+        #         "self.health": self.health,
+        #         "self.maxHealth": self.maxHealth,
+        #         "self.lives": self.lives,
+        #         "self.damage": self.damage,
+        #         "self.pspeed": self.pspeed,
+        #         "self.bspeed": self.bspeed,
+        #         "self.bps": self.bps,
+        #         "self.bpsMax": self.bpsMax,
+        #         "self.score": self.score,
+        #         "self.xp": self.xp,
+        #         "self.level": self.level,
+        #         "self.money": self.money,
+        #         "self.time": self.time,
+        #         "self.base_lives": self.base_lives,
+        #         "self.base_pspeed": self.base_pspeed,
+        #         "self.base_hp": self.base_hp,
+        #         "self.base_bps": self.base_bps,
+        #         "self.base_xp": self.base_xp,
+        #         "self.base_xp_multiplier": self.base_xp_multiplier,
+        #         "self.base_damage": self.base_damage,
+        #         "self.player_points": self.player_points,
+        #         "self.pspeed_max": self.pspeed_max,
+        #         "self.money_gain_multiplier": self.money_gain_multiplier,
+        #         "self.xp_gain_multiplier": self.xp_gain_multiplier,
+        #         "self.offensive_buff_multiplier": self.offensive_buff_multiplier,
+        #         "self.support_buff_multiplier": self.support_buff_multiplier,
+        #         "self.store": self.store,
+        #         "self.unlocks": self.unlocks,
+        #         "self.damage_max": self.damage_max}
+
+        #print(dict(list(self.__dict__.items())[8:]))
 
     # Move the sprite based on user keypresses
     def update(self, pressed_keys):
@@ -158,19 +163,23 @@ class Player(pygame.sprite.DirtySprite):
             self.player_points += 1
 
     def getInfo(self):
-        list = []
-        for x in self.info:
-            list.append(self.info[x])
-        return tuple(list)
+        # list = []
+        # for x in self.info:
+        #     list.append(self.info[x])
+        # return tuple(list)
+        return dict(list(self.__dict__.items())[8:])
 
     def setInfo(self, db):
-        counter = 0
-        for x in self.info:
-            if counter >= len(db):
-                break
-            else:
-                self.info[x] = db[counter]
-                counter += 1
+        # counter = 0
+        # for x in self.info:
+        #     if counter >= len(db):
+        #         break
+        #     else:
+        #          self.info[x] = db[counter]
+        #          counter += 1
+        for key, value in db.items():
+           setattr(self, key, value)
+
         """
         self.arrows, self.health, self.maxHealth, self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \
         self.bpsMax, self.score, self.xp, self.level, self.money, self.time, self.base_lives, self.base_pspeed, \
