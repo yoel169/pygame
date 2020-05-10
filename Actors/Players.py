@@ -49,7 +49,7 @@ class Player(pygame.sprite.DirtySprite):
         self.money_gain_multiplier = 1
         self.support_buff_multiplier = 1
         self.offensive_buff_multiplier = 1
-        self.store = [False, 0, 0, 0, 0, 0, 0, 0]  # Store, health, dam, speed, money, xp, support buffs, often buffs
+        self.store = [False, 0, 0, 0, 0, 0, 0, 0]  # Store, health, dam, speed, offense buffs, support buffs,  xp, money
         self.unlocks = [False, 0, 0, 0]  # unlock store for bullet trees
 
         # player current stats that can change through game
@@ -157,7 +157,7 @@ class Player(pygame.sprite.DirtySprite):
             self.level += 1
             self.player_points += 1
 
-    def getInfo(self, db):
+    def getInfo(self):
         list = []
         for x in self.info:
             list.append(self.info[x])

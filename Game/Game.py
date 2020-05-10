@@ -170,14 +170,12 @@ class Game:
 
                 # WIN BASED ON LAST ARGUMENT
                 if score >= maxScore and currentWave == maxWaves:
-                    self.player.xp += partXP
+                    self.player.xp += partXP * self.player.xp_gain_multiplier
                     if index == 0:
                         self.player.score += maxScore
-                        xp_counter += maxScore
                     else:
                         diff = maxScore - self.levels[index - 1][0][0]
                         self.player.score += diff
-                        xp_counter += diff
 
                     won = True
                     exit = True
@@ -465,10 +463,10 @@ class Game:
                             bullet.kill()
                             if enemy.health <= 0:
                                 score += enemy.points
-                                self.player.xp += enemy.xp
-                                self.player.money += enemy.money
-                                money_counter += enemy.money
-                                xp_counter += enemy.xp
+                                self.player.xp += enemy.xp * self.player.xp_gain_multiplier
+                                self.player.money += enemy.money * self.player.money_gain_multiplier
+                                money_counter += enemy.money * self.player.money_gain_multiplier
+                                xp_counter += enemy.xp * self.player.xp_gain_multiplier
 
                 # PLAYER AND ENEMY BULLET
                 hit = py.sprite.spritecollideany(self.player, bullets)
@@ -482,13 +480,13 @@ class Game:
                 if hit != None:
                     if hit.type == 0:
                         if self.player.health <= self.player.maxHealth:
-                            self.player.health += hit.power
+                            self.player.health += hit.power * self.player.support_buff_multiplier
                     elif hit.type == 1:
                         if self.player.damage <= self.player.damage_max:
-                            self.player.damage += hit.power
+                            self.player.damage += hit.power * self.player.offensive_buff_multiplier
                     else:
                         if self.player.bps >= self.player.bpsMax:
-                            self.player.bps -= hit.power
+                            self.player.bps -= hit.power * self.player.offensive_buff_multiplier
                     print("power up!")
                     hit.kill()
 

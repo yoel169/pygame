@@ -30,11 +30,11 @@ class Store:
 
         store_panel = self.maker.make_panel(SW2, SH2, 650, 800, 'store_panel')
 
-        count = 0
+        self.player = player
 
         # title and money
         self.maker.make_label(300, 25, 70, 20, 'Store', 'store_title', store_panel)
-        self.money_label = self.maker.make_label(300, 50, 150, 20, 'Money: ' + str(self.player.money) + str(count),
+        self.money_label = self.maker.make_label(300, 50, 150, 20, 'Money: ' + str(self.player.money),
                                                  'store_pmoney',
                                                  store_panel)
 
@@ -57,7 +57,7 @@ class Store:
                                              health_panel)
         self.max_hp = self.maker.make_label(50, 50, 90, 20, 'max: ' + str(self.player.maxHealth), 'store_hm',
                                             health_panel)
-        self.current_label = self.maker.make_label(250, 35, 200, 20, self.get_string(1, self.player), 'store_hcl',
+        self.current_label = self.maker.make_label(250, 35, 200, 20, self.get_string(1), 'store_hcl',
                                                    health_panel)
         self.h_price = self.maker.make_label(430, 35, 100, 20, 'Price: ' + str((self.player.store[1] + 1) * 30),
                                              'store_hprice',
@@ -73,7 +73,7 @@ class Store:
                                               health_panel)
         self.max_dam = self.maker.make_label(50, 50, 90, 20, 'max: ' + str(self.player.damage_max), 'store_dm',
                                              health_panel)
-        self.current_label_dam = self.maker.make_label(250, 35, 200, 20, self.get_string(2, self.player), 'store_dcl',
+        self.current_label_dam = self.maker.make_label(250, 35, 200, 20, self.get_string(2), 'store_dcl',
                                                        health_panel)
         self.dam_price = self.maker.make_label(430, 35, 100, 20, 'Price: ' + str((self.player.store[2] + 1) * 30),
                                                'store_dprice', health_panel)
@@ -88,7 +88,7 @@ class Store:
                                                 health_panel)
         self.max_speed = self.maker.make_label(50, 50, 90, 20, 'max: ' + str(self.player.pspeed_max), 'store_sm',
                                                health_panel)
-        self.current_label_speed = self.maker.make_label(250, 35, 200, 20, self.get_string(3, self.player), 'store_scl',
+        self.current_label_speed = self.maker.make_label(250, 35, 200, 20, self.get_string(3), 'store_scl',
                                                          health_panel)
         self.s_price = self.maker.make_label(430, 35, 100, 20, 'Price: ' + str((self.player.store[3] + 1) * 30),
                                              'store_sprice',
@@ -266,19 +266,19 @@ class Store:
         self.health_title.set_text('Health ' + str(self.player.store[1]) + '/10')
         self.base_hp.set_text('base: ' + str(self.player.base_hp))
         self.max_hp.set_text('max: ' + str(self.player.maxHealth))
-        self.current_label.set_text(self.get_string(1, self.player))
+        self.current_label.set_text(self.get_string(1))
         self.h_price.set_text('Price: ' + str((self.player.store[1] + 1) * 30))
 
         self.damage_title.set_text('Damage' + str(self.player.store[2]) + '/10')
         self.base_dam.set_text('base: ' + str(self.player.base_damage))
         self.max_dam.set_text('max: ' + str(self.player.damage_max))
-        self.current_label_dam.set_text(self.get_string(2, self.player))
+        self.current_label_dam.set_text(self.get_string(2))
         self.dam_price.set_text('Price: ' + str((self.player.store[2] + 1) * 30))
 
         self.speed_title.set_text('Speed' + str(self.player.store[3]) + '/10')
         self.base_speed.set_text('base: ' + str(self.player.base_pspeed))
         self.max_speed.set_text('max: ' + str(self.player.pspeed_max))
-        self.current_label_speed.set_text(self.get_string(3, self.player))
+        self.current_label_speed.set_text(self.get_string(3))
         self.s_price.set_text('Price: ' + str((self.player.store[3] + 1) * 30))
 
         self.offensive_title.set_text('Offense ' + str(self.player.store[4]) + '/10')
@@ -289,7 +289,8 @@ class Store:
 
         self.support_title.set_text('Support ' + str(self.player.store[5]) + '/10')
         self.health_buff.set_text('hp: ' + str(15 * self.player.offensive_buff_multiplier))
-        self.pspeed_buff.set_text('increase to:  ' + str(buff_mutipliers[self.player.store[5]]) + '%')
+        self.pspeed_buff.set_text('p speed: ' + str(5 * self.player.offensive_buff_multiplier))
+        self.current_label_sp.set_text('increase to:  ' + str(buff_mutipliers[self.player.store[5]]) + '%')
         self.sp_price.set_text('Price: ' + str((self.player.store[5] + 1) * 40))
 
         self.money_title.set_text('Money ' + str(self.player.store[6]) + '/10')

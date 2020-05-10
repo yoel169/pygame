@@ -4,11 +4,10 @@ from Other.Menus import GameMenu
 from Actors.Players import Player
 from Game.Game import Game
 from Other.InputBox import InputBox
-from Other.Store import Store
+from Game.Store import Store
 from Saves.SaveLoad import PlayerHandler
 from pygame.locals import (
-    K_ESCAPE,
-    QUIT)
+    K_ESCAPE)
 
 # INITIALIZE GAME
 py.init()
@@ -135,7 +134,13 @@ class PlayerHub:
                         # store button
                         elif event.ui_element == gameMenu.store_b:
                             manager.clear_and_reset()
-                            store.run(player)
+                            player = store.run(player)
+
+                            player_save['player'] = player.getInfo()
+                            player_handler.save(player_save)
+
+                            manager.clear_and_reset()
+                            gameMenu.player_hub(player_save, stage_names)
 
                         # confirm button from play launch
                         elif event.ui_element == gameMenu.launch_hub_b:
@@ -150,7 +155,7 @@ class PlayerHub:
 
                             # set the player and stage info based from save file
                             player.setInfo(player_save['player'])
-                            player_save['player'] = player.getInfo(player_save)
+                            player_save['player'] = player.getInfo()
                             current_stage, current_part = player_save['stage'][0], player_save['stage'][1]
 
                             # turn off inputbox, launch player hub and show player panel
@@ -180,10 +185,8 @@ class PlayerHub:
                     running = False
 
                 # save
-                player_save['player'] = player.getInfo(self)
+                player_save['player'] = player.getInfo()
                 player_handler.save(player_save)
-
-                player_save['player'] = player.getInfo()  # update player save file
 
                 play = False
                 manager.clear_and_reset()
@@ -238,7 +241,7 @@ class PlayerHub:
 
         # save before exiting
         if save:
-            player_save['player'] = player.getInfo(self)
+            player_save['player'] = player.getInfo()
             player_handler.save(player_save)
 
         return kim_exit

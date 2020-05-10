@@ -110,3 +110,7 @@
       reduction.
     * Added some player variables to get ready for the store so any old save won't work.
     * Stores 80% there just have to implement it into the player.
+------------------------------------------------------------------------------------------------------------------------
+3.6 * Store update. Go spend your money! Needs proper testing first jk.
+      Todos left to finish the store update: update HUD and player panel to show proper min/max, and user needs to get
+      to stage 3 first and then buy the store for 100 money(maybe).
