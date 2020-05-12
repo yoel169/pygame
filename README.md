@@ -7,7 +7,7 @@ Download files and assests and run 'Driver.py' (python Driver.py).
 Dependecies: python, pygame, pygame_gui
 
 Game: default arrows to move, default auto shoot, can be changed in main menu under settings. Game currently consists of 3 stages.
-Each stage introduces a new enemy and consists of multiple levels, or parts. Get the required score to beat a part. Collect different buffs to help you out as you go. Player stats save between parts but not stages. If player runs out of health they die and reset the part. If they run out of lives. they reset the stage and their stats. 
+Each stage introduces a new enemy and consists of multiple levels, or parts. Get the required score to beat a part. Collect different buffs to help you out as you go. Player stats save between parts but not stages. If player runs out of health they die and reset the part. If they run out of lives. they reset the stage and their stats. Your player is saved into a profile that can later be loaded into the game.
 
 Changes can be found in the changelog.txt and plans for next updates in roadwork.txt. You can also find more information about the game and future content in the documentation file.
 
