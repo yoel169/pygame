@@ -126,7 +126,7 @@ class Store:
         self.health_buff = self.maker.make_label(50, 30, 90, 20,
                                                  'hp: ' + str(15 * self.player.offensive_buff_multiplier),
                                                  'store_spb', support_panel)
-        self.pspeed_buff = self.maker.make_label(50, 50, 90, 20,
+        self.pspeed_buff = self.maker.make_label(60, 50, 110, 20,
                                                  'p speed: ' + str(5 * self.player.offensive_buff_multiplier),
                                                  'store_spbm', support_panel)
         self.current_label_sp = self.maker.make_label(250, 35, 250, 20,
@@ -177,7 +177,7 @@ class Store:
                                               xp_panel)
         xp_buy_b = self.maker.make_button(550, 35, 50, 50, 'Buy', xp_panel)
 
-        #self.player.money = 1000
+        # self.player.money = 1000
 
         while runner:
 
@@ -251,58 +251,58 @@ class Store:
         track = [1, 0, 0, 1, 0, 0, 1, 0, 0, 1]
 
         if pos == 1:
-            return 'increase: ' + values_hp[hp_track[self.player.store[1]]][0] + ' by ' + str(
-                values_hp[hp_track[self.player.store[1]]][1])
+            return ('increase: %s by %.1f' % (values_hp[hp_track[self.player.store[1]]][0],
+                                                     values_hp[hp_track[self.player.store[1]]][1]))
         elif pos == 2:
-            return 'increase: ' + values_dam[hp_track[self.player.store[2]]][0] + ' by ' + str(
-                values_dam[track[self.player.store[2]]][1])
+            return 'increase: %s %.1f' % (values_dam[hp_track[self.player.store[2]]][0],
+                                                     values_dam[track[self.player.store[2]]][1])
         else:
-            return 'increase: ' + values_speed[hp_track[self.player.store[3]]][0] + ' by ' + str(
-                values_speed[track[self.player.store[3]]][1])
+            return 'increase: %s by %.1f' % (values_speed[hp_track[self.player.store[3]]][0],
+                                                     values_speed[track[self.player.store[3]]][1])
 
     def update(self):
         buff_mutipliers = [1.15, 1.25, 1.5, 1.75, 2, 1.5, 2, 4, 8]
         game_multipliers = [1.05, 1.10, 1.20, 1.4, 1.7, 2, 2.5, 3.5, 5]
-        self.money_label.set_text('Money: ' + str(self.player.money))
+        self.money_label.set_text('Money: %.3f' % self.player.money)
 
-        self.health_title.set_text('Health ' + str(self.player.store[1]) + '/10')
+        self.health_title.set_text('Health %d/10' % self.player.store[1])
         self.base_hp.set_text('base: ' + str(self.player.base_hp))
         self.max_hp.set_text('max: ' + str(self.player.maxHealth))
         self.current_label.set_text(self.get_string(1))
         self.h_price.set_text('Price: ' + str((self.player.store[1] + 1) * 30))
 
-        self.damage_title.set_text('Damage' + str(self.player.store[2]) + '/10')
+        self.damage_title.set_text('Damage ' + str(self.player.store[2]) + '/10')
         self.base_dam.set_text('base: ' + str(self.player.base_damage))
         self.max_dam.set_text('max: ' + str(self.player.damage_max))
         self.current_label_dam.set_text(self.get_string(2))
         self.dam_price.set_text('Price: ' + str((self.player.store[2] + 1) * 30))
 
-        self.speed_title.set_text('Speed' + str(self.player.store[3]) + '/10')
-        self.base_speed.set_text('base: ' + str(self.player.base_pspeed))
+        self.speed_title.set_text('Speed ' + str(self.player.store[3]) + '/10')
+        self.base_speed.set_text('base: %.1f' % self.player.base_pspeed)
         self.max_speed.set_text('max: ' + str(self.player.pspeed_max))
         self.current_label_speed.set_text(self.get_string(3))
         self.s_price.set_text('Price: ' + str((self.player.store[3] + 1) * 30))
 
         self.offensive_title.set_text('Offense ' + str(self.player.store[4]) + '/10')
-        self.dam_buff.set_text('dam: ' + str(5 * self.player.offensive_buff_multiplier))
-        self.bps_buff.set_text('bps: ' + str(300 * self.player.offensive_buff_multiplier))
-        self.current_label_ob.set_text('increase to ' + str(buff_mutipliers[self.player.store[4]]) + '%')
+        self.dam_buff.set_text('dam: %.2f' % 5 * self.player.offensive_buff_multiplier)
+        self.bps_buff.set_text('bps: %.2f' % 300 * self.player.offensive_buff_multiplier)
+        self.current_label_ob.set_text('increase to: %.2f%s' % (buff_mutipliers[self.player.store[4]], '%'))
         self.ob_price.set_text('Price: ' + str((self.player.store[4] + 1) * 40))
 
         self.support_title.set_text('Support ' + str(self.player.store[5]) + '/10')
-        self.health_buff.set_text('hp: ' + str(15 * self.player.offensive_buff_multiplier))
-        self.pspeed_buff.set_text('p speed: ' + str(5 * self.player.offensive_buff_multiplier))
-        self.current_label_sp.set_text('increase to:  ' + str(buff_mutipliers[self.player.store[5]]) + '%')
+        self.health_buff.set_text('hp: %.2f' % 15 * self.player.offensive_buff_multiplier)
+        self.pspeed_buff.set_text('p speed: %.2f' % 5 * self.player.offensive_buff_multiplier)
+        self.current_label_sp.set_text('increase to: %.2f%s' % (buff_mutipliers[self.player.store[5]], '%'))
         self.sp_price.set_text('Price: ' + str((self.player.store[5] + 1) * 40))
 
         self.money_title.set_text('Money ' + str(self.player.store[6]) + '/10')
-        self.money_cm.set_text('current: ' + str(self.player.money_gain_multiplier))
-        self.current_label_mon.set_text('increase to:  ' + str(game_multipliers[self.player.store[6]]) + '%')
+        self.money_cm.set_text('current: %.2f' % self.player.money_gain_multiplier)
+        self.current_label_mon.set_text('increase to: %.2f%s' % (game_multipliers[self.player.store[6]], '%'))
         self.mon_price.set_text('Price: ' + str((self.player.store[6] + 1) * 50))
 
         self.xp_title.set_text('XP ' + str(self.player.store[7]) + '/10')
         self.xp_cm.set_text('current: ' + str(self.player.xp_gain_multiplier))
-        self.current_label_xp.set_text('increase to:  ' + str(game_multipliers[self.player.store[7]]) + '%')
+        self.current_label_xp.set_text('increase to: %.2f%s' % (game_multipliers[self.player.store[7]], '%'))
         self.xp_price.set_text('Price: ' + str((self.player.store[7] + 1) * 50))
 
     def buy(self, pos):
@@ -334,7 +334,7 @@ class Store:
 
             else:
                 if values_speed[track[self.player.store[3]]][0] == 'base':
-                    self.player.pspeed += values_speed[track[self.player.store[3]]][1]
+                    self.player.base_pspeed += values_speed[track[self.player.store[3]]][1]
                 else:
                     self.player.pspeed_max += values_speed[track[self.player.store[3]]][1]
 

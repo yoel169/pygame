@@ -208,7 +208,6 @@ class GameMenu():
         self.stats_b = self.maker.make_button(400, 540, 150, 60, 'stats', None)
         self.setting_b = self.maker.make_button(400, 610, 150, 60, 'settings', None)
         self.back_b = self.maker.make_button(400, 680, 150, 60, 'save and exit', None)
-
         # player info panel
         self.player_panel.setPlayer(player_save)
 

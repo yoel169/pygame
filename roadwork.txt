@@ -18,6 +18,7 @@ Get better sprites.
 I don't know if the time counter in player works right.
 Get sounds.
 Actually make a description page.
+Add counters.
 Make a game summary page after every stage/ part.
 
 Sandbox mode.

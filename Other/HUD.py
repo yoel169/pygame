@@ -34,7 +34,7 @@ class HUD:
         part_string = 'Part: ' + str(part) + '/' + str(partmax)
 
         # left
-        self.damage_label = self.maker.make_label(100, 15, 200, 20, '', 'hud_damage', self.hud)
+        self.damage_label = self.maker.make_label(100, 15, 180, 20, '', 'hud_damage', self.hud)
         self.bps_label = self.maker.make_label(100, 35, 200, 20, '', 'hud_bps', self.hud)
         self.bspeed_label = self.maker.make_label(100, 55, 200, 20, '', 'hud_bspeed', self.hud)
 
@@ -58,20 +58,20 @@ class HUD:
                money, xp, time):
         self.wave_label.set_text(('wave: ' + str(wave) + '/' + str(self.maxWaves)))
         self.score_label.set_text(('Score: ' + str(score) + '/' + str(score2)))
-        self.health_label.set_text(('Health: ' + str(health) + '/' + str(health2)))
+        self.health_label.set_text('Health: %.2f/%d' % (health, health2))
         self.life_label.set_text(('Lives: ' + str(lives)) + '/' + str(lives2))
-        self.damage_label.set_text(('damage: ' + str(damage)) + '/' + str(damage2))
+        self.damage_label.set_text('damage: %.2f/%d' % (damage, damage2))
         self.bps_label.set_text(('bullets every: ' + str(bps) + 'ms' + '/' + str(bps2) + 'ms'))
-        self.bspeed_label.set_text(('bullet speed: ' + str(bspeed)))
-        self.money_label.set_text('Money: ' + str(money))
+        self.bspeed_label.set_text('bullet speed: %.2f' % bspeed)
+        self.money_label.set_text('Money: $%.2f' % money)
         self.time_label.set_text('Time: ' + str(time) + 's')
-        self.xp_label.set_text('XP: ' + str(xp))
+        self.xp_label.set_text('XP: %.2f' % xp)
 
     # pause game with button or by pressing p
     def pause(self):
-        pause_panel = self.maker.make_panel(SW2, SH2 - 150, 200, 200, 'pause_panel')
-        cont_button = self.maker.make_button(100, 50, 80, 50, 'continue', pause_panel)
-        exit_button = self.maker.make_button(100, 100, 80, 50, 'exit', pause_panel)
+        pause_panel = self.maker.make_panel(SW2, SH2, 200, 200, 'pause_panel')
+        cont_button = self.maker.make_button(90, 60, 80, 50, 'continue', pause_panel)
+        exit_button = self.maker.make_button(90, 110, 80, 50, 'exit', pause_panel)
 
         exit = False
         runner = True

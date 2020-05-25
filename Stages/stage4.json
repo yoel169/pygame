@@ -1,0 +1,237 @@
+[
+   {
+      "waves": [
+         {
+            "maxScore": 100,
+            "enemies": [
+               [
+                  "group",
+                  "time",
+                  "1000",
+                  {
+                     "type": [
+                        0,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        50
+                     ]
+                  }
+               ]
+            ],
+            "buffs": [
+               [
+                  "group",
+                  "random",
+                  "5",
+                  {
+                     "type": [
+                        0,
+                        1,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        25,
+                        25
+                     ]
+                  }
+               ]
+            ]
+         }
+      ],
+      "xp": 20
+   },
+   {
+      "waves": [
+         {
+            "maxScore": 200,
+            "enemies": [
+               [
+                  "group",
+                  "time",
+                  "1000",
+                  {
+                     "type": [
+                        0,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        50
+                     ]
+                  }
+               ],
+              [
+                  "single",
+                  "time",
+                  2000,
+                  1
+               ]
+            ],
+            "buffs": [
+               [
+                  "group",
+                  "random",
+                  "5",
+                  {
+                     "type": [
+                        0,
+                        1,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        25,
+                        25
+                     ]
+                  }
+               ]
+            ]
+         }
+      ],
+      "xp": 20
+   },
+   {
+      "waves": [
+         {
+            "maxScore": 400,
+            "enemies": [
+               [
+                  "group",
+                  "time",
+                  "1000",
+                  {
+                     "type": [
+                        0,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        50
+                     ]
+                  }
+               ],
+              [
+                  "single",
+                  "time",
+                  1000,
+                  1
+               ]
+            ],
+            "buffs": [
+               [
+                  "group",
+                  "random",
+                  "5",
+                  {
+                     "type": [
+                        0,
+                        1,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        25,
+                        25
+                     ]
+                  }
+               ]
+            ]
+         }
+      ],
+      "xp": 40
+   },
+   {
+      "waves": [
+         {
+            "maxScore": 600,
+            "enemies": [
+               [
+                  "group",
+                  "time",
+                  "500",
+                  {
+                     "type": [
+                        0,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        50
+                     ]
+                  }
+               ],
+              [
+                  "single",
+                  "time",
+                  1000,
+                  1
+               ]
+            ],
+            "buffs": [
+               [
+                  "group",
+                  "random",
+                  "5",
+                  {
+                     "type": [
+                        0,
+                        1,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        25,
+                        25
+                     ]
+                  }
+               ]
+            ]
+         }
+      ],
+      "xp": 40
+   },
+   {
+      "waves": [
+         {
+            "maxScore": 1000,
+            "enemies": [
+               [
+                  "single",
+                  "time",
+                  500,
+                  2
+               ],
+              [
+                  "single",
+                  "time",
+                  500,
+                  1
+               ]
+            ],
+            "buffs": [
+               [
+                  "group",
+                  "random",
+                  "5",
+                  {
+                     "type": [
+                        0,
+                        1,
+                        2
+                     ],
+                     "chance": [
+                        50,
+                        25,
+                        25
+                     ]
+                  }
+               ]
+            ]
+         }
+      ],
+      "xp": 60
+   }
+]

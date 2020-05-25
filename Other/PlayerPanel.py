@@ -40,22 +40,22 @@ class PlayerPanel:
                                            manager=self.manager, container=self.playerpanel, object_id='livesL')
 
         hp_label = gui.elements.UILabel(relative_rect=py.Rect((30, height * 3), (170, 20)),
-                                        text=('health: ' + str(self.player['health']) + '/' +
-                                              str(self.player['maxHealth'])), object_id='hpL',
+                                        text=('health: %.2f/%d' % (self.player['health'],
+                                              self.player['maxHealth'])), object_id='hpL',
                                         manager=self.manager, container=self.playerpanel)
 
         dam_label = gui.elements.UILabel(relative_rect=py.Rect((30, height * 4), (170, 20)),
-                                         text=('damage: ' + str(self.player['damage']) + '/' +
-                                               str(self.player['damage_max'])), object_id='damL',
+                                         text=('damage: %.2f/%d' % (self.player['damage'],
+                                               self.player['damage_max'])), object_id='damL',
                                          manager=self.manager, container=self.playerpanel)
 
         pspeed_label = gui.elements.UILabel(relative_rect=py.Rect((30, height * 5), (170, 20)),
-                                            text=('player speed: ' + str(self.player['pspeed'])) + '/' +
-                                                 str(self.player['pspeed_max']), object_id='pspeedL',
+                                            text=('player speed: %.2f/%d' % (self.player['pspeed'],
+                                                 self.player['pspeed_max'])), object_id='pspeedL',
                                             manager=self.manager, container=self.playerpanel)
 
         bspeed_label = gui.elements.UILabel(relative_rect=py.Rect((30, height * 6), (170, 20)),
-                                            text=('bullet speed: ' + str(self.player['bspeed'])), object_id='bspeedL',
+                                            text=('bullet speed: %.2f' % self.player['bspeed']), object_id='bspeedL',
                                             manager=self.manager, container=self.playerpanel)
 
         bps_label = gui.elements.UILabel(relative_rect=py.Rect((30, height * 7), (170, 20)),
@@ -68,7 +68,7 @@ class PlayerPanel:
                                            container=self.playerpanel, object_id='stageL')
 
         xp_label = gui.elements.UILabel(relative_rect=py.Rect((200, height * 2), (170, 20)),
-                                        text=("xp: " + str(self.player['xp'])), manager=self.manager,
+                                        text=("xp: %.2f" % self.player['xp']), manager=self.manager,
                                         container=self.playerpanel, object_id='stageL')
 
         score_label = gui.elements.UILabel(relative_rect=py.Rect((200, height * 3), (170, 20)),
@@ -76,7 +76,7 @@ class PlayerPanel:
                                            container=self.playerpanel, object_id='stageL')
 
         money_label = gui.elements.UILabel(relative_rect=py.Rect((200, height * 4), (170, 20)),
-                                           text=("money: " + str(self.player['money'])), manager=self.manager,
+                                           text=("money: %.2f" % self.player['money']), manager=self.manager,
                                            container=self.playerpanel, object_id='stageL')
 
         unlock_points_label = self.maker.make_label(285, (height * 5) + 20, 170, 30,

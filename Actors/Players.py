@@ -35,12 +35,12 @@ class Player(pygame.sprite.DirtySprite):
         self.arrows = option
 
         # player starting stats that can change from store
-        self.base_hp = 100
+        self.base_hp = 75
         self.maxHealth = 100
         self.base_lives = 2
         self.base_pspeed = 5
         self.pspeed_max = 5
-        self.base_damage = 5
+        self.base_damage = 10
         self.damage_max = 30
         self.base_bps = 600
         self.bpsMax = 300
@@ -55,7 +55,7 @@ class Player(pygame.sprite.DirtySprite):
         self.unlocks = [False, 0, 0, 0]  # unlock store for bullet trees
 
         # player current stats that can change through game
-        self.health = self.maxHealth
+        self.health = self.base_hp
         self.lives = self.base_lives
         self.pspeed = self.base_pspeed
         self.damage = self.base_damage

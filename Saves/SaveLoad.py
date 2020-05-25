@@ -4,7 +4,7 @@ import datetime
 from Actors.Players import Player
 
 
-class PlayerHandler():
+class PlayerHandler:
     def __init__(self):
         self.saveFile = {}
 
@@ -14,7 +14,7 @@ class PlayerHandler():
         time2 = time2.strftime("%m-%d-%y %I:%M:%S %p")
         db['times'][1] = time2
 
-        string = 'Saves/' +str(db['name']) + '.sf'
+        string = 'Saves/' + str(db['name']) + '.sf'
 
         with open(string, 'bw') as f:
             dump(db, f)
@@ -55,6 +55,3 @@ class PlayerHandler():
             self.save(db)
 
             return db
-
-
-

@@ -119,3 +119,10 @@
      * Stage picker now works so it will only show the stages the player beat.
      * Updated HUD and player panel to show base and max values. New problem is that the string needs to be formatted to
        show only 2 decimal points.
+------------------------------------------------------------------------------------------------------------------------
+3.7  * Reformatted some labels that use decimals to shorten them to 2 decimal points.
+     * changed the store so it only opens after stage 3.
+     * redid health and damage value defaults for player.
+     * Current stage is now an option at select stage.
+     * Stage 4 is on. Needs more testing but its hella hard folks lol
+

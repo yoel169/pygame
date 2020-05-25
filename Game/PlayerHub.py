@@ -51,8 +51,8 @@ class PlayerHub:
         # screen args
         ls = [self.SW, self.SH, self.background, self.screen]
 
-        # Load first 3 stages
-        for x in range(1, 4):
+        # Load stages
+        for x in range(1, 5):
             pack = 'Stages/stage' + str(x) + '.json'
             title = 'Stage ' + str(x)
             # stage_names.append(title)
@@ -133,14 +133,17 @@ class PlayerHub:
 
                         # store button
                         elif event.ui_element == gameMenu.store_b:
-                            manager.clear_and_reset()
-                            player = store.run(player)
+                            if 3 in player.stages_beat:
+                                manager.clear_and_reset()
+                                player = store.run(player)
 
-                            player_save['player'] = player.getInfo()
-                            #player_handler.save(player_save)
+                                player_save['player'] = player.getInfo()
+                                # player_handler.save(player_save)
 
-                            manager.clear_and_reset()
-                            gameMenu.player_hub(player_save, stage_names)
+                                manager.clear_and_reset()
+                                gameMenu.player_hub(player_save, stage_names)
+                            else:
+                                gameMenu.store_b.set_text('Beat stage 3')
 
                         # confirm button from play launch
                         elif event.ui_element == gameMenu.launch_hub_b:
@@ -150,7 +153,7 @@ class PlayerHub:
                             name2 = inputboxd.text
 
                             # feed it to launch handler to get a player save according to names and update setting
-                            player_save = player_handler.launch(name1,name2,option,option2)
+                            player_save = player_handler.launch(name1, name2, option, option2)
                             option, option2 = player_save['settings'][0], player_save['settings'][1]
 
                             # set the player and stage info based from save file
@@ -161,6 +164,8 @@ class PlayerHub:
                             for x in player.stages_beat:
                                 title = 'Stage ' + str(x)
                                 stage_names.append(title)
+
+                            stage_names.append('Stage ' + str(current_stage + 1))
 
                             # turn off inputbox, launch player hub and show player panel
                             inputbox = False
@@ -219,11 +224,11 @@ class PlayerHub:
 
                         if (current_stage + 1) not in player.stages_beat:
                             player.stages_beat.append(current_stage + 1)
-                            stage_names.append(('Stage ' + str(current_stage + 1)))
+                            stage_names.append(('Stage ' + str(current_stage + 2)))
 
                         player_save['player'] = player.getInfo()
 
-                        # if we ran out of stages go to main menu else next stage todo make level selection menu
+                        # if we ran out of stages go to main menu else next stage
                         if current_stage >= maxstagenum:
                             gameMenu.player_hub(player_save, stage_names)
                         else:

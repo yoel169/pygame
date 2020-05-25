@@ -6,7 +6,7 @@ from pygame.locals import (
 )
 
 # Define constants for the screen width and height
-SCREEN_WIDTH , SCREEN_HEIGHT = Constants.screenSize
+SCREEN_WIDTH, SCREEN_HEIGHT = Constants.screenSize
 
 
 class EnenemyJet(pygame.sprite.DirtySprite):
@@ -18,7 +18,7 @@ class EnenemyJet(pygame.sprite.DirtySprite):
             self.surf = pygame.image.load("Media/bluejet.png").convert()
             self.speed = random.randint(4, 8)
             self.damage = 10
-            self.health = 5
+            self.health = 10
             self.points = 1
             self.xp = 3
             self.money = 0.25
@@ -26,15 +26,15 @@ class EnenemyJet(pygame.sprite.DirtySprite):
             self.surf = pygame.image.load("Media/bluejetplus.png").convert()
             self.speed = random.randint(6, 10)
             self.damage = 12
-            self.health = 10
+            self.health = 20
             self.points = 2
             self.xp = 9
             self.money = 0.75
-        elif type ==2:
+        elif type == 2:
             self.surf = pygame.image.load("Media/greenjet.png").convert()
             self.speed = random.randint(4, 8)
             self.damage = 20
-            self.health = 15
+            self.health = 30
             self.points = 3
             self.xp = 6
             self.money = 0.5
@@ -69,6 +69,6 @@ class EBullet(pygame.sprite.DirtySprite):
 
     def update(self):
         # Add the velocity to the position vector to move the sprite.
-        self.rect.move_ip( - self.speed, 0)
+        self.rect.move_ip(- self.speed, 0)
         if self.rect.left > SCREEN_WIDTH:
             self.kill()

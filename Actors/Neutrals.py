@@ -78,7 +78,7 @@ class Buff(pygame.sprite.DirtySprite):
             self.power = 15
         elif type == 1:
             self.surf = pygame.image.load("Media/damagebuff.png").convert()
-            self.power = 2.5
+            self.power = 5
         else:
             self.surf = pygame.image.load("Media/bulletbuff.png").convert()
             self.power = 60  # ms
