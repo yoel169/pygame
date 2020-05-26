@@ -21,7 +21,7 @@ class PlayerHub:
         self.SW = args[0]
         self.SH = args[1]
 
-    def run(self, opt1, opt2, opt3):
+    def run(self):
 
         info = {}
 
@@ -38,9 +38,8 @@ class PlayerHub:
 
         # user variables
         score = 0
-        option = opt1  # 0 for auto shooting, 1 for space, 2 for mouse
-        option2 = opt2  # 0 for arrows, 1 for wads, 2 for mouse
-        # option3 = opt3  # 0 for windowed, 2 for fullscreen, 3 for hw
+        option = None  # 0 for auto shooting, 1 for space, 2 for mouse
+        option2 = None  # 0 for arrows, 1 for wads, 2 for mouse
 
         # create player handler for player save handling
         player_handler = PlayerHandler()

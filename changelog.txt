@@ -128,4 +128,5 @@
 ------------------------------------------------------------------------------------------------------------------------
 3.75 * Made stage 4 somewhat easier.
      * Settings menu working in player hub, removed from main menu.
+     * Got rid of commented out outdates sections on driver.
 
