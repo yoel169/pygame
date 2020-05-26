@@ -125,4 +125,7 @@
      * redid health and damage value defaults for player.
      * Current stage is now an option at select stage.
      * Stage 4 is on. Needs more testing but its hella hard folks lol
+------------------------------------------------------------------------------------------------------------------------
+3.75 * Made stage 4 somewhat easier.
+     * Settings menu working in player hub, removed from main menu.
 

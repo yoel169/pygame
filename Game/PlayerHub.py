@@ -1,5 +1,6 @@
 import pygame_gui as gui
 import pygame as py
+import json
 from Other.Menus import GameMenu
 from Actors.Players import Player
 from Game.Game import Game
@@ -21,6 +22,8 @@ class PlayerHub:
         self.SH = args[1]
 
     def run(self, opt1, opt2, opt3):
+
+        info = {}
 
         # loop variables
         time_delta = 0
@@ -175,6 +178,63 @@ class PlayerHub:
                         # start next stage/ part
                         elif event.ui_element == gameMenu.cont_b:
                             play = True
+
+                        # point store 2
+                        elif event.ui_element == gameMenu.store2_b:
+                            pass
+
+                        # settings menu
+                        elif event.ui_element == gameMenu.setting_b:
+                            manager.clear_and_reset()
+                            gameMenu.settings_menu()
+
+                        # confirm in settings menu
+                        elif event.ui_element == gameMenu.confirm_setting_b:
+
+                            temp = gameMenu.shoot_selection.get_single_selection()  # save shooting selection
+                            temp2 = gameMenu.screen_selection.get_single_selection()  # save screen selection
+                            temp3 = gameMenu.movement_selection.get_single_selection()  # save movement selection
+
+                            # update shooting
+                            if temp is not None:
+                                if temp == 'space':
+                                    option = 1
+                                elif temp == 'mouse':
+                                    option = 2
+                                else:
+                                    option = 0
+
+                            # update screen
+                            if temp2 is not None:
+                                if temp2 == 'fullscreen':
+                                    self.screen = py.display.set_mode((self.SW, self.SH), flags=py.FULLSCREEN)
+                                elif temp2 == 'hardware accelerated':
+                                    self.screen = py.display.set_mode((self.SW, self.SH), flags=py.FULLSCREEN |
+                                                                                                py.HWSURFACE | py.DOUBLEBUF)
+                                else:
+                                    self.screen = py.display.set_mode((self.SW, self.SH), flags=py.RESIZABLE)
+
+                                # update game config file
+                                with open('gameconfig.json', 'w') as f:
+                                    info['screen'] = temp2
+                                    json.dump(info, f, indent=2)
+
+                            # update movement
+                            if temp3 is not None:
+                                if temp3 == 'wads keys':
+                                    option2 = 1
+                                    player.arrows = False
+                                elif temp3 == 'mouse':
+                                    option2 = 2
+                                else:
+                                    option2 = 0
+                                    player.arrows = True
+
+                            # update save file
+                            player_save['settings'] = [option, option2]
+
+                            manager.clear_and_reset()
+                            gameMenu.player_hub(player_save, stage_names)
 
                 manager.process_events(event)
                 if inputbox:

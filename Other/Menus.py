@@ -7,7 +7,7 @@ import pygame as py
 # For buttons use 70 pixel space between buttons in height
 
 
-class GameMenu():
+class GameMenu:
     def __init__(self, width, height, manager):
         self.SW = width
         self.SH = height
@@ -16,7 +16,6 @@ class GameMenu():
         # main menu
         self.play_b = None
         self.info_b = None
-        self.setting_b = None
         self.quit_b = None
 
         # replay
@@ -41,13 +40,13 @@ class GameMenu():
         # player hub
         self.cont_b = None
         self.store_b = None
+        self.store2_b = None
+        self.setting_b = None
         self.stats_b = None
         self.back_b = None
         self.player_panel = PlayerPanel(self.manager)
         self.pick_b = None
         self.pick_ddm = None
-
-        # store hub
 
         # gui helper maker
         self.maker = GuiHelper(self.SW, self.SH, self.manager)
@@ -66,12 +65,10 @@ class GameMenu():
 
         self.info_b = self.maker.make_button(self.SW2, height + 70, button_s[0], button_s[1], 'How to Play', None)
 
-        self.setting_b = self.maker.make_button(self.SW2, height + (70 * 2), button_s[0], button_s[1], 'Settings', None)
-
-        self.quit_b = self.maker.make_button(self.SW2, height + (70 * 3), button_s[0], button_s[1], 'Quit', None)
+        self.quit_b = self.maker.make_button(self.SW2, height + (70 * 2), button_s[0], button_s[1], 'Quit', None)
 
     def replay_menu(self, string):
-        title = self.maker.make_label(self.SW2, self.SH2 - 90, 240, 90, string, 'replay', None)
+        title = self.maker.make_label(self.SW2, self.SH2 - 90, 260, 90, string, 'replay', None)
 
         button_s = (150, 60)
 
@@ -205,12 +202,13 @@ class GameMenu():
         self.pick_b = self.maker.make_button(350, 400, 50, 60, 'Go', None)
         self.pick_ddm = self.maker.make_drop_down_menu(425, 400, 100, 60, 'pick_ddm', stages)
         self.store_b = self.maker.make_button(400, 470, 150, 60, 'store', None)
-        self.stats_b = self.maker.make_button(400, 540, 150, 60, 'stats', None)
-        self.setting_b = self.maker.make_button(400, 610, 150, 60, 'settings', None)
-        self.back_b = self.maker.make_button(400, 680, 150, 60, 'save and exit', None)
+        self.store2_b = self.maker.make_button(400, 540, 150, 60, 'point store', None)
+        self.stats_b = self.maker.make_button(400, 610, 150, 60, 'stats', None)
+        self.setting_b = self.maker.make_button(400, 680, 150, 60, 'settings', None)
+        self.back_b = self.maker.make_button(400, 750, 150, 60, 'save and exit', None)
+
         # player info panel
         self.player_panel.setPlayer(player_save)
-
         #  ====================================== player name panel ==============================================
         name_panel = self.maker.make_panel(self.SW2 - 100, 100, 400, 180, 'namepanel')
 
