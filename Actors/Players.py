@@ -71,6 +71,10 @@ class Player(pygame.sprite.DirtySprite):
         self.player_points = 0
         self.stages_beat = []
 
+        # point store
+        self.point_store = [[0, 0, 0], [0, 0, 0]]  # [speed, dam]  [bullet, stat, points spent]
+        self.current_track = 0  # 0 speed, 1 damage
+
         # dict for all the info
         # self.info = {"self.arrows": self.arrows,
         #         "self.health": self.health,
@@ -103,7 +107,7 @@ class Player(pygame.sprite.DirtySprite):
         #         "self.unlocks": self.unlocks,
         #         "self.damage_max": self.damage_max}
 
-        #print(dict(list(self.__dict__.items())[8:]))
+        # print(dict(list(self.__dict__.items())[8:]))
 
     # Move the sprite based on user keypresses
     def update(self, pressed_keys):
@@ -178,7 +182,7 @@ class Player(pygame.sprite.DirtySprite):
         #          self.info[x] = db[counter]
         #          counter += 1
         for key, value in db.items():
-           setattr(self, key, value)
+            setattr(self, key, value)
 
         """
         self.arrows, self.health, self.maxHealth, self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \

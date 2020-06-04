@@ -1,9 +1,10 @@
 ----------------------------------------------------
                 Current track
 ----------------------------------------------------
-Finish store by making it only available after stage 3 is beat.
-New stages, enemies, buffs.
-Bullet track store.
+take out damage and speed from money store
+finish point store menu, and add mechanics to player and game.
+add sprites for new bullet tracks.
+new enemy.
 Sandbox Mode
 
 GOALS FOR: 4.0
