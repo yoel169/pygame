@@ -1,14 +1,10 @@
 ----------------------------------------------------
                 Current track
 ----------------------------------------------------
-take out damage and speed from money store
-finish point store menu, and add mechanics to player and game.
-add sprites for new bullet tracks.
+Merge stores.
 new enemy.
+music and sound rework.
 Sandbox Mode
-
-GOALS FOR: 4.0
-store and unlocks, at least: 2 new enemies and new stages.
 
 
 ---------------------------------------------------

@@ -60,7 +60,7 @@ class PlayerPanel:
 
         bps_label = gui.elements.UILabel(relative_rect=py.Rect((30, height * 7), (170, 20)),
                                          text=('bps: ' + str(self.player['bps']) + '/' +
-                                               str(self.player['bpsMax'])), manager=self.manager, object_id='bpsL',
+                                               str(self.player['bps_max'])), manager=self.manager, object_id='bpsL',
                                          container=self.playerpanel)
 
         Level_label = gui.elements.UILabel(relative_rect=py.Rect((200, height), (170, 20)),

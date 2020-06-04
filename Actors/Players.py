@@ -34,16 +34,33 @@ class Player(pygame.sprite.DirtySprite):
         # do not set variables above here
         self.arrows = option
 
+        # point store
+        self.point_store = [[0, 0, 0], [0, 0, 0]]  # [speed, dam]  [bullet, stat, points spent]
+        self.current_track = 0  # 0 speed, 1 damage
+
+        # defaults
+        self.base_damage = None
+        self.damage_max = None
+        self.base_pspeed = None
+        self.pspeed_max = None
+        self.base_bps = None
+        self.bps_max = None
+        self.base_lives = None
+        self.base_bspeed = None
+
+        # player current stats that can change through game
+        self.health = None
+        self.lives = None
+        self.pspeed = None
+        self.damage = None
+        self.bspeed = None
+        self.bps = None
+        self.buffs = [0, 0, 0, 0]  # dam, bps, bspeed, pspeed
+
+        # init player based on track (point store)
+        self.set_track()
+
         # player starting stats that can change from store
-        self.base_hp = 75
-        self.maxHealth = 100
-        self.base_lives = 2
-        self.base_pspeed = 5
-        self.pspeed_max = 5
-        self.base_damage = 10
-        self.damage_max = 30
-        self.base_bps = 600
-        self.bpsMax = 300
         self.base_bspeed = 10
         self.base_xp = 500
         self.base_xp_multiplier = 2
@@ -51,16 +68,8 @@ class Player(pygame.sprite.DirtySprite):
         self.money_gain_multiplier = 1
         self.support_buff_multiplier = 1
         self.offensive_buff_multiplier = 1
-        self.store = [False, 0, 0, 0, 0, 0, 0, 0]  # Store, health, dam, speed, offense buffs, support buffs,  xp, money
-        self.unlocks = [False, 0, 0, 0]  # unlock store for bullet trees
 
-        # player current stats that can change through game
-        self.health = self.base_hp
-        self.lives = self.base_lives
-        self.pspeed = self.base_pspeed
-        self.damage = self.base_damage
-        self.bspeed = self.base_bspeed
-        self.bps = self.base_bps
+        self.store = [False, 0, 0, 0, 0, 0, 0, 0]  # Store, health, dam, speed, offense buffs, support buffs, xp, money
 
         # player collectibles
         self.score = 0
@@ -70,44 +79,6 @@ class Player(pygame.sprite.DirtySprite):
         self.time = 0
         self.player_points = 0
         self.stages_beat = []
-
-        # point store
-        self.point_store = [[0, 0, 0], [0, 0, 0]]  # [speed, dam]  [bullet, stat, points spent]
-        self.current_track = 0  # 0 speed, 1 damage
-
-        # dict for all the info
-        # self.info = {"self.arrows": self.arrows,
-        #         "self.health": self.health,
-        #         "self.maxHealth": self.maxHealth,
-        #         "self.lives": self.lives,
-        #         "self.damage": self.damage,
-        #         "self.pspeed": self.pspeed,
-        #         "self.bspeed": self.bspeed,
-        #         "self.bps": self.bps,
-        #         "self.bpsMax": self.bpsMax,
-        #         "self.score": self.score,
-        #         "self.xp": self.xp,
-        #         "self.level": self.level,
-        #         "self.money": self.money,
-        #         "self.time": self.time,
-        #         "self.base_lives": self.base_lives,
-        #         "self.base_pspeed": self.base_pspeed,
-        #         "self.base_hp": self.base_hp,
-        #         "self.base_bps": self.base_bps,
-        #         "self.base_xp": self.base_xp,
-        #         "self.base_xp_multiplier": self.base_xp_multiplier,
-        #         "self.base_damage": self.base_damage,
-        #         "self.player_points": self.player_points,
-        #         "self.pspeed_max": self.pspeed_max,
-        #         "self.money_gain_multiplier": self.money_gain_multiplier,
-        #         "self.xp_gain_multiplier": self.xp_gain_multiplier,
-        #         "self.offensive_buff_multiplier": self.offensive_buff_multiplier,
-        #         "self.support_buff_multiplier": self.support_buff_multiplier,
-        #         "self.store": self.store,
-        #         "self.unlocks": self.unlocks,
-        #         "self.damage_max": self.damage_max}
-
-        # print(dict(list(self.__dict__.items())[8:]))
 
     # Move the sprite based on user keypresses
     def update(self, pressed_keys):
@@ -146,8 +117,8 @@ class Player(pygame.sprite.DirtySprite):
             self.rect.bottom = SCREEN_HEIGHT
 
         # if player goes under/over max make it equal max
-        if self.bps < self.bpsMax:
-            self.bps = self.bpsMax
+        if self.bps < self.bps_max:
+            self.bps = self.bps_max
 
         if self.health > self.maxHealth:
             self.health = self.maxHealth
@@ -167,30 +138,11 @@ class Player(pygame.sprite.DirtySprite):
             self.player_points += 1
 
     def getInfo(self):
-        # list = []
-        # for x in self.info:
-        #     list.append(self.info[x])
-        # return tuple(list)
         return dict(list(self.__dict__.items())[8:])
 
     def setInfo(self, db):
-        # counter = 0
-        # for x in self.info:
-        #     if counter >= len(db):
-        #         break
-        #     else:
-        #          self.info[x] = db[counter]
-        #          counter += 1
         for key, value in db.items():
             setattr(self, key, value)
-
-        """
-        self.arrows, self.health, self.maxHealth, self.lives, self.damage, self.pspeed, self.bspeed, self.bps, \
-        self.bpsMax, self.score, self.xp, self.level, self.money, self.time, self.base_lives, self.base_pspeed, \
-        self.base_hp, self.base_bps, self.base_xp, self.base_xp_multiplier, self.base_damage, self.player_points, \
-        self.pspeed_max, self.money_gain_multiplier, self.xp_gain_multiplier, self.offensive_buff_multiplier, \
-        self.support_buff_multiplier, self.store, self.unlocks, self.damage_max = db
-        """
 
     # reset user back to defaults
     def reset(self):
@@ -200,3 +152,70 @@ class Player(pygame.sprite.DirtySprite):
         self.damage = self.base_damage
         self.bspeed = self.base_bspeed
         self.bps = self.base_bps
+        self.buffs = 0, 0, 0, 0
+
+    # updating user stats based on track selected
+    def set_track(self):
+
+        # defaults reset just in case track was changed
+        self.base_damage = 10
+        self.damage_max = 30
+        self.base_pspeed = 5
+        self.pspeed_max = 5
+        self.base_bps = 600
+        self.bps_max = 300
+        self.base_lives = 2
+        self.base_hp = 100
+        self.maxHealth = 100
+        self.base_bspeed = 5
+
+        # speed track
+        if self.current_track == 0 and self.point_store[0][1] != 0:
+
+            x = range(1, self.point_store[0][1] + 1)
+
+            for n in x:
+                if n % 2 == 0:
+                    self.base_pspeed += 1
+                    self.pspeed_max += 2
+                    self.base_lives += 1
+                else:
+                    self.base_bps -= 100
+                    self.base_hp += 50
+                    self.maxHealth += 100
+
+            if self.point_store[0][1] >= 3:
+                self.bps_max = 250
+            elif self.point_store[0][1] == 5:
+                self.bps_max = 200
+                self.base_hp = 300
+                self.maxHealth = 300
+
+            self.base_damage *= self.point_store[0][0] + 1
+
+        # dam track
+        elif self.point_store[1][1] != 0 and self.current_track == 1:
+
+            x = range(1, self.point_store[1][1] + 1)
+
+            for n in x:
+                self.base_damage = 30 * self.point_store[1][1]
+                self.damage_max = 60 + (30 * self.point_store[1][1] - 1)
+
+                if n % 2 == 0:
+                    self.base_lives += 1
+                else:
+                    self.base_hp += 50
+                    self.maxHealth += 100
+
+                if self.point_store[1][1] == 5:
+                    self.base_hp = 300
+                    self.maxHealth = 300
+
+        # update the player stats again
+        self.health = self.base_hp
+        self.lives = self.base_lives
+        self.pspeed = self.base_pspeed + self.buffs[3]
+        self.damage = self.base_damage + self.buffs[0]
+        self.bspeed = self.base_bspeed + self.buffs[2]
+        self.bps = self.base_bps + self.buffs[1]

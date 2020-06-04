@@ -134,8 +134,8 @@ class PointStore:
 
         # bullet
         self.bullet_title.set_text('Bullet ' + str(self.player.point_store[self.selected][0]) + '/5')
-        self.b_price.set_text(str('Points: ' + self.player.point_store[self.selected][0] + 1))
+        self.b_price.set_text(str('Points: ' + str(self.player.point_store[self.selected][0] + 1)))
 
         # stat
         self.stat_title.set_text('Stats ' + str(self.player.point_store[self.selected][1]) + '/5')
-        self.stat_price.set_text(str('Points: ' + self.player.point_store[self.selected][1] + 1))
+        self.stat_price.set_text(str('Points: ' + str(self.player.point_store[self.selected][1] + 1)))

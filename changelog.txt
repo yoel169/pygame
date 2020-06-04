@@ -131,4 +131,18 @@
      * Got rid of commented out outdated sections on driver.
 ------------------------------------------------------------------------------------------------------------------------
 3.80 * Added point store menu and added some player variable. non functional on the game side yet.
+------------------------------------------------------------------------------------------------------------------------
+3.90 * Reworked player and store. Damage, bps, and pspeed are increased in the point store according to which track you
+       choose. Removed those upgrades from the money store. b_speed is currently not used.
+     * Added buff variables that track the increase stats from buff for keeping them when user upgrades their stats in
+       the store since before you wouldn't see change till after you passed/failed a stage (reset function called).
+     * First track focuses on speed where the second one focuses on damage. Each track has two main pathways of upgrades.
+       First path is bullet type which each track having unique bullet, second increases the player stats like damage,
+       bps, and speed. Specs will be on doc.
+     * Created new sprites for the different bullets.
+     * added enemy bullet health for the new red bullet mechanics.
+     * added the emp mechanic tier 3 15% of stunning the enemy, tier 5 30% chance of stun (damage track).
+     * added multiple bullet mechanics to game and player. Each bullet multiplies the base damage.
+     * things left to do: merge store, fix points going negative when buying, add track selector.
+
 

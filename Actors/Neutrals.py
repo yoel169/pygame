@@ -32,14 +32,23 @@ class Cloud(pygame.sprite.DirtySprite):
 
 
 class Bullet1(pygame.sprite.DirtySprite):
-    def __init__(self, position, power, speed):
+    def __init__(self, position, power, speed, track, pos):
         super(Bullet1, self).__init__()
-        self.surf = pygame.image.load("Media/bullet.png").convert()
+        names = ['bullet', 'big']
+        self.surf = pygame.image.load(names[track] + str(pos + 1) + '.png').convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self._layer = 1
         self.damage = power
         self.speed = speed
         self.rect = self.surf.get_rect(center=(position[0], position[1] + 25))
+
+        # bullet health. yup that's a thing now too
+        if track == 1 and pos >= 2:
+            self.health = 2
+        elif track == 1 and pos >= 4:
+            self.health = 4
+        else:
+            self.health = 1
 
     def update(self):
         # Add the velocity to the position vector to move the sprite.
@@ -48,22 +57,22 @@ class Bullet1(pygame.sprite.DirtySprite):
             self.kill()
 
 
-class Carrot(pygame.sprite.DirtySprite):
-    def __init__(self, position):
-        super(Carrot, self).__init__()
-        self.surf = carrot = pygame.image.load("Media/carrot.png").convert()
-        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
-        self.rect = self.surf.get_rect(center=position)
-        self.pos = pygame.math.Vector2(position)
-        self.vel = pygame.math.Vector2(0, -450)
-        self._layer = 1
-        self.damage = 10
-
-    def update(self):
-        # Add the velocity to the position vector to move the sprite.
-        self.rect.move_ip(5, 0)
-        if self.rect.left > SCREEN_WIDTH:
-            self.kill()
+# class Carrot(pygame.sprite.DirtySprite):
+#     def __init__(self, position):
+#         super(Carrot, self).__init__()
+#         self.surf = carrot = pygame.image.load("Media/carrot.png").convert()
+#         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
+#         self.rect = self.surf.get_rect(center=position)
+#         self.pos = pygame.math.Vector2(position)
+#         self.vel = pygame.math.Vector2(0, -450)
+#         self._layer = 1
+#         self.damage = 10
+#
+#     def update(self):
+#         # Add the velocity to the position vector to move the sprite.
+#         self.rect.move_ip(5, 0)
+#         if self.rect.left > SCREEN_WIDTH:
+#             self.kill()
 
 
 # ===================================== BUFFS =========================================================

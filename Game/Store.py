@@ -44,57 +44,6 @@ class Store:
 
         self.leave_b = self.maker.make_button(300, 330, 150, 160, 'back', None)
 
-        # ----------------------------------------- jet panel ----------------------------------------------------------
-        jetpanel = self.maker.make_contained_panel(310, 210, 600, 210, 'jet_panel', store_panel)
-        self.maker.make_label(300, 90, 100, 20, 'Jet Upgrades', 'store_jet', store_panel)
-
-        # health
-        health_panel = self.maker.make_contained_panel(300, 30, 600, 70, 'health_panel', jetpanel)
-        self.health_title = self.maker.make_label(60, 10, 100, 20, 'Health ' + str(self.player.store[1]) + '/10',
-                                                  'store_ht',
-                                                  health_panel)
-        self.base_hp = self.maker.make_label(60, 30, 90, 20, 'base: ' + str(self.player.base_hp), 'store_hb',
-                                             health_panel)
-        self.max_hp = self.maker.make_label(50, 50, 90, 20, 'max: ' + str(self.player.maxHealth), 'store_hm',
-                                            health_panel)
-        self.current_label = self.maker.make_label(250, 35, 200, 20, self.get_string(1), 'store_hcl',
-                                                   health_panel)
-        self.h_price = self.maker.make_label(430, 35, 100, 20, 'Price: ' + str((self.player.store[1] + 1) * 30),
-                                             'store_hprice',
-                                             health_panel)
-        health_buy_b = self.maker.make_button(550, 35, 50, 50, 'Buy', health_panel)
-
-        # damage
-        health_panel = self.maker.make_contained_panel(300, 100, 600, 70, 'damage_panel', jetpanel)
-        self.damage_title = self.maker.make_label(60, 10, 100, 20, 'Damage' + str(self.player.store[2]) + '/10',
-                                                  'store_ht',
-                                                  health_panel)
-        self.base_dam = self.maker.make_label(50, 30, 90, 20, 'base: ' + str(self.player.base_damage), 'store_db',
-                                              health_panel)
-        self.max_dam = self.maker.make_label(50, 50, 90, 20, 'max: ' + str(self.player.damage_max), 'store_dm',
-                                             health_panel)
-        self.current_label_dam = self.maker.make_label(250, 35, 200, 20, self.get_string(2), 'store_dcl',
-                                                       health_panel)
-        self.dam_price = self.maker.make_label(430, 35, 100, 20, 'Price: ' + str((self.player.store[2] + 1) * 30),
-                                               'store_dprice', health_panel)
-        damage_buy_b = self.maker.make_button(550, 35, 50, 50, 'Buy', health_panel)
-
-        # speed
-        health_panel = self.maker.make_contained_panel(300, 167, 600, 70, 'speed_panel', jetpanel)
-        self.speed_title = self.maker.make_label(60, 10, 100, 20, 'Speed' + str(self.player.store[3]) + '/10',
-                                                 'store_st',
-                                                 health_panel)
-        self.base_speed = self.maker.make_label(50, 30, 90, 20, 'base: ' + str(self.player.base_pspeed), 'store_sb',
-                                                health_panel)
-        self.max_speed = self.maker.make_label(50, 50, 90, 20, 'max: ' + str(self.player.pspeed_max), 'store_sm',
-                                               health_panel)
-        self.current_label_speed = self.maker.make_label(250, 35, 200, 20, self.get_string(3), 'store_scl',
-                                                         health_panel)
-        self.s_price = self.maker.make_label(430, 35, 100, 20, 'Price: ' + str((self.player.store[3] + 1) * 30),
-                                             'store_sprice',
-                                             health_panel)
-        speed_buy_b = self.maker.make_button(550, 35, 50, 50, 'Buy', health_panel)
-
         #  -------------------------------------------- buff panel ----------------------------------------------------
         buffpanel = self.maker.make_contained_panel(310, 430, 600, 150, 'buff_panel', store_panel)
         self.maker.make_label(300, 340, 110, 20, 'Buff Upgrades', 'store_buff', store_panel)
@@ -200,18 +149,6 @@ class Store:
                             print('exited')
                             runner = False
 
-                        elif event.ui_element == health_buy_b:
-                            if self.player.money >= (self.player.store[1] + 1) * 30:
-                                self.buy(1)
-
-                        elif event.ui_element == damage_buy_b:
-                            if self.player.money >= (self.player.store[2] + 1) * 30:
-                                self.buy(2)
-
-                        elif event.ui_element == speed_buy_b:
-                            if self.player.money >= (self.player.store[3] + 1) * 30:
-                                self.buy(3)
-
                         elif event.ui_element == ob_buy_b:
                             if self.player.money >= (self.player.store[4] + 1) * 40:
                                 self.buy(4)
@@ -242,46 +179,10 @@ class Store:
 
         return self.player
 
-    def get_string(self, pos):
-
-        values_hp = [['base', 25], ['max', 100], ['life', 1]]
-        values_dam = [['base', 10], ['max', 15]]
-        values_speed = [['base', 0.3], ['max', 1]]
-        hp_track = [1, 0, 0, 2, 0, 0, 1, 0, 0, 2]
-        track = [1, 0, 0, 1, 0, 0, 1, 0, 0, 1]
-
-        if pos == 1:
-            return ('increase: %s by %.1f' % (values_hp[hp_track[self.player.store[1]]][0],
-                                                     values_hp[hp_track[self.player.store[1]]][1]))
-        elif pos == 2:
-            return 'increase: %s %.1f' % (values_dam[hp_track[self.player.store[2]]][0],
-                                                     values_dam[track[self.player.store[2]]][1])
-        else:
-            return 'increase: %s by %.1f' % (values_speed[hp_track[self.player.store[3]]][0],
-                                                     values_speed[track[self.player.store[3]]][1])
-
     def update(self):
         buff_mutipliers = [1.15, 1.25, 1.5, 1.75, 2, 1.5, 2, 4, 8]
         game_multipliers = [1.05, 1.10, 1.20, 1.4, 1.7, 2, 2.5, 3.5, 5]
         self.money_label.set_text('Money: %.3f' % self.player.money)
-
-        self.health_title.set_text('Health %d/10' % self.player.store[1])
-        self.base_hp.set_text('base: ' + str(self.player.base_hp))
-        self.max_hp.set_text('max: ' + str(self.player.maxHealth))
-        self.current_label.set_text(self.get_string(1))
-        self.h_price.set_text('Price: ' + str((self.player.store[1] + 1) * 30))
-
-        self.damage_title.set_text('Damage ' + str(self.player.store[2]) + '/10')
-        self.base_dam.set_text('base: ' + str(self.player.base_damage))
-        self.max_dam.set_text('max: ' + str(self.player.damage_max))
-        self.current_label_dam.set_text(self.get_string(2))
-        self.dam_price.set_text('Price: ' + str((self.player.store[2] + 1) * 30))
-
-        self.speed_title.set_text('Speed ' + str(self.player.store[3]) + '/10')
-        self.base_speed.set_text('base: %.1f' % self.player.base_pspeed)
-        self.max_speed.set_text('max: ' + str(self.player.pspeed_max))
-        self.current_label_speed.set_text(self.get_string(3))
-        self.s_price.set_text('Price: ' + str((self.player.store[3] + 1) * 30))
 
         self.offensive_title.set_text('Offense ' + str(self.player.store[4]) + '/10')
         self.dam_buff.set_text('dam: %.2f' % 5 * self.player.offensive_buff_multiplier)
@@ -307,38 +208,7 @@ class Store:
 
     def buy(self, pos):
 
-        if pos in range(1, 4):
-
-            values_hp = [['base', 25], ['max', 100], ['life', 1]]
-            values_dam = [['base', 10], ['max', 15]]
-            values_speed = [['base', 0.3], ['max', 1]]
-
-            hp_track = [1, 0, 0, 2, 0, 0, 1, 0, 0, 2]
-            track = [1, 0, 0, 1, 0, 0, 1, 0, 0, 1]
-
-            self.player.money -= (self.player.store[pos] + 1) * 30
-
-            if pos == 1:
-                if values_hp[hp_track[self.player.store[1]]][0] == 'base':
-                    self.player.base_hp += values_hp[hp_track[self.player.store[1]]][1]
-                elif values_hp[hp_track[self.player.store[1]]][0] == 'max':
-                    self.player.maxHealth += values_hp[hp_track[self.player.store[1]]][1]
-                else:
-                    self.player.maxHealth += values_hp[hp_track[self.player.store[1]]][1]
-
-            elif pos == 2:
-                if values_dam[track[self.player.store[2]]][0] == 'base':
-                    self.player.base_damage += values_dam[track[self.player.store[2]]][1]
-                else:
-                    self.player.damage_max += values_dam[track[self.player.store[2]]][1]
-
-            else:
-                if values_speed[track[self.player.store[3]]][0] == 'base':
-                    self.player.base_pspeed += values_speed[track[self.player.store[3]]][1]
-                else:
-                    self.player.pspeed_max += values_speed[track[self.player.store[3]]][1]
-
-        elif pos in range(4, 6):
+        if pos in range(4, 6):
 
             buff_mutipliers = [1.15, 1.25, 1.5, 1.75, 2, 1.5, 2, 4, 8]
 

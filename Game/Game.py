@@ -323,7 +323,9 @@ class Game:
                 # SPAWN PLAYER BULLETS IF AUTO SHOOT IS ON
                 auto_timer = py.time.get_ticks() - auto_start
                 if auto_timer >= self.player.bps and auto:
-                    new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
+                    b_type = self.player.point_store[self.player.current_track][0]
+                    new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed,
+                                         self.player.current_track, b_type)
                     bullets.add(new_bullet)
                     all_sprites.add(new_bullet)
                     auto_start = py.time.get_ticks()
@@ -463,7 +465,16 @@ class Game:
                         if bullet.__class__ == Bullet1:
                             enemy.health -= bullet.damage
                             # self.collision_sound.play()
-                            bullet.kill()
+                            bullet.health -= 1
+                            if bullet.health <= 0:
+                                bullet.kill()
+                            if self.player.current_track == 1:
+                                chance = (random.randint(1, 100))
+                                if self.player.point_store[1][0] == 3 and chance <= 15:
+                                    enemy.speed = 0
+                                elif self.player.point_store[1][0] >= 5 and chance <= 30:
+                                    enemy.speed = 0
+
                             if enemy.health <= 0:
                                 score += enemy.points
                                 self.player.xp += enemy.xp * self.player.xp_gain_multiplier
@@ -487,9 +498,11 @@ class Game:
                     elif hit.type == 1:
                         if self.player.damage <= self.player.damage_max:
                             self.player.damage += hit.power * self.player.offensive_buff_multiplier
+                            self.player.buffs[0] += hit.power * self.player.offensive_buff_multiplier
                     else:
                         if self.player.bps >= self.player.bpsMax:
                             self.player.bps -= hit.power * self.player.offensive_buff_multiplier
+                            self.player.buffs[1] += hit.power * self.player.offensive_buff_multiplier
                     print("power up!")
                     hit.kill()
 
