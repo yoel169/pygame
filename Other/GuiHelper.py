@@ -88,3 +88,15 @@ class GuiHelper:
         return pygame_gui.elements.UIDropDownMenu(options_list=stages, starting_option=stages[0],
                                                   relative_rect=size_rect,
                                                   manager=self.manager, object_id=id)
+
+    def make_contained_drop_down_menu(self, x, y, w, h, id, stages, container):
+        size = (0, 0, w, h)
+        size_rect = pygame.Rect(size)
+        size_rect.center = (x, y)
+
+        if len(stages) == 0:
+            stages = ['']
+
+        return pygame_gui.elements.UIDropDownMenu(options_list=stages, starting_option=stages[0],
+                                                  relative_rect=size_rect, container=container,
+                                                  manager=self.manager, object_id=id)

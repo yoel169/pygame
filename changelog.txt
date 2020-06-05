@@ -144,5 +144,13 @@
      * added the emp mechanic tier 3 15% of stunning the enemy, tier 5 30% chance of stun (damage track).
      * added multiple bullet mechanics to game and player. Each bullet multiplies the base damage.
      * things left to do: merge store, fix points going negative when buying, add track selector.
+------------------------------------------------------------------------------------------------------------------------
+3.91 * Merged both stores since there's space.
+     * Added the selection menu to switch between tracks. You can switch between tracks and both get saved.
+     * Fixed store buying mechanics that caused player points to go negative (was missing a 1).
+     * Added a reset track option to reset track and get all the points refunded.
+     * Added to show current track on player panel.
+     * Fixed so current track gets saved to player when leaving store. Current track will be displayed.
+     * Everything from 3.80 till now needs debugging to make sure mechanics and store values hold up.
 
 

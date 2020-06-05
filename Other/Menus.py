@@ -202,7 +202,6 @@ class GameMenu:
         self.pick_b = self.maker.make_button(350, 400, 50, 60, 'Go', None)
         self.pick_ddm = self.maker.make_drop_down_menu(425, 400, 100, 60, 'pick_ddm', stages)
         self.store_b = self.maker.make_button(400, 470, 150, 60, 'store', None)
-        self.store2_b = self.maker.make_button(400, 540, 150, 60, 'point store', None)
         self.stats_b = self.maker.make_button(400, 610, 150, 60, 'stats', None)
         self.setting_b = self.maker.make_button(400, 680, 150, 60, 'settings', None)
         self.back_b = self.maker.make_button(400, 750, 150, 60, 'save and exit', None)

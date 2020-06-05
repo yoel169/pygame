@@ -1,7 +1,6 @@
 ----------------------------------------------------
                 Current track
 ----------------------------------------------------
-Merge stores.
 new enemy.
 music and sound rework.
 Sandbox Mode

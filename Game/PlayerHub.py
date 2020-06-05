@@ -6,7 +6,6 @@ from Actors.Players import Player
 from Game.Game import Game
 from Other.InputBox import InputBox
 from Game.Store import Store
-from Game.PointStore import PointStore
 from Saves.SaveLoad import PlayerHandler
 from pygame.locals import (
     K_ESCAPE)
@@ -74,7 +73,6 @@ class PlayerHub:
 
         # stores
         store = Store(self.screen, self.background, manager)
-        point_store = PointStore(self.screen, self.background, manager)
 
         # launch load/save menu and create input box
         gameMenu.launch_menu(player_handler.getSaves())
@@ -137,17 +135,17 @@ class PlayerHub:
 
                         # store button
                         elif event.ui_element == gameMenu.store_b:
-                            if 3 in player.stages_beat:
-                                manager.clear_and_reset()
-                                player = store.run(player)
+                            #if 3 in player.stages_beat:
+                            manager.clear_and_reset()
+                            player = store.run(player)
 
-                                player_save['player'] = player.getInfo()
-                                # player_handler.save(player_save)
+                            player_save['player'] = player.getInfo()
+                            # player_handler.save(player_save)
 
-                                manager.clear_and_reset()
-                                gameMenu.player_hub(player_save, stage_names)
-                            else:
-                                gameMenu.store_b.set_text('Beat stage 3')
+                            manager.clear_and_reset()
+                            gameMenu.player_hub(player_save, stage_names)
+                            # else:
+                            #     gameMenu.store_b.set_text('Beat stage 3')
 
                         # confirm button from play launch
                         elif event.ui_element == gameMenu.launch_hub_b:
@@ -179,17 +177,6 @@ class PlayerHub:
                         # start next stage/ part
                         elif event.ui_element == gameMenu.cont_b:
                             play = True
-
-                        # point store
-                        elif event.ui_element == gameMenu.store2_b:
-                            manager.clear_and_reset()
-                            player = point_store.run(player)
-
-                            player_save['player'] = player.getInfo()
-                            # player_handler.save(player_save)
-
-                            manager.clear_and_reset()
-                            gameMenu.player_hub(player_save, stage_names)
 
                         # settings menu
                         elif event.ui_element == gameMenu.setting_b:

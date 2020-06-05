@@ -19,8 +19,18 @@ class Store:
         self.screen = screen
         self.background = bg
         self.maker = GuiHelper(SW, SH, self.manager)
+
         self.leave_b = None
         self.player = None
+        self.bullet_title = None
+        self.current_label = None
+        self.b_price = None
+        self.stat_title = None
+        self.current_label_stat = None
+        self.stat_price = None
+        self.money_label = None
+        self.selected = None
+        self.reset_track = None
 
     def run(self, player):
 
@@ -31,10 +41,15 @@ class Store:
         store_panel = self.maker.make_panel(SW2, SH2, 650, 800, 'store_panel')
 
         self.player = player
+        self.selected = player.current_track
 
         # title and money
         self.maker.make_label(300, 25, 70, 20, 'Store', 'store_title', store_panel)
-        self.money_label = self.maker.make_label(300, 50, 150, 20, 'Money: ' + str(self.player.money),
+
+        self.money_label = self.maker.make_label(150, 50, 150, 20, 'Money: ' + str(self.player.money),
+                                                 'store_pmoney',
+                                                 store_panel)
+        self.point_label = self.maker.make_label(400, 50, 150, 20, 'Points: ' + str(self.player.player_points),
                                                  'store_pmoney',
                                                  store_panel)
 
@@ -42,11 +57,46 @@ class Store:
         buff_mutipliers = [1.15, 1.25, 1.5, 1.75, 2, 1.5, 2, 4, 8]
         game_multipliers = [1.05, 1.10, 1.20, 1.4, 1.7, 2, 2.5, 3.5, 5]
 
-        self.leave_b = self.maker.make_button(300, 330, 150, 160, 'back', None)
+        self.leave_b = self.maker.make_button(300, 800, 100, 60, 'back', None)
+
+        # ----------------------------------------- jet panel ----------------------------------------------------------
+        string = []
+        if self.player.current_track == 0:
+            string = ['speed', 'damage']
+        else:
+            string = ['damage', 'speed']
+
+        self.track_selector = self.maker.make_contained_drop_down_menu(100, 295, 100, 40, 'pick_ddm',
+                                                                       string, store_panel)
+
+        self.reset_track = self.maker.make_button(500, 295, 120, 40, 'reset track', store_panel)
+
+        self.jet_title = self.maker.make_label(300, 110, 220, 20,
+                                               'Jet Upgrades: ' + self.track_selector.selected_option + ' track',
+                                               'store_buff', store_panel)
+        jetpanel = self.maker.make_contained_panel(310, 200, 600, 140, 'jet_panel', store_panel)
+
+        # bullet
+        bullet_panel = self.maker.make_contained_panel(300, 30, 600, 70, 'health_panel', jetpanel)
+
+        self.bullet_title = self.maker.make_label(60, 35, 100, 20, 'Bullet ', 'store_ht', bullet_panel)
+        self.current_label = self.maker.make_label(250, 35, 200, 20, '', 'store_hcl', bullet_panel)
+        self.b_price = self.maker.make_label(430, 35, 100, 20, 'Price: ', 'store_hprice', bullet_panel)
+
+        bullet_buy_b = self.maker.make_button(550, 35, 50, 50, 'Buy', bullet_panel)
+
+        # stat
+        stat_panel = self.maker.make_contained_panel(300, 100, 600, 70, 'damage_panel', jetpanel)
+
+        self.stat_title = self.maker.make_label(60, 35, 100, 20, 'Stats ', 'store_ht', stat_panel)
+        self.current_label_stat = self.maker.make_label(250, 35, 200, 20, '', 'store_dcl', stat_panel)
+        self.stat_price = self.maker.make_label(430, 35, 100, 20, 'Price: ', 'store_dprice', stat_panel)
+
+        stat_buy_b = self.maker.make_button(550, 35, 50, 50, 'Buy', stat_panel)
 
         #  -------------------------------------------- buff panel ----------------------------------------------------
-        buffpanel = self.maker.make_contained_panel(310, 430, 600, 150, 'buff_panel', store_panel)
         self.maker.make_label(300, 340, 110, 20, 'Buff Upgrades', 'store_buff', store_panel)
+        buffpanel = self.maker.make_contained_panel(310, 430, 600, 140, 'buff_panel', store_panel)
 
         # offensive buffs
         offensive_panel = self.maker.make_contained_panel(300, 30, 600, 70, 'ob_panel', buffpanel)
@@ -89,8 +139,8 @@ class Store:
         sp_buy_b = self.maker.make_button(550, 35, 50, 50, 'Buy', support_panel)
 
         #  -------------------------------------------- game panel ----------------------------------------------------
-        gamepanel = self.maker.make_contained_panel(310, 650, 600, 150, 'game_panel', store_panel)
         self.maker.make_label(300, 550, 120, 20, 'Game Upgrades', 'store_game', store_panel)
+        gamepanel = self.maker.make_contained_panel(310, 640, 600, 140, 'game_panel', store_panel)
 
         # money
         money_panel = self.maker.make_contained_panel(300, 30, 600, 70, 'mon_panel', gamepanel)
@@ -144,7 +194,7 @@ class Store:
                 elif event.type == py.USEREVENT:
                     if event.user_type == gui.UI_BUTTON_PRESSED:
 
-                        # go back button WHY YOU NO WORK
+                        # go back button
                         if event.ui_element == self.leave_b:
                             print('exited')
                             runner = False
@@ -165,6 +215,19 @@ class Store:
                             if self.player.money >= (self.player.store[6] + 1) * 50:
                                 self.buy(6)
 
+                        elif event.ui_element == bullet_buy_b:
+                            if self.player.player_points >= self.player.point_store[self.selected][0] + 1:
+                                self.buy(0)
+
+                        elif event.ui_element == stat_buy_b:
+                            if self.player.player_points >= self.player.point_store[self.selected][1] + 1:
+                                self.buy(1)
+
+                        elif event.ui_element == self.reset_track:
+                            self.player.player_points += self.player.point_store[self.selected][2]
+                            self.player.point_store[self.selected] = 0, 0, 0
+                            print('reset ' + self.track_selector.selected_option + ' track')
+
                 self.manager.process_events(event)
 
             self.screen.blit(self.background, (0, 0))
@@ -173,7 +236,6 @@ class Store:
 
             self.manager.update(time_delta)
             self.manager.draw_ui(self.screen)
-            self.mon_price.rebuild()
 
             py.display.update()
 
@@ -182,6 +244,35 @@ class Store:
     def update(self):
         buff_mutipliers = [1.15, 1.25, 1.5, 1.75, 2, 1.5, 2, 4, 8]
         game_multipliers = [1.05, 1.10, 1.20, 1.4, 1.7, 2, 2.5, 3.5, 5]
+
+        self.money_label.set_text('Points: ' + str(self.player.player_points))
+
+        strings = [['upgrade size', 'red bullets', 'emp 15%', 'emp 30%', '2x bullets'],
+                   ['bps', 'speed', 'bps', 'speed', 'bps']]
+
+        # speed track else damage track
+        if self.track_selector.selected_option == 'speed':
+            self.selected = 0
+            self.player.current_track = 0
+            bullet = 'x' + str(self.player.point_store[0][0] + 2)
+            self.current_label.set_text(bullet)
+            self.current_label_stat.set_text(strings[1][self.player.point_store[0][1]])
+        else:
+            self.selected = 1
+            self.player.current_track = 1
+            self.current_label.set_text(strings[0][self.player.point_store[1][0]])
+            self.current_label_stat.set_text('damage')
+
+        self.jet_title.set_text('Jet Upgrades: ' + self.track_selector.selected_option + ' track')
+
+        # bullet
+        self.bullet_title.set_text('Bullet ' + str(self.player.point_store[self.selected][0]) + '/5')
+        self.b_price.set_text(str('Points: ' + str(self.player.point_store[self.selected][0] + 1)))
+
+        # stat
+        self.stat_title.set_text('Stats ' + str(self.player.point_store[self.selected][1]) + '/5')
+        self.stat_price.set_text(str('Points: ' + str(self.player.point_store[self.selected][1] + 1)))
+
         self.money_label.set_text('Money: %.3f' % self.player.money)
 
         self.offensive_title.set_text('Offense ' + str(self.player.store[4]) + '/10')
@@ -208,27 +299,33 @@ class Store:
 
     def buy(self, pos):
 
-        if pos in range(4, 6):
-
-            buff_mutipliers = [1.15, 1.25, 1.5, 1.75, 2, 1.5, 2, 4, 8]
-
-            self.player.money -= (self.player.store[pos] + 1) * 40
-
-            if pos == 4:
-                self.player.offensive_buff_multiplier = buff_mutipliers[self.player.store[pos]]
-            else:
-                self.player.support_buff_multiplier = buff_mutipliers[self.player.store[pos]]
+        if pos in range(0, 2):
+            self.player.point_store[self.selected][pos] += 1
+            self.player.player_points -= self.player.point_store[self.selected][pos] + 1
+            self.player.point_store[self.selected][2] += self.player.point_store[self.selected][pos] + 1
 
         else:
+            if pos in range(4, 6):
 
-            game_multipliers = [1.05, 1.10, 1.20, 1.4, 1.7, 2, 2.5, 3.5, 5]
+                buff_mutipliers = [1.15, 1.25, 1.5, 1.75, 2, 1.5, 2, 4, 8]
 
-            self.player.money -= (self.player.store[pos] + 1) * 50
+                self.player.money -= (self.player.store[pos] + 1) * 40
 
-            if pos == 6:
-                self.player.money_gain_multiplier = game_multipliers[self.player.store[pos]]
+                if pos == 4:
+                    self.player.offensive_buff_multiplier = buff_mutipliers[self.player.store[pos]]
+                else:
+                    self.player.support_buff_multiplier = buff_mutipliers[self.player.store[pos]]
+
             else:
-                self.player.xp_gain_multiplier = game_multipliers[self.player.store[pos]]
 
-        self.player.store[pos] += 1
-        print(str(pos))
+                game_multipliers = [1.05, 1.10, 1.20, 1.4, 1.7, 2, 2.5, 3.5, 5]
+
+                self.player.money -= (self.player.store[pos] + 1) * 50
+
+                if pos == 6:
+                    self.player.money_gain_multiplier = game_multipliers[self.player.store[pos]]
+                else:
+                    self.player.xp_gain_multiplier = game_multipliers[self.player.store[pos]]
+
+            self.player.store[pos] += 1
+            print(str(pos))

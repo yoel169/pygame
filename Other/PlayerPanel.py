@@ -41,17 +41,18 @@ class PlayerPanel:
 
         hp_label = gui.elements.UILabel(relative_rect=py.Rect((30, height * 3), (170, 20)),
                                         text=('health: %.2f/%d' % (self.player['health'],
-                                              self.player['maxHealth'])), object_id='hpL',
+                                                                   self.player['maxHealth'])), object_id='hpL',
                                         manager=self.manager, container=self.playerpanel)
 
         dam_label = gui.elements.UILabel(relative_rect=py.Rect((30, height * 4), (170, 20)),
                                          text=('damage: %.2f/%d' % (self.player['damage'],
-                                               self.player['damage_max'])), object_id='damL',
+                                                                    self.player['damage_max'])), object_id='damL',
                                          manager=self.manager, container=self.playerpanel)
 
         pspeed_label = gui.elements.UILabel(relative_rect=py.Rect((30, height * 5), (170, 20)),
                                             text=('player speed: %.2f/%d' % (self.player['pspeed'],
-                                                 self.player['pspeed_max'])), object_id='pspeedL',
+                                                                             self.player['pspeed_max'])),
+                                            object_id='pspeedL',
                                             manager=self.manager, container=self.playerpanel)
 
         bspeed_label = gui.elements.UILabel(relative_rect=py.Rect((30, height * 6), (170, 20)),
@@ -79,7 +80,15 @@ class PlayerPanel:
                                            text=("money: %.2f" % self.player['money']), manager=self.manager,
                                            container=self.playerpanel, object_id='stageL')
 
-        unlock_points_label = self.maker.make_label(285, (height * 5) + 20, 170, 30,
+        unlock_points_label = self.maker.make_label(285, (height * 5) + 10, 170, 20,
                                                     ('unlock points: ' + str(self.player['player_points'])),
-                                                    'playerpoints',
+                                                    'stageL',
                                                     self.playerpanel)
+        string = ''
+
+        if self.player['current_track'] == 0:
+            string = 'speed'
+        else:
+            string = 'damage'
+
+        self.maker.make_label(285, (height * 6) + 10, 170, 30, 'track: ' + string, 'playerpoints', self.playerpanel)
