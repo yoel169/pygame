@@ -38,8 +38,8 @@ class PlayerHub:
 
         # user variables
         score = 0
-        option = None  # 0 for auto shooting, 1 for space, 2 for mouse
-        option2 = None  # 0 for arrows, 1 for wads, 2 for mouse
+        option = 0  # 0 for auto shooting, 1 for space, 2 for mouse
+        option2 = 0  # 0 for arrows, 1 for wads, 2 for mouse
 
         # create player handler for player save handling
         player_handler = PlayerHandler()

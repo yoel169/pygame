@@ -35,7 +35,7 @@ class Bullet1(pygame.sprite.DirtySprite):
     def __init__(self, position, power, speed, track, pos):
         super(Bullet1, self).__init__()
         names = ['bullet', 'big']
-        self.surf = pygame.image.load(names[track] + str(pos + 1) + '.png').convert()
+        self.surf = pygame.image.load('Media/' + names[track] + str(pos + 1) + '.png').convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self._layer = 1
         self.damage = power

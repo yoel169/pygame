@@ -250,7 +250,8 @@ class Game:
                             auto is not True:
                         manual_timer = py.time.get_ticks() - manual_start
                         if manual_timer >= self.player.bps:
-                            new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
+                            b_type = self.player.point_store[self.player.current_track][0]
+                            new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed, self.player.current_track, b_type)
                             bullets.add(new_bullet)
                             all_sprites.add(new_bullet)
                             manual_start = py.time.get_ticks()
@@ -500,7 +501,7 @@ class Game:
                             self.player.damage += hit.power * self.player.offensive_buff_multiplier
                             self.player.buffs[0] += hit.power * self.player.offensive_buff_multiplier
                     else:
-                        if self.player.bps >= self.player.bpsMax:
+                        if self.player.bps >= self.player.bps_max:
                             self.player.bps -= hit.power * self.player.offensive_buff_multiplier
                             self.player.buffs[1] += hit.power * self.player.offensive_buff_multiplier
                     print("power up!")
@@ -537,7 +538,7 @@ class Game:
                 # UPDATE HUD AND DRAW IT
                 hud.update(currentWave, score, maxScore, self.player.health, self.player.maxHealth, self.player.lives,
                            self.player.base_lives, self.player.damage, self.player.damage_max, self.player.bps,
-                           self.player.bpsMax, self.player.bspeed, money_counter, xp_counter, int(time / 60))
+                           self.player.bps_max, self.player.bspeed, money_counter, xp_counter, int(time / 60))
                 manager.draw_ui(self.screen)
 
                 # UPDATE SCREEN AND TICK CLOCK

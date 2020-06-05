@@ -225,7 +225,8 @@ class Store:
 
                         elif event.ui_element == self.reset_track:
                             self.player.player_points += self.player.point_store[self.selected][2]
-                            self.player.point_store[self.selected] = 0, 0, 0
+                            self.player.point_store[self.selected] = [0, 0, 0]
+                            self.player.set_track()
                             print('reset ' + self.track_selector.selected_option + ' track')
 
                 self.manager.process_events(event)
@@ -254,12 +255,14 @@ class Store:
         if self.track_selector.selected_option == 'speed':
             self.selected = 0
             self.player.current_track = 0
+            self.player.set_track()
             bullet = 'x' + str(self.player.point_store[0][0] + 2)
             self.current_label.set_text(bullet)
             self.current_label_stat.set_text(strings[1][self.player.point_store[0][1]])
         else:
             self.selected = 1
             self.player.current_track = 1
+            self.player.set_track()
             self.current_label.set_text(strings[0][self.player.point_store[1][0]])
             self.current_label_stat.set_text('damage')
 
@@ -303,6 +306,7 @@ class Store:
             self.player.point_store[self.selected][pos] += 1
             self.player.player_points -= self.player.point_store[self.selected][pos] + 1
             self.player.point_store[self.selected][2] += self.player.point_store[self.selected][pos] + 1
+            self.player.set_track()
 
         else:
             if pos in range(4, 6):

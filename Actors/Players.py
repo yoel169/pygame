@@ -61,7 +61,6 @@ class Player(pygame.sprite.DirtySprite):
         self.set_track()
 
         # player starting stats that can change from store
-        self.base_bspeed = 10
         self.base_xp = 500
         self.base_xp_multiplier = 2
         self.xp_gain_multiplier = 1
@@ -69,7 +68,7 @@ class Player(pygame.sprite.DirtySprite):
         self.support_buff_multiplier = 1
         self.offensive_buff_multiplier = 1
 
-        self.store = [False, 0, 0, 0, 0, 0, 0, 0]  # Store, health, dam, speed, offense buffs, support buffs, xp, money
+        self.store = [False, 0, 0, 0, 0, 0, 0, 0]  # first 4 not used, offense buffs, support buffs, xp, money
 
         # player collectibles
         self.score = 0
@@ -152,7 +151,7 @@ class Player(pygame.sprite.DirtySprite):
         self.damage = self.base_damage
         self.bspeed = self.base_bspeed
         self.bps = self.base_bps
-        self.buffs = 0, 0, 0, 0
+        self.buffs = [0, 0, 0, 0]
 
     # updating user stats based on track selected
     def set_track(self):
@@ -167,7 +166,7 @@ class Player(pygame.sprite.DirtySprite):
         self.base_lives = 2
         self.base_hp = 100
         self.maxHealth = 100
-        self.base_bspeed = 5
+        self.base_bspeed = 10
 
         # speed track
         if self.current_track == 0 and self.point_store[0][1] != 0:
@@ -191,7 +190,9 @@ class Player(pygame.sprite.DirtySprite):
                 self.base_hp = 300
                 self.maxHealth = 300
 
+            # multiplying the damage based on how many bullets
             self.base_damage *= self.point_store[0][0] + 1
+            self.damage_max *= self.point_store[0][0] + 1
 
         # dam track
         elif self.point_store[1][1] != 0 and self.current_track == 1:
@@ -213,9 +214,9 @@ class Player(pygame.sprite.DirtySprite):
                     self.maxHealth = 300
 
         # update the player stats again
-        self.health = self.base_hp
-        self.lives = self.base_lives
+        self.health += 100 - self.base_hp
+        self.lives += 2 - self.base_lives
         self.pspeed = self.base_pspeed + self.buffs[3]
         self.damage = self.base_damage + self.buffs[0]
         self.bspeed = self.base_bspeed + self.buffs[2]
-        self.bps = self.base_bps + self.buffs[1]
+        self.bps = self.base_bps - self.buffs[1]

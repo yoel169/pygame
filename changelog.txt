@@ -151,6 +151,8 @@
      * Added a reset track option to reset track and get all the points refunded.
      * Added to show current track on player panel.
      * Fixed so current track gets saved to player when leaving store. Current track will be displayed.
-     * Everything from 3.80 till now needs debugging to make sure mechanics and store values hold up.
+     * Everything from 3.80 till now needs testing to make sure mechanics and store values hold up.
+------------------------------------------------------------------------------------------------------------------------
+3.92 * Fixed some bugs with variable assignments and bullet speed being too slow (5->10)
 
 
