@@ -32,7 +32,7 @@ class Cloud(pygame.sprite.DirtySprite):
 
 
 class Bullet1(pygame.sprite.DirtySprite):
-    def __init__(self, position, power, speed, track, pos):
+    def __init__(self, position, power, speed, track, pos, id):
         super(Bullet1, self).__init__()
         names = ['bullet', 'big']
         self.surf = pygame.image.load('Media/' + names[track] + str(pos + 1) + '.png').convert()
@@ -41,9 +41,10 @@ class Bullet1(pygame.sprite.DirtySprite):
         self.damage = power
         self.speed = speed
         self.rect = self.surf.get_rect(center=(position[0], position[1] + 25))
+        self.id = id
 
         # bullet health. yup that's a thing now too
-        if track == 1 and pos >= 2:
+        if track == 1 and pos >= 3:
             self.health = 2
         elif track == 1 and pos >= 4:
             self.health = 4

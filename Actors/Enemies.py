@@ -46,6 +46,7 @@ class EnenemyJet(pygame.sprite.DirtySprite):
             )
         )
         self._layer = 1
+        self.bullets = []
 
     # Move the sprite based on speed
     # Remove the sprite when it passes the left edge of the screen

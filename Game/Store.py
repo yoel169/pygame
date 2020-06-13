@@ -246,10 +246,10 @@ class Store:
         buff_mutipliers = [1.15, 1.25, 1.5, 1.75, 2, 1.5, 2, 4, 8]
         game_multipliers = [1.05, 1.10, 1.20, 1.4, 1.7, 2, 2.5, 3.5, 5]
 
-        self.money_label.set_text('Points: ' + str(self.player.player_points))
+        self.point_label.set_text('Points: ' + str(self.player.player_points))
 
-        strings = [['upgrade size', 'red bullets', 'emp 15%', 'emp 30%', '2x bullets'],
-                   ['bps', 'speed', 'bps', 'speed', 'bps']]
+        strings = [['upgrade size', 'piercing bullets(2)', 'emp 30%', 'emp 60%', 'piercing bullets(4)', 'maxed'],
+                   ['bps', 'speed', 'bps', 'speed', 'bps', 'maxed']]
 
         # speed track else damage track
         if self.track_selector.selected_option == 'speed':
@@ -303,10 +303,18 @@ class Store:
     def buy(self, pos):
 
         if pos in range(0, 2):
-            self.player.point_store[self.selected][pos] += 1
-            self.player.player_points -= self.player.point_store[self.selected][pos] + 1
-            self.player.point_store[self.selected][2] += self.player.point_store[self.selected][pos] + 1
-            self.player.set_track()
+            if self.player.point_store[self.selected][pos] >= 5:
+                pass
+            else:
+                # take player points, give to the player, and increase the points spent in that track, and set track
+                self.player.player_points -= self.player.point_store[self.selected][pos] + 1
+                self.player.point_store[self.selected][pos] += 1
+                self.player.point_store[self.selected][2] += self.player.point_store[self.selected][pos] + 1
+                # debug heck if player goes below 0, fixed now tho
+                if self.player.player_points < 0:
+                    print('heck')
+                    self.player.player_points = 0
+                self.player.set_track()
 
         else:
             if pos in range(4, 6):

@@ -39,14 +39,16 @@ class Player(pygame.sprite.DirtySprite):
         self.current_track = 0  # 0 speed, 1 damage
 
         # defaults
-        self.base_damage = None
-        self.damage_max = None
-        self.base_pspeed = None
-        self.pspeed_max = None
-        self.base_bps = None
-        self.bps_max = None
-        self.base_lives = None
-        self.base_bspeed = None
+        self.base_damage = 10
+        self.damage_max = 30
+        self.base_pspeed = 5
+        self.pspeed_max = 5
+        self.base_bps = 600
+        self.bps_max = 300
+        self.base_lives = 2
+        self.base_hp = 100
+        self.maxHealth = 100
+        self.base_bspeed = 10
 
         # player current stats that can change through game
         self.health = None
@@ -58,6 +60,7 @@ class Player(pygame.sprite.DirtySprite):
         self.buffs = [0, 0, 0, 0]  # dam, bps, bspeed, pspeed
 
         # init player based on track (point store)
+        self.reset()  # set currents
         self.set_track()
 
         # player starting stats that can change from store
@@ -129,7 +132,7 @@ class Player(pygame.sprite.DirtySprite):
             self.pspeed = self.pspeed_max
 
         # if player reaches xp for the level increase level, special case for level 1
-        if self.level == 1 and self.xp >= self.base_xp * self.level:
+        if self.level == 1 and self.xp >= self.base_xp:
             self.level += 1
             self.player_points += 1
         elif self.xp >= self.base_xp * (self.level - 1) * self.base_xp_multiplier:
@@ -199,9 +202,16 @@ class Player(pygame.sprite.DirtySprite):
 
             x = range(1, self.point_store[1][1] + 1)
 
+            self.base_bps = 800
+            self.bps_max = 600
+            self.base_damage = 30
+            self.damage_max = 60
+
             for n in x:
-                self.base_damage = 30 * self.point_store[1][1]
-                self.damage_max = 60 + (30 * self.point_store[1][1] - 1)
+                self.base_damage *= self.point_store[1][1]
+                self.damage_max += (30 * self.point_store[1][1] - 1)
+                self.base_bps += (50 * self.point_store[1][1] - 1)
+                self.bps_max += (100 * self.point_store[1][1] - 1)
 
                 if n % 2 == 0:
                     self.base_lives += 1
@@ -214,8 +224,8 @@ class Player(pygame.sprite.DirtySprite):
                     self.maxHealth = 300
 
         # update the player stats again
-        self.health += 100 - self.base_hp
-        self.lives += 2 - self.base_lives
+        self.health += (self.base_hp - 100)
+        self.lives += (self.base_lives - 2)
         self.pspeed = self.base_pspeed + self.buffs[3]
         self.damage = self.base_damage + self.buffs[0]
         self.bspeed = self.base_bspeed + self.buffs[2]

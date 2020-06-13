@@ -63,6 +63,7 @@ class Game:
         space = False  # default space shooting to off
         mouse = False  # default mouse movement to off
         counter = 0  # counter for looping through arguments
+        bullet_ids = []  # keep track of bullet ids
 
         # ======================================== SHOOTING AND MOVEMENT SETUP ==================================
         option = args  # SHOOTING AND MOVEMENT
@@ -232,7 +233,11 @@ class Game:
                         if event.key == K_SPACE and space:
                             manual_timer = py.time.get_ticks() - manual_start
                             if manual_timer >= self.player.bps:
-                                new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed)
+                                rand = random.randint(1, 10000)
+                                # bullet_ids.append(rand)
+                                b_type = self.player.point_store[self.player.current_track][0]
+                                new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed,
+                                                     self.player.current_track, b_type, rand)
                                 bullets.add(new_bullet)
                                 all_sprites.add(new_bullet)
                                 manual_start = py.time.get_ticks()
@@ -251,7 +256,10 @@ class Game:
                         manual_timer = py.time.get_ticks() - manual_start
                         if manual_timer >= self.player.bps:
                             b_type = self.player.point_store[self.player.current_track][0]
-                            new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed, self.player.current_track, b_type)
+                            rand = random.randint(1, 10000)
+                            # bullet_ids.append(rand)
+                            new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed,
+                                                 self.player.current_track, b_type, rand)
                             bullets.add(new_bullet)
                             all_sprites.add(new_bullet)
                             manual_start = py.time.get_ticks()
@@ -325,8 +333,10 @@ class Game:
                 auto_timer = py.time.get_ticks() - auto_start
                 if auto_timer >= self.player.bps and auto:
                     b_type = self.player.point_store[self.player.current_track][0]
+                    rand = random.randint(1, 10000)
+                    # bullet_ids.append(rand)
                     new_bullet = Bullet1(self.player.rect.center, self.player.damage, self.player.bspeed,
-                                         self.player.current_track, b_type)
+                                         self.player.current_track, b_type, rand)
                     bullets.add(new_bullet)
                     all_sprites.add(new_bullet)
                     auto_start = py.time.get_ticks()
@@ -463,29 +473,42 @@ class Game:
                 hits = py.sprite.groupcollide(enemies, bullets, False, False)
                 for enemy, bullet_list in hits.items():
                     for bullet in bullet_list:
-                        if bullet.__class__ == Bullet1:
-                            enemy.health -= bullet.damage
-                            # self.collision_sound.play()
-                            bullet.health -= 1
-                            if bullet.health <= 0:
-                                bullet.kill()
-                            if self.player.current_track == 1:
-                                chance = (random.randint(1, 100))
-                                if self.player.point_store[1][0] == 3 and chance <= 15:
-                                    enemy.speed = 0
-                                elif self.player.point_store[1][0] >= 5 and chance <= 30:
-                                    enemy.speed = 0
 
-                            if enemy.health <= 0:
-                                score += enemy.points
-                                self.player.xp += enemy.xp * self.player.xp_gain_multiplier
-                                self.player.money += enemy.money * self.player.money_gain_multiplier
-                                money_counter += enemy.money * self.player.money_gain_multiplier
-                                xp_counter += enemy.xp * self.player.xp_gain_multiplier
+                        # check if we are working with player bullet
+                        if bullet.__class__ == Bullet1:
+
+                            # check if the bullet has not already hit the enemy before
+                            if bullet.id in enemy.bullets:
+                                continue
+                            else:
+
+                                enemy.bullets.append(bullet.id)
+
+                                enemy.health -= bullet.damage
+                                # self.collision_sound.play()
+
+                                if self.player.current_track == 1:
+                                    chance = (random.randint(1, 100))
+                                    if self.player.point_store[1][0] >= 2 and chance <= 30:
+                                        enemy.speed = 0
+                                    elif self.player.point_store[1][0] >= 3 and chance <= 60:
+                                        enemy.speed = 0
+
+                                bullet.health -= 1
+
+                                if bullet.health <= 0:
+                                    bullet.kill()
+
+                                if enemy.health <= 0:
+                                    score += enemy.points
+                                    self.player.xp += enemy.xp * self.player.xp_gain_multiplier
+                                    self.player.money += enemy.money * self.player.money_gain_multiplier
+                                    money_counter += enemy.money * self.player.money_gain_multiplier
+                                    xp_counter += enemy.xp * self.player.xp_gain_multiplier
 
                 # PLAYER AND ENEMY BULLET
                 hit = py.sprite.spritecollideany(self.player, bullets)
-                if hit.__class__ == EBullet and hit != None:
+                if hit.__class__ == EBullet and hit is not None:
                     self.player.health -= hit.damage
                     print("you got hit by enemy bullet!")
                     hit.kill()

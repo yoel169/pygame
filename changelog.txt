@@ -154,5 +154,9 @@
      * Everything from 3.80 till now needs testing to make sure mechanics and store values hold up.
 ------------------------------------------------------------------------------------------------------------------------
 3.92 * Fixed some bugs with variable assignments and bullet speed being too slow (5->10)
+------------------------------------------------------------------------------------------------------------------------
+3.93 * Fixed points from going negative(again).
+     * Each bullet will have their own ID for tracking to make piercing bullets work.
+     * Broken: hp, lives, damage track (bps), exit on pause not working, xp and point system
 
 

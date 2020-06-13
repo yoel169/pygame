@@ -1,6 +1,7 @@
 ----------------------------------------------------
                 Current track
 ----------------------------------------------------
+keep testing for bugs from store update
 new enemy.
 music and sound rework.
 Sandbox Mode
