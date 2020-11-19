@@ -1,5 +1,7 @@
 # World Flying Shooter
  Just a student having some fun with python.
+ 
+ Demo: https://youtu.be/vQNx-DLujwo
 
 Description: flying jet fighting different enemies.
 
